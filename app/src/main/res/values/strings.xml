@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+
+    <string name="dontpause">Breaks: </string>
+    <string name="tpause">Breaks: </string>
+
+    <string name="tdebut">In: </string>
+    <string name="tfin">Out: </string>
+
+    <string name="theme_dark">Dark</string>
+    <string name="theme_white">White</string>
+
+    <string name="theme_description"> Select a theme. The change will take effect after restarting the application.</string>
+    <string name="titre_theme">Select a theme</string>
+    <string name="supprimer_pub">Delete ad</string>
+
+    <string name="supprimer_pub_description">Delete the interstitial ads</string>
+
+    <string name="confirmation_suppression_pause">Confirm the removal of breaks</string>
+
+    <string name="banner_ad_unit_id_pointer"></string>
+    <string name="titre_pause">Breaks list</string>
+    <string name="reglages_pauses">Settings breaks</string>
+    <string name="ajouter_pause">Add a new break</string>
+
+    <string name="confirmation">Confirmation</string>
+
+    <string name="suppression_pointage_unitaire">Delete check-in</string>
+    <string name="suppression_pointage_unitaire_message">Are you sure to delete this check-in?</string>
+
+    <string name="pointagealasecondetitre">Accuracy</string>
+    <string name="pointagealasecondedescription">Count the seconds in the calcul</string>
+
+
+
+    <string name="prefformat">Display check in/out format</string>
+    <string name="prefformat1">Defined format of check in/out</string>
+    
+    <string name="jourarrondi">d</string>
+    <string name="erreurchangementdate1">The start time must be less than the end time</string> 
+    <string name="erreurchangementdate2">The end time must be greater than the start time</string> 
+    
+  <string name="widget_name">Working Time</string>
+    <string name="app_name">Working Time</string>
+    
+     <string name="feedback">Add a feedback</string>
+     
+     <string name="noter">Note this application!</string>
+    <string name="noter2">Note this application on the android market!</string>
+    
+     <string name="aucunpointage">No check-in</string> 
+    <string name="insertiontermine">Insert ended</string> 
+     <string name="dateto">to</string> 
+     <string name="aidecommentaire">Ok for validate</string>
+    <string name="cancel">Cancel</string>
+  <string name="addcomment">Add a comment</string>
+   <string name="commentaire">comment</string>
+      
+    
+         <string name="aucun">none</string>
+         
+         <string name="prefgenerale">General Preference</string>   
+      
+      <string name="prefsep">The separator character for the backup file (CSV)</string>   
+      <string name="prefsep1">Separator</string>  
+      <string name="prefmail">Enter your Email address</string>
+      
+          <string name="prefarrondi">Rounding check in</string>  
+          <string name="prefarrondi1">Check-in are no longer at the minute but calculated by rounding</string>  
+        
+     <string name="jour">Day</string>
+      <string name="semaine">Week</string>
+       <string name="mois">Month</string>
+        <string name="annee">Year</string>
+    <string name="heure1">Hour / Min</string>
+     <string name="heure2">Day / Hour / Min</string>
+             <string name="inserer">Insert a check-in/out</string>
+              <string name="pointagerapide">Fast check in/out</string>
+              
+                   <string name="duree">Working time:</string>
+            
+    <string name="savepointage">Saving check-in</string>
+     <string name="choisir">Choose your sofware</string>
+     <string name="listeP">Check in/out list</string>
+      <string name="numero">Number</string>
+      <string name="debut">In</string>
+       <string name="fin">Out</string>
+       
+	<string name="pasdepointage">There is no check in</string>
+	 <string name="somme">Sum=</string>
+		<string name="suppressionPointage">Remove check in</string> 
+		<string name="validersuppressionPointage">Confirm the removal of check in</string> 
+		 <string name="param">Parameters</string>    
+		 <string name="save">Backup</string>   
+		<string name="help">Help</string>   
+	  <string name="err_email2">Please enter your email address in the preferences!</string>
+	  <string name="err_email5">Error when generating the backup file!</string>
+	
+	   <string name="pointer">Check in/out</string>
+	     <string name="calendrier">Calendar</string>
+    <string name="parametres">Parameters</string>
+
+	   <string name="debutpointage">Check in at</string>
+	   <string name="finpointage">Check out</string>
+	    <string name="debuter">Add a new check in</string>
+	   <string name="tempstravail">Working time:\n</string>
+	    <string name="tempstravail1">Working time:</string>
+	    <string name="validation1">Validate</string>
+	     <string name="validationinsertion">Validate the insertion of the new check in</string>
+	      <string name="oui1">Yes</string>   
+	         <string name="non1">No</string>
+	         <string name="suppression">Delete check in</string>
+	 
+	   <string name="txtaide1">Working time:\n
+\n
+\tThis application makes working hours counting easy as a simple touch of the screen. The calculation is automatic. The alternation between check in and  out work is automatic.\n
+\n
+Add a check in:\n
+\n
+\tIn order to add a check in/out since the application, just push the «Fast check in/out» button. The check in hour will be the same as the telephone hour. The first touch initiate the check in, the second will end it.\n 
+\tIn case of omission, an insertion is possible with the « insert a check in/out» button.\n
+\n
+Add a comment:\n\n
+\tTo comment a check in/out just click on this one from the calendar and add your comment. Press OK to validate or Cancel to ... cancel.
+\n\n
+Save:\n
+\n
+\tSaving all the check in is possible by e-mail in CSV (Exel) format. An e-mail adress must previously be inserted in the parameters. The CSV file parameters can also be modified in the parameters section.\n
+\n
+Check in displaying:\n
+\n
+\tDaily, weekly, monthly or annual chek in are viewable in the calendar tab. Just select a date or a period on the calendar, the display is automatic.\n
+\n
+Widget:\n
+\n
+\tA widget is available on the desktop. It allows fast check and ongoing check in displaying.\n
+</string>
+	  <string name="txtaide2">Rounding :\n
+\n
+\tRounding check in allows to round the check in to a lower value.\n
+\tFor example, a time of 1h02min will be rounded to 1 hour if the rounding  interval is 5 minute.\n
+\tIn this case, 1h54min will be rounded to 1h50min.\n
+\n
+E-mail adress :\n
+\n
+\tThis is the e-mail adress that will be used in order to receive saving data. E-mail sending will be launched since an Android e-mail application that will be choosen by the user at saving time.\n
+\n
+Separator :\n
+\n
+\tThe separator will be the one selected during saving in CSV format. This allows to collect directly check in in an Exel table.\n
+</string>
+    <string name="ajouter_pointage">Add a check-in</string>
+    <string name="confirmation_suppression">Confirm the removal of check-in</string>
+
+
+</resources>

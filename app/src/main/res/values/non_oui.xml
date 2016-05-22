@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="non_oui">
+        <item>@string/non1</item>
+        <item>@string/oui1</item>
+    </array>
+
+
+
+    <array name="valeur_non_oui">
+        <item>"0"</item>
+        <item>"1"</item>
+    </array>
+</resources>

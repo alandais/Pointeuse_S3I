@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<array name="liste_arrondis">
+		<item>@string/aucun</item>
+		<item>"10 min"</item>
+		<item>"15 min"</item>
+		<item>"30 min"</item>
+		<item>"1H"</item>
+	</array>
+	
+	<array name="valeur_liste_arrondis">
+		<item>"0"</item>
+		<item>"10"</item>
+		<item>"15"</item>
+		<item>"30"</item>
+		<item>"60"</item>
+	</array>
+	
+	<array name="liste_format">
+		<item>@string/heure1</item>
+		<item>@string/heure2</item>
+	</array>
+	<array name="valeur_liste_format">
+		<item>"0"</item>
+		<item>"1"</item>
+	</array>
+
+	<array name="liste_theme">
+		<item>@string/theme_dark</item>
+		<item>@string/theme_white</item>
+	</array>
+	<array name="liste_valeur_theme">
+		<item>"AppThemeNoir"</item>
+		<item>"AppTheme"</item>
+	</array>
+
+
+</resources>
