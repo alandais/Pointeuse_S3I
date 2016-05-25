@@ -65,7 +65,7 @@ public class ListeDesPointagesAdapter extends BaseAdapter
 	public Calcul getCalcul(){
 		return this.calcul;
 	}
-    public  void suppression_confirmer(Context context,int position,int debutFin)//1 debut 2 fin
+    public  void suppression_confirmer(Context context,int position,int debutFin)
     {
         DatabaseHelper dbHelper=null;
         SQLiteDatabase db;
@@ -74,53 +74,56 @@ public class ListeDesPointagesAdapter extends BaseAdapter
         db = dbHelper.getWritableDatabase();
 
         Cursor constantsCursor = dbHelper.selectDatePointage(db, position);
-        String valeur;
-        if (debutFinEnCours==1)
-            valeur = constantsCursor.getString(1);
-        else
-            valeur = constantsCursor.getString(2);
-        constantsCursor.close();
+//        String valeur;
+//        if (debutFinEnCours==1)
+//            valeur = constantsCursor.getString(1);
+//        else
+//            valeur = constantsCursor.getString(2);
+//        constantsCursor.close();
+//
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//        String conditions= "strftime('%s',DATE_DEBUT) >= strftime('%s','"+valeur+"') " +
+//                " or strftime('%s',DATE_FIN) >= strftime('%s','"+valeur+"') " ;
+//
+//
+//        constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
+//        if(constantsCursor==null)
+//        {
+//            //android.util.Log.w("constantsCursor", "==null");
+//            parent.refresh();
+//            return ;
+//        }
+//
+//        boolean premier_coup = true;
+//        long old_position = -1;
+//		long pos = -1;
+//        while (constantsCursor.moveToNext() )
+//        {
+//            pos = constantsCursor.getLong(0);
+//            if( premier_coup) {
+//                if (debutFin == 1) {
+//                    dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_DEBUT, constantsCursor.getString(2));
+//                }
+//                premier_coup = false;
+//                old_position = constantsCursor.getLong(0);
+//            }
+//            else
+//            {
+//                dbHelper.updateEnregistrementPointage(db, old_position, dbHelper.DATE_FIN, constantsCursor.getString(1));
+//                dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_DEBUT, constantsCursor.getString(2));
+//
+//                old_position = constantsCursor.getLong(0);
+//
+//            }
+//            dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_FIN, "");
+//
+//        }
+//
+//        dbHelper.purge_pointage_vide(db);
+		// modification pour supprimer un pointage complet
+		dbHelper.deleteEnregistrementPointage(db,constantsCursor.getLong(0));
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        String conditions= "strftime('%s',DATE_DEBUT) >= strftime('%s','"+valeur+"') " +
-                " or strftime('%s',DATE_FIN) >= strftime('%s','"+valeur+"') " ;
-
-
-        constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
-        if(constantsCursor==null)
-        {
-            //android.util.Log.w("constantsCursor", "==null");
-            parent.refresh();
-            return ;
-        }
-
-        boolean premier_coup = true;
-        long old_position = -1;
-		long pos = -1;
-        while (constantsCursor.moveToNext() )
-        {
-            pos = constantsCursor.getLong(0);
-            if( premier_coup) {
-                if (debutFin == 1) {
-                    dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_DEBUT, constantsCursor.getString(2));
-                }
-                premier_coup = false;
-                old_position = constantsCursor.getLong(0);
-            }
-            else
-            {
-                dbHelper.updateEnregistrementPointage(db, old_position, dbHelper.DATE_FIN, constantsCursor.getString(1));
-                dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_DEBUT, constantsCursor.getString(2));
-
-                old_position = constantsCursor.getLong(0);
-
-            }
-            dbHelper.updateEnregistrementPointage(db, pos, dbHelper.DATE_FIN, "");
-
-        }
-
-        dbHelper.purge_pointage_vide(db);
 
         dbHelper.close();
         parent.refresh();

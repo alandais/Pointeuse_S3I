@@ -4,15 +4,21 @@ package fr.s3i.pointeuse;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import fr.s3i.pointeuse.activite.Aide;
+import fr.s3i.pointeuse.activite.ReglagePauses;
+import fr.s3i.pointeuse.activite.Suppression;
 import fr.s3i.pointeuse.framents.Calendrier;
+import fr.s3i.pointeuse.framents.Pointer;
 import fr.s3i.pointeuse.utils.Utilitaire;
 
 /*
@@ -36,6 +42,10 @@ public class Pointeuse extends ActionBarActivity
 {
 
     FragmentTabHost mTabHost;
+
+
+
+
 
     /** Called when the activity is first created. */
     @Override

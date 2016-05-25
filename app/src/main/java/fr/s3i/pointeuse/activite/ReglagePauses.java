@@ -1,4 +1,4 @@
-package fr.s3i.pointeuse;
+package fr.s3i.pointeuse.activite;
 
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.adaptaters.ListeDesPausesAdapter;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 

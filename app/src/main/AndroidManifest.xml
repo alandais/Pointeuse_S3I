@@ -28,8 +28,8 @@
         </activity>
 
         <activity  android:name=".activite.Aide" android:label="@string/app_name"></activity>
-        <activity  android:name="ReglagePauses" android:label="@string/reglages_pauses"></activity>
-        <activity  android:name="Suppression" android:label="@string/app_name"></activity>
+        <activity  android:name=".activite.ReglagePauses" android:label="@string/reglages_pauses"></activity>
+        <activity  android:name=".activite.Suppression" android:label="@string/app_name"></activity>
         <activity  android:name="Parametre" android:label="@string/app_name"> </activity>
 
         <!-- Broadcast Receiver that will process AppWidget updates -->
@@ -45,7 +45,7 @@
         </receiver>
 
         <!-- Configure activity -->
-        <activity android:name="widgetConfigure">
+        <activity android:name=".widget.widgetConfigure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
                 <action android:name="fr.s3i.pointeuse.PointeuseWidgetProvider.ACTION_WIDGET_UPDATE" />

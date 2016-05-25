@@ -5,6 +5,6 @@
   android:minHeight="72dip"
   android:updatePeriodMillis="0"
   android:initialLayout="@layout/widgetlayout"
-  android:configure="fr.s3i.pointeuse.widgetConfigure"
+  android:configure="fr.s3i.pointeuse.widget.widgetConfigure"
 >
 </appwidget-provider>

@@ -1,4 +1,4 @@
-package fr.s3i.pointeuse;
+package fr.s3i.pointeuse.activite;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.adaptaters.ListeDesPointagesDeleteAdapter;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 

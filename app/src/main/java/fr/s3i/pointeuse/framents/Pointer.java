@@ -1,4 +1,4 @@
-package fr.s3i.pointeuse;
+package fr.s3i.pointeuse.framents;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -29,10 +30,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.utils.Calcul;
 import fr.s3i.pointeuse.widget.PointageWidgetProvider;
@@ -91,6 +94,17 @@ public class Pointer extends Fragment
 			}
 
 		});
+		// Ajout du listener de click sur l'image banniere_S3i pour aller sur le site
+		ImageView img = (ImageView)v.findViewById(R.id.imgS3i);
+		img.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_VIEW);
+				intent.addCategory(Intent.CATEGORY_BROWSABLE);
+				intent.setData(Uri.parse("http://s3i.fr"));
+				startActivity(intent);
+			}
+		});
 
 		dbHelper = new DatabaseHelper(this.getContext());
 		db = dbHelper.getWritableDatabase();
@@ -126,13 +140,13 @@ public class Pointer extends Fragment
          {
          	try
          	{
-         		if(dernierEnregistrement.getString(2).length()>0 )
-         		{
+         		if(! (dernierEnregistrement.getString(2).length()>0) )
+//         		{
          			//Creation d'un nouvel enregistrement
-         			dbHelper.insereNouveauPointage(db, "", "");
-         			etatEnCours.setText(getString(R.string.aucunpointage));
-         		}
-         		else
+//         			dbHelper.insereNouveauPointage(db, "", "");
+//         			etatEnCours.setText(getString(R.string.aucunpointage));
+//         		}
+//         		else
          		{
          			//android.util.Log.w("debut=", (String)dernierEnregistrement.getString(1));
          			debut  = dateFormat.parse((String)dernierEnregistrement.getString(1));
@@ -197,22 +211,23 @@ public class Pointer extends Fragment
          
          dernierEnregistrement.close();
          dernierEnregistrement.deactivate();
-         if (isMyServiceRunning())
-         {
+//         if (isMyServiceRunning())
+//         {
 	         AlarmManager alarmManager =  (AlarmManager)this.getContext().getSystemService(Context.ALARM_SERVICE);
 	         Intent intent = new Intent(this.getContext(), PointageWidgetProvider.class);
 	         intent.setAction(PointageWidgetProvider.ACTION_START_REFRESH_WIDGET);
 	         PendingIntent pi = PendingIntent.getBroadcast(this.getContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	         alarmManager.cancel(pi);
 	         alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-         }
-         else
-         {
-        	// android.util.Log.w(TAG, "service stop");
-         }
+//         }
+//         else
+//         {
+//        	// android.util.Log.w(TAG, "service stop");
+//         }
     }
 
-    private boolean isMyServiceRunning() 
+/*
+    private boolean isMyServiceRunning()
     {
         ActivityManager manager = (ActivityManager) this.getContext().getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -222,6 +237,7 @@ public class Pointer extends Fragment
         }
         return false;
     }
+*/
 
     public void creerFenetreDateHeure()
     {
@@ -299,32 +315,19 @@ public class Pointer extends Fragment
     	{
     		constantsCursor.close();
     		 constantsCursor=dbHelper.getLastEnregistrementPointage(db);
-    		 if (constantsCursor.getCount() > 0)
-    		 {
-    			 if(constantsCursor.getString(1).length()==0 )
-    	    	{
-    				 //android.util.Log.w("constantsCursor", "==DATE_DEBUT");
-    				 dbHelper.updateEnregistrementPointage(db, constantsCursor.getLong(0), dbHelper.DATE_DEBUT, dateFormat.format(LaNouvelleDate));
-    	    	}
-    			 else
-    			 {
-    				 //android.util.Log.w("constantsCursor", "==DATE_FIN");
-    				 dbHelper.updateEnregistrementPointage(db, constantsCursor.getLong(0), dbHelper.DATE_FIN, dateFormat.format(LaNouvelleDate));
-    				 dbHelper.insereNouveauPointage(db, "", "");
-    			 }
-    			 constantsCursor.close();
-    			 String message = getString(R.string.insertiontermine);
-    			 Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
-        		 return;
-    		 }
-    		 dbHelper.insereNouveauPointage(db, "", "");
-    		 constantsCursor=dbHelper.getLastEnregistrementPointage(db);
-    		 if(constantsCursor==null)return ;
-    	       
-    		 dbHelper.updateEnregistrementPointage(db, constantsCursor.getLong(0), dbHelper.DATE_DEBUT, dateFormat.format(LaNouvelleDate));
-    		 constantsCursor.close();
-    		 
-    		 String message = getString(R.string.insertiontermine);
+			 if(constantsCursor.getCount()== 0 || constantsCursor.getString(2).length()!=0)
+			{
+				 //android.util.Log.w("constantsCursor", "==DATE_DEBUT");
+				 dbHelper.insereNouveauPointage(db,dateFormat.format(LaNouvelleDate),"");
+			}
+			 else
+			 {
+				 //android.util.Log.w("constantsCursor", "==DATE_FIN");
+				 dbHelper.updateEnregistrementPointage(db, constantsCursor.getLong(0), dbHelper.DATE_FIN, dateFormat.format(LaNouvelleDate));
+				 dbHelper.insereNouveauPointage(db, "", "");
+			 }
+			 constantsCursor.close();
+			 String message = getString(R.string.insertiontermine);
 			 Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
 			 refresh_etat();
     		 return;
@@ -394,28 +397,20 @@ public class Pointer extends Fragment
     				" - Debut = " + dernierEnregistrement.getString(2) + " Fin= " + 
     				dernierEnregistrement.getString(3), Toast.LENGTH_SHORT).show();*/
     	
-    	try
-    	{
-    		if(dernierEnregistrement.getString(1).length()==0 )
-    		{
-    			dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_DEBUT, dateFormat.format(date));
-    			dateFormat = new SimpleDateFormat("HH:mm"); 
-    			message = getString(R.string.debutpointage) + " " + dateFormat.format(date);
-    			Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
-    		}
-    		else
-    		{
-    			dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_FIN, dateFormat.format(date));
-    			dbHelper.insereNouveauPointage(db, "", "");
-    			dateFormat = new SimpleDateFormat("HH:mm"); 
-    			message = getString(R.string.finpointage) + " " + dateFormat.format(date);
-    			Toast.makeText(this.getContext()	, message, Toast.LENGTH_SHORT).show();
-    		}
-    	}
-    	catch(CursorIndexOutOfBoundsException e)
-    	{
-    		dbHelper.insereNouveauPointage(db, "", "");
-    	}
+		if(dernierEnregistrement == null || dernierEnregistrement.getString(2).length() >0 )
+		{
+			dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
+			dateFormat = new SimpleDateFormat("HH:mm");
+			message = getString(R.string.debutpointage) + " " + dateFormat.format(date);
+			Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+		}
+		else
+		{
+			dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_FIN, dateFormat.format(date));
+			dateFormat = new SimpleDateFormat("HH:mm");
+			message = getString(R.string.finpointage) + " " + dateFormat.format(date);
+			Toast.makeText(this.getContext()	, message, Toast.LENGTH_SHORT).show();
+		}
     	 refresh_etat();
     }
   

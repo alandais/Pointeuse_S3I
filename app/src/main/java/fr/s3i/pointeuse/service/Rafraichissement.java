@@ -2,6 +2,7 @@ package fr.s3i.pointeuse.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,8 +20,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
+import fr.s3i.pointeuse.adaptaters.ListeDesPointagesAdapter;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.widget.PointageWidgetProvider;
 import fr.s3i.pointeuse.R;
@@ -100,31 +103,47 @@ public class Rafraichissement extends Service
 	         dbHelper = new DatabaseHelper(this);
 	         db = dbHelper.getWritableDatabase();;
 	         dernierEnregistrement = dbHelper.getLastEnregistrementPointage(db);
+			Date maintenant = new Date();
+			//android.util.Log.w("DATE", "Dateformat="+dateFormat.format(LaNouvelleDate));
+			String conditions= "( strftime('%j',DATE_DEBUT) = strftime('%j','"+dateFormat.format(maintenant)+"') " +
+					" and strftime('%Y',DATE_DEBUT) = strftime('%Y','"+dateFormat.format(maintenant)+"') ) " +
+
+					" or ( strftime('%j',DATE_FIN) = strftime('%j','"+dateFormat.format(maintenant)+"') " +
+					" and strftime('%Y',DATE_FIN) = strftime('%Y','"+dateFormat.format(maintenant)+"') ) ";
+			Cursor curseurEnreg = dbHelper.getSomeDatePointage(db,conditions );
 	        // android.util.Log.w("Constants", "Refresh");
 
-	         if (dernierEnregistrement!=null)
+	         if (curseurEnreg!=null)
 	         {
-	         	try
+/*	         	try
 	         	{
 	         		if(! (dernierEnregistrement.getString(2).length()>0 ))
-/*	         		{
+	         		{
 	         			//Creation d'un nouvel enregistrement
 	         			dbHelper.insereNouveauPointage(db, "", "");
 	         			remoteViews.setTextViewText(R.id.monTextWidget, getString(R.string.debuter));
 	         		}
 	         		else
-*/	         		{
+	         		{
 	         			//android.util.Log.w("debut=", (String)dernierEnregistrement.getString(1));
 	         			debut  = dateFormat.parse((String)dernierEnregistrement.getString(1));
+*/
 
+//						GregorianCalendar c_debut = new GregorianCalendar();
+//						c_debut.setTime(debut);
+//						GregorianCalendar c_fin = new GregorianCalendar();
+//						c_fin.setTime(fin);
+						ArrayList listeDebut = new ArrayList<String>();
+						ArrayList listeFin = new ArrayList<String>();
 
-						GregorianCalendar c_debut = new GregorianCalendar();
-						c_debut.setTime(debut);
-						GregorianCalendar c_fin = new GregorianCalendar();
-						c_fin.setTime(fin);
-
+						while (curseurEnreg.moveToNext() )
+						{
+							listeDebut.add(curseurEnreg.getString(1)); // 0 is the first column
+							listeFin.add(curseurEnreg.getString(2)); // 0 is the first column
+						}
 						Calcul calcul = new Calcul(this);
-						Calcul.Spointage s = calcul.CalculTemps(c_debut,c_fin,0);
+						//Calcul.Spointage s = calcul.CalculTemps(c_debut,c_fin,0);
+						Calcul.Spointage s = calcul.somme(listeDebut,listeFin,0);
 						long temps = s.temps_pointage / 60;
 
 	         			//remoteViews.setTextViewText(R.id.monTextWidget, getString(R.string.tempstravail)+temps/60+"H"+temps%60+"Min");
@@ -166,15 +185,15 @@ public class Rafraichissement extends Service
 	         			  }
 	         			
 	         			
-	         		}
-	         	}
-	         	catch(Exception e )
-	         	{
-	         	//	Toast.makeText(context, "exception=" + e.getMessage() , Toast.LENGTH_SHORT).show();
-	         		dbHelper.insereNouveauPointage(db, "", "");
-	            	remoteViews.setTextViewText(R.id.monTextWidget,getString(R.string.debuter));
-	               // android.util.Log.w("Exception Refresh", e.getMessage());
-	         	}
+//	         		}
+//	         	}
+//	         	catch(Exception e )
+//	         	{
+//	         	//	Toast.makeText(context, "exception=" + e.getMessage() , Toast.LENGTH_SHORT).show();
+//	         		dbHelper.insereNouveauPointage(db, "", "");
+//	            	remoteViews.setTextViewText(R.id.monTextWidget,getString(R.string.debuter));
+//	               // android.util.Log.w("Exception Refresh", e.getMessage());
+//	         	}
 	         }
 	         //   Toast.makeText(this, "Update!", Toast.LENGTH_SHORT).show();
 	         

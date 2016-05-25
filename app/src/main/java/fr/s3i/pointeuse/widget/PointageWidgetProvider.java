@@ -41,6 +41,7 @@ public class PointageWidgetProvider extends AppWidgetProvider
 	
 	private boolean pointageEnCours = false;
     int[] appWidgetIds;
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) 
     {
@@ -74,7 +75,7 @@ public class PointageWidgetProvider extends AppWidgetProvider
         
     }
     
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         // Prepare widget views
     	RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widgetlayout);
@@ -244,4 +245,6 @@ public class PointageWidgetProvider extends AppWidgetProvider
     	context.stopService(new Intent(context,Rafraichissement.class));
         super.onDisabled(context);
     }
+
+
 }

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.ReglagePauses;
+import fr.s3i.pointeuse.activite.ReglagePauses;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 
 

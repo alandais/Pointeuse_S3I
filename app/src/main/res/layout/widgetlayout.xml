@@ -7,8 +7,10 @@
 	  >
 	<ImageView
 		android:layout_width="50dip"
-		android:src="@drawable/logoS3i"
-		android:layout_height="wrap_content"/>
+		android:src="@drawable/logo_s3i"
+		android:layout_height="wrap_content"
+		android:tag="http://www.s3i.fr"
+		android:onClick="openBrowser"/>
 
 	 <TextView
       android:background="#35FFFFFF"

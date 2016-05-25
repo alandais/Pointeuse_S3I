@@ -1,4 +1,4 @@
-package fr.s3i.pointeuse;
+package fr.s3i.pointeuse.widget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
