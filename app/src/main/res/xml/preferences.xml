@@ -1,66 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-  
-  <PreferenceCategory android:title="@string/prefgenerale">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	  <ListPreference
-		  android:key="theme"
-		  android:title="@string/titre_theme"
-		  android:summary="@string/theme_description"
-		  android:dialogTitle="@string/titre_theme"
-		  android:entries="@array/liste_theme"
-		  android:entryValues="@array/liste_valeur_theme"
-		  />
+    <PreferenceCategory android:title="@string/prefgenerale">
 
-  <ListPreference 
-  	android:key="listedesarrondis"
-  	android:title="@string/prefarrondi"
-  	android:summary="@string/prefarrondi1"
-  	android:dialogTitle="@string/prefarrondi"
-  	android:entries="@array/liste_arrondis"
-  	android:entryValues="@array/valeur_liste_arrondis"
-  />
+        <ListPreference
+            android:key="theme"
+            android:title="@string/titre_theme"
+            android:summary="@string/theme_description"
+            android:dialogTitle="@string/titre_theme"
+            android:entries="@array/liste_theme"
+            android:entryValues="@array/liste_valeur_theme" />
 
-  <ListPreference
-      android:key="pointagealaseconde"
-      android:title="@string/pointagealasecondetitre"
-      android:summary="@string/pointagealasecondedescription"
-      android:dialogTitle="@string/pointagealasecondetitre"
-      android:entries="@array/non_oui"
-      android:entryValues="@array/valeur_non_oui"
-      />
+        <ListPreference
+            android:key="listedesarrondis"
+            android:title="@string/prefarrondi"
+            android:summary="@string/prefarrondi1"
+            android:dialogTitle="@string/prefarrondi"
+            android:entries="@array/liste_arrondis"
+            android:entryValues="@array/valeur_liste_arrondis" />
 
-  <ListPreference 
-  	android:key="formataffichage"
-  	android:title="@string/prefformat"
-  	android:summary="@string/prefformat1"
-  	android:dialogTitle="@string/prefformat"
-  	android:entries="@array/liste_format"
-  	android:entryValues="@array/valeur_liste_format"
-  />
+        <ListPreference
+            android:key="pointagealaseconde"
+            android:title="@string/pointagealasecondetitre"
+            android:summary="@string/pointagealasecondedescription"
+            android:dialogTitle="@string/pointagealasecondetitre"
+            android:entries="@array/non_oui"
+            android:entryValues="@array/valeur_non_oui" />
 
-  </PreferenceCategory>
-  
-  <PreferenceCategory android:title="Backup">
-  
-   <EditTextPreference    
-  	android:key="email"
-  	android:title="Email"
-  	android:summary="@string/prefmail"
-  	android:dialogTitle="Email"
-  />
-  
-    <EditTextPreference    
-  	android:key="separateur"
-  	android:title="@string/prefsep1"
-  	android:defaultValue=";"
-  	android:maxLength="1"
-  	android:summary="@string/prefsep"
-  	android:dialogTitle="@string/prefsep1"
-  />
-   	    
- 
-   </PreferenceCategory>
-   	
+        <ListPreference
+            android:key="formataffichage"
+            android:title="@string/prefformat"
+            android:summary="@string/prefformat1"
+            android:dialogTitle="@string/prefformat"
+            android:entries="@array/liste_format"
+            android:entryValues="@array/valeur_liste_format" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Backup">
+
+        <EditTextPreference
+            android:key="email"
+            android:title="Email"
+            android:summary="@string/prefmail"
+            android:dialogTitle="Email" />
+
+        <EditTextPreference
+            android:key="separateur"
+            android:title="@string/prefsep1"
+            android:defaultValue=";"
+            android:maxLength="1"
+            android:summary="@string/prefsep"
+            android:dialogTitle="@string/prefsep1" />
+
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

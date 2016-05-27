@@ -38,31 +38,24 @@ import fr.s3i.pointeuse.utils.Utilitaire;
 //http://www.hidroh.com/2015/02/25/support-multiple-themes-android-app-part-2/
 
 @SuppressWarnings("deprecation")
-public class Pointeuse extends ActionBarActivity
-{
+public class Pointeuse extends ActionBarActivity {
 
     FragmentTabHost mTabHost;
 
 
-
-
-
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        try
-        {
+        try {
             String theme = preferences.getString("theme", "AppThemeNoir");
 
-            if("AppThemeNoir".equals(theme) )
-            {
+            if ("AppThemeNoir".equals(theme)) {
                 setTheme(R.style.AppThemeNoir);
             }
-        }
-        catch(Exception All)
-        {
+        } catch (Exception All) {
             //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
@@ -77,11 +70,11 @@ public class Pointeuse extends ActionBarActivity
         Resources res = getResources(); // Resource object to get Durables
 
 
-         mTabHost.addTab(
+        mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator(getString(R.string.pointer), res.getDrawable(R.drawable.ipointage)),
                 Pointer.class, null);
 
-         mTabHost.addTab(
+        mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator(getString(R.string.calendrier), res.getDrawable(R.drawable.icalendrier)),
                 Calendrier.class, null);
 
@@ -90,11 +83,11 @@ public class Pointeuse extends ActionBarActivity
 
     private static final int DELETE = Menu.FIRST;
     private static final int PARAMETRE = Menu.FIRST + 1;
-    private static final int BACKUP = Menu.FIRST +2;
+    private static final int BACKUP = Menu.FIRST + 2;
     private static final int HELP = Menu.FIRST + 3;
     private static final int PAUSE = Menu.FIRST + 4;
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+
+    public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         menu.add(0, DELETE, 0, getString(R.string.suppression))
                 .setIcon(android.R.drawable.ic_menu_delete);
@@ -102,7 +95,7 @@ public class Pointeuse extends ActionBarActivity
                 .setIcon(android.R.drawable.ic_menu_preferences);
         menu.add(0, BACKUP, 0, getString(R.string.save))
                 .setIcon(android.R.drawable.ic_dialog_email);
-        menu.add(0, HELP, 0,getString(R.string.help))
+        menu.add(0, HELP, 0, getString(R.string.help))
                 .setIcon(android.R.drawable.ic_menu_help);
         menu.add(0, PAUSE, 0, getString(R.string.reglages_pauses));
 
@@ -110,12 +103,11 @@ public class Pointeuse extends ActionBarActivity
         super.onCreateOptionsMenu(menu);
         return true;
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case DELETE:
                 suppression();
                 break;
@@ -138,25 +130,23 @@ public class Pointeuse extends ActionBarActivity
     }
 
 
-    public void suppression()
-    {
+    public void suppression() {
         Intent con = new Intent(this, Suppression.class);
         this.startActivity(con);
     }
-    public void parametre()
-    {
+
+    public void parametre() {
         Intent con = new Intent(this, Parametre.class);
         this.startActivity(con);
     }
 
-    public void aide()
-    {
+    public void aide() {
         Intent con = new Intent(this, Aide.class);
         con.putExtra("NumAide", 1);
         this.startActivity(con);
     }
-    public void pause()
-    {
+
+    public void pause() {
         Intent con = new Intent(this, ReglagePauses.class);
         this.startActivity(con);
     }

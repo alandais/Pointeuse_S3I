@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -34,43 +33,42 @@ import fr.s3i.pointeuse.framents.Calendrier;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.utils.Calcul;
 
-public class ListeDesPointagesAdapter extends BaseAdapter
-{
-	Context leContext;
-	//Un mécanisme pour gérer l'affichage graphique depuis un layout XML
-	private LayoutInflater mInflater;
-	Cursor curseur;
-	
-	private ArrayList<String> listeDebut;
-	private ArrayList<String> listeFin;
+public class ListeDesPointagesAdapter extends BaseAdapter {
+    Context leContext;
+    //Un mécanisme pour gérer l'affichage graphique depuis un layout XML
+    private LayoutInflater mInflater;
+    Cursor curseur;
 
-	ArrayList<String> listeId;
-	
-	Calendrier parent;
-	private Calcul calcul;
+    private ArrayList<String> listeDebut;
+    private ArrayList<String> listeFin;
 
-	public ListeDesPointagesAdapter(Context context,Calendrier cal)
-	{
-		leContext = context;
-		parent = cal ; 
-	}
-	public ArrayList<String> getListeDebut() {
-		return listeDebut;
-	}
+    ArrayList<String> listeId;
 
-	public ArrayList<String> getListeFin() {
-		return listeFin;
-	}
+    Calendrier parent;
+    private Calcul calcul;
 
-	public Calcul getCalcul(){
-		return this.calcul;
-	}
-    public  void suppression_confirmer(Context context,int position,int debutFin)
-    {
-        DatabaseHelper dbHelper=null;
+    public ListeDesPointagesAdapter(Context context, Calendrier cal) {
+        leContext = context;
+        parent = cal;
+    }
+
+    public ArrayList<String> getListeDebut() {
+        return listeDebut;
+    }
+
+    public ArrayList<String> getListeFin() {
+        return listeFin;
+    }
+
+    public Calcul getCalcul() {
+        return this.calcul;
+    }
+
+    public void suppression_confirmer(Context context, int position, int debutFin) {
+        DatabaseHelper dbHelper = null;
         SQLiteDatabase db;
 
-        dbHelper = new DatabaseHelper(context) ;
+        dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
 
         Cursor constantsCursor = dbHelper.selectDatePointage(db, position);
@@ -121,8 +119,8 @@ public class ListeDesPointagesAdapter extends BaseAdapter
 //        }
 //
 //        dbHelper.purge_pointage_vide(db);
-		// modification pour supprimer un pointage complet
-		dbHelper.deleteEnregistrementPointage(db,constantsCursor.getLong(0));
+        // modification pour supprimer un pointage complet
+        dbHelper.deleteEnregistrementPointage(db, constantsCursor.getLong(0));
 
 
         dbHelper.close();
@@ -133,47 +131,42 @@ public class ListeDesPointagesAdapter extends BaseAdapter
     public void supprimer_pointage(final Context context, final int position, final int debutFin)//1 debut 2 fin
     {
 
-        Cursor constantsCursor=null;
-        DatabaseHelper dbHelper=null;
+        Cursor constantsCursor = null;
+        DatabaseHelper dbHelper = null;
         SQLiteDatabase db;
 
-        dbHelper = new DatabaseHelper(context) ;
+        dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
 
-        constantsCursor=dbHelper.selectDatePointage(db, position) ;
-        if(constantsCursor==null)
-        {
+        constantsCursor = dbHelper.selectDatePointage(db, position);
+        if (constantsCursor == null) {
             //android.util.Log.w("Return", "constantsCursor is null");
             //constantsCursor.close();
             dbHelper.close();
-            return ;
+            return;
         }
-        if(constantsCursor.getCount()==0)
-        {
+        if (constantsCursor.getCount() == 0) {
             //android.util.Log.w("Return", "constantsCursor == 0");
             constantsCursor.close();
             dbHelper.close();
             return;
         }
         String valeur = "";
-        if(debutFin == 1)
+        if (debutFin == 1)
             valeur = constantsCursor.getString(1); // 0 is the first column
-        else valeur = constantsCursor.getString(2) ;
+        else valeur = constantsCursor.getString(2);
 
         constantsCursor.close();
         dbHelper.close();
-        if(valeur == null)return;
-        if(valeur == "")return;
+        if (valeur == null) return;
+        if (valeur == "") return;
 
         SimpleDateFormat newdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try
-        {
-            Date date  = olddateFormat.parse(valeur);
-            valeur = (String)newdateFormat.format(date);
-        }
-        catch (ParseException e)
-        {
+        try {
+            Date date = olddateFormat.parse(valeur);
+            valeur = (String) newdateFormat.format(date);
+        } catch (ParseException e) {
             return;
             //Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -189,7 +182,7 @@ public class ListeDesPointagesAdapter extends BaseAdapter
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        suppression_confirmer(context,position,debutFin);
+                        suppression_confirmer(context, position, debutFin);
                     }
                 }
         );
@@ -198,164 +191,140 @@ public class ListeDesPointagesAdapter extends BaseAdapter
 
     }
 
-	/*Permet de creer la fenetre de modification*/
-	public void creerFenetreModification(Context context,int position,int debutFin)//1 debut 2 fin
-	{
-		Cursor constantsCursor=null;
-		DatabaseHelper dbHelper=null;
-		SQLiteDatabase db;
-		String debut , fin;
-		SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		 
-		int iheureDebut=-1,iheureFin=-1,iminDebut=-1,iminFin=-1;
-		
-		Date date = new Date();
-		dbHelper = new DatabaseHelper(context) ;
-	    db = dbHelper.getWritableDatabase();
-	    
-	    dateFinEnCours = null;
-	    dateDebutEnCours = null;
-	    
-	    positionEnCours = position;
-		debutFinEnCours = debutFin;
-		
-	    constantsCursor=dbHelper.selectDatePointage(db, position) ;
-	    if(constantsCursor==null)
-	    {
-	    	//android.util.Log.w("Return", "constantsCursor is null");
-	    	//constantsCursor.close();
-		    dbHelper.close();
-	    	return ;
-	    }
-	    if(constantsCursor.getCount()==0)
-    	{
-	    	//android.util.Log.w("Return", "constantsCursor == 0");
-	    	constantsCursor.close();
-		    dbHelper.close();
-	    	return;
-    	}
-	    debut = "";
-		debut = constantsCursor.getString(1); // 0 is the first column
-		fin = "" ;
-		fin = constantsCursor.getString(2); // 0 is the first column
-		if (debut.length()>0)
-		{
-	    	try 
-			{
-	    		date  = olddateFormat.parse(debut);
-	    		iheureDebut = date.getHours();
-	    		iminDebut = date.getMinutes();
-	    		dateDebutEnCours = date;	
-			}
-	    	catch(Exception e)
-	    	{
-	    		
-	    	}
-		}
-		else if(debutFin == 1)
-		{
-			constantsCursor.close();
-		    dbHelper.close();
-			return;
-		}
-		 
-		if (fin.length()>0)
-		{
-			 try 
-			 {
-				 date  = olddateFormat.parse(fin);
-				 iheureFin = date.getHours();
-				 iminFin = date.getMinutes();
-				 dateFinEnCours = date;
-			 }
-			 catch(Exception e)
-	    	 {
-	    		
-	    	 } 
-		}
-		
-		if( (debutFin == 2 && fin.length()<=0 )||(debutFin == 1 && debut.length()<=0 ))
-		{
-			constantsCursor.close();
-		    dbHelper.close();
-			return;
-		}
-		
-		constantsCursor.close();
-		dbHelper.close();     
-		    
-		Dialog timepick;
-		if(debutFin==1)timepick = onCreateDialogTime(context,iheureDebut,iminDebut);
-		else timepick = onCreateDialogTime(context,iheureFin,iminFin);
-		 
-		timepick.show();
-	}
-	
-	int positionEnCours = -1;
-	int debutFinEnCours = -1;
-	Date dateFinEnCours,dateDebutEnCours ;
-
-	// the callback received when the user "sets" the time in the dialog
-	private TimePickerDialog.OnTimeSetListener mTimeSetListener =  new TimePickerDialog.OnTimeSetListener()
+    /*Permet de creer la fenetre de modification*/
+    public void creerFenetreModification(Context context, int position, int debutFin)//1 debut 2 fin
     {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute)
-        {
+        Cursor constantsCursor = null;
+        DatabaseHelper dbHelper = null;
+        SQLiteDatabase db;
+        String debut, fin;
+        SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        int iheureDebut = -1, iheureFin = -1, iminDebut = -1, iminFin = -1;
+
+        Date date = new Date();
+        dbHelper = new DatabaseHelper(context);
+        db = dbHelper.getWritableDatabase();
+
+        dateFinEnCours = null;
+        dateDebutEnCours = null;
+
+        positionEnCours = position;
+        debutFinEnCours = debutFin;
+
+        constantsCursor = dbHelper.selectDatePointage(db, position);
+        if (constantsCursor == null) {
+            //android.util.Log.w("Return", "constantsCursor is null");
+            //constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+        if (constantsCursor.getCount() == 0) {
+            //android.util.Log.w("Return", "constantsCursor == 0");
+            constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+        debut = "";
+        debut = constantsCursor.getString(1); // 0 is the first column
+        fin = "";
+        fin = constantsCursor.getString(2); // 0 is the first column
+        if (debut.length() > 0) {
+            try {
+                date = olddateFormat.parse(debut);
+                iheureDebut = date.getHours();
+                iminDebut = date.getMinutes();
+                dateDebutEnCours = date;
+            } catch (Exception e) {
+
+            }
+        } else if (debutFin == 1) {
+            constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+
+        if (fin.length() > 0) {
+            try {
+                date = olddateFormat.parse(fin);
+                iheureFin = date.getHours();
+                iminFin = date.getMinutes();
+                dateFinEnCours = date;
+            } catch (Exception e) {
+
+            }
+        }
+
+        if ((debutFin == 2 && fin.length() <= 0) || (debutFin == 1 && debut.length() <= 0)) {
+            constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+
+        constantsCursor.close();
+        dbHelper.close();
+
+        Dialog timepick;
+        if (debutFin == 1) timepick = onCreateDialogTime(context, iheureDebut, iminDebut);
+        else timepick = onCreateDialogTime(context, iheureFin, iminFin);
+
+        timepick.show();
+    }
+
+    int positionEnCours = -1;
+    int debutFinEnCours = -1;
+    Date dateFinEnCours, dateDebutEnCours;
+
+    // the callback received when the user "sets" the time in the dialog
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             Date dateEnCours;
             SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //android.util.Log.w("onTimeSet", "hourOfDay="+hourOfDay+" - "+ "minute="+minute);
 
-            if(debutFinEnCours==1)
-            {
+            if (debutFinEnCours == 1) {
                 dateEnCours = dateDebutEnCours;
-            }
-            else
-            {
+            } else {
                 dateEnCours = dateFinEnCours;
             }
             dateEnCours.setHours(hourOfDay);
             dateEnCours.setMinutes(minute);
 
-            if(debutFinEnCours==1 && dateFinEnCours!=null)
-            {
-                if(dateEnCours.after(dateFinEnCours))
-                {
-                    Toast.makeText(view.getContext() , view.getContext().getString(R.string.erreurchangementdate1), Toast.LENGTH_SHORT).show();
+            if (debutFinEnCours == 1 && dateFinEnCours != null) {
+                if (dateEnCours.after(dateFinEnCours)) {
+                    Toast.makeText(view.getContext(), view.getContext().getString(R.string.erreurchangementdate1), Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
-            if(debutFinEnCours==2 && dateDebutEnCours!=null)
-            {
-                if(dateEnCours.before(dateDebutEnCours))
-                {
-                    Toast.makeText(view.getContext() , view.getContext().getString(R.string.erreurchangementdate2), Toast.LENGTH_SHORT).show();
+            if (debutFinEnCours == 2 && dateDebutEnCours != null) {
+                if (dateEnCours.before(dateDebutEnCours)) {
+                    Toast.makeText(view.getContext(), view.getContext().getString(R.string.erreurchangementdate2), Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
 
-            Cursor constantsCursor=null;
-            DatabaseHelper dbHelper=null;
+            Cursor constantsCursor = null;
+            DatabaseHelper dbHelper = null;
             SQLiteDatabase db;
 
-           // android.util.Log.w("commentaire=", commentaire);
-            dbHelper = new DatabaseHelper(view.getContext()) ;
+            // android.util.Log.w("commentaire=", commentaire);
+            dbHelper = new DatabaseHelper(view.getContext());
             db = dbHelper.getWritableDatabase();
 
-            constantsCursor=dbHelper.selectDatePointage(db, positionEnCours) ;
-            if(constantsCursor==null)
-            {
+            constantsCursor = dbHelper.selectDatePointage(db, positionEnCours);
+            if (constantsCursor == null) {
                 //android.util.Log.w("constantsCursor=", "null");
                 //constantsCursor.close();
                 dbHelper.close();
-                return ;
+                return;
             }
-            if(constantsCursor.getCount()==0)
-            {
+            if (constantsCursor.getCount() == 0) {
                 //android.util.Log.w("constantsCursor=", "0");
                 constantsCursor.close();
                 dbHelper.close();
                 return;
             }
-            if (debutFinEnCours==1)
+            if (debutFinEnCours == 1)
                 dbHelper.updateEnregistrementPointage(db, positionEnCours, dbHelper.DATE_DEBUT, (String) olddateFormat.format(dateEnCours));
             else
                 dbHelper.updateEnregistrementPointage(db, positionEnCours, dbHelper.DATE_FIN, (String) olddateFormat.format(dateEnCours));
@@ -367,411 +336,347 @@ public class ListeDesPointagesAdapter extends BaseAdapter
     };
 
 
-	protected Dialog onCreateDialogTime(Context context,int heure,int min) 
-	{
-		TimePickerDialog temp = new TimePickerDialog(context , mTimeSetListener, heure, min, true);
+    protected Dialog onCreateDialogTime(Context context, int heure, int min) {
+        TimePickerDialog temp = new TimePickerDialog(context, mTimeSetListener, heure, min, true);
 
-		return temp;
-	}
+        return temp;
+    }
 
-	/* Commentaire */
-	public void creerFenetreCommentaire(Context context,int position)
-	{
-		Cursor constantsCursor=null;
-		DatabaseHelper dbHelper=null;
-		SQLiteDatabase db;
-		String commentaire;
-		String debut , fin;
-		SimpleDateFormat newdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
-		SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		 
-		Date date = new Date();
-		dbHelper = new DatabaseHelper(context) ;
-	    db = dbHelper.getWritableDatabase();
-	      
-	    //android.util.Log.w("textString", "creerFenetreCommentaire position="+position);
-	    constantsCursor=dbHelper.selectDatePointage(db, position) ;
-	    if(constantsCursor==null)
-	    {
-	    	//android.util.Log.w("Return", "constantsCursor is null");
-	    	//constantsCursor.close();
-		    dbHelper.close();
-	    	return ;
-	    }
-	    if(constantsCursor.getCount()==0)
-    	{
-	    	//android.util.Log.w("Return", "constantsCursor == 0");
-	    	constantsCursor.close();
-		    dbHelper.close();
-	    	return;
-    	}
-	    
-	    
-	    debut = "";
-		debut = constantsCursor.getString(1); // 0 is the first column
-		fin = "" ;
-		fin = constantsCursor.getString(2); // 0 is the first column
-		commentaire = "";
-		commentaire = constantsCursor.getString(3);
-	    	
-	    if (debut.length()>0)
-		 {
-	    	try 
-			{
-	    		date  = olddateFormat.parse(debut);
-	    		debut = (String)newdateFormat.format(date) ;
-			}
-	    	catch(Exception e)
-	    	{
-	    		
-	    	}
-		 }
+    /* Commentaire */
+    public void creerFenetreCommentaire(Context context, int position) {
+        Cursor constantsCursor = null;
+        DatabaseHelper dbHelper = null;
+        SQLiteDatabase db;
+        String commentaire;
+        String debut, fin;
+        SimpleDateFormat newdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		 if (fin.length()>0)
-		 {
-			 try 
-			 {
-				 date  = olddateFormat.parse(fin);
-				 fin = (String)newdateFormat.format(date) ;
-			 }
-			 catch(Exception e)
-	    	 {
-	    		
-	    	 } 
-		 }
-	     
-	    constantsCursor.close();
-	    dbHelper.close();
-	    
-		AlertDialog.Builder alert = new AlertDialog.Builder(context);
-		alert.setTitle(context.getString(R.string.addcomment));
-		String titre;
-		titre = debut ;
-		
-		if (fin != null)
-		{
-			if(fin.length()>0)
-			{
-				titre = titre + "   " + context.getString(R.string.dateto) + " " + fin;
-			}
-		}
-		//android.util.Log.w("titre", "titre="+titre);
-		alert.setMessage(titre);
-	    final EditText editText = new EditText(context);
+        Date date = new Date();
+        dbHelper = new DatabaseHelper(context);
+        db = dbHelper.getWritableDatabase();
 
-	    editText.setTag(position);
-	    alert.setView(editText);
-	    
-	    editText.setText(commentaire);
-	    
-	    alert.setNegativeButton(context.getString(R.string.cancel), null);
-	  
-	    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() 
-	    {
-	        public void onClick(DialogInterface dialog, int whichButton) 
-	        {
-	        	Cursor constantsCursor=null;
-	    		DatabaseHelper dbHelper=null;
-	    		SQLiteDatabase db;
-	    		int position = (Integer) editText.getTag();
-	    		
-	    		String commentaire = editText.getText().toString();
-	           // android.util.Log.w("commentaire=", commentaire);
-	            dbHelper = new DatabaseHelper(editText.getContext()) ;
-	    	    db = dbHelper.getWritableDatabase();
-	    	      
-	    	    
-	    	    constantsCursor=dbHelper.selectDatePointage(db, position) ;
-	    	    if(constantsCursor==null)
-	    	    {
-	    	    	//android.util.Log.w("constantsCursor=", "null");
-	    	    	//constantsCursor.close();
-	    		    dbHelper.close();
-	    	    	return ;
-	    	    }
-	    	    if(constantsCursor.getCount()==0)
-	        	{
-	    	    	//android.util.Log.w("constantsCursor=", "0");
-	    	    	constantsCursor.close();
-	    		    dbHelper.close();
-	    	    	return;
-	        	}
-	    	    dbHelper.updateEnregistrementPointage(db, position, dbHelper.COMMENTAIRE, commentaire);
-	    	    constantsCursor.close();
-	    	    dbHelper.close();
-	    	    
-	        }
-	    }
-	    	);
-	    alert.show();
-	}
-	
-	
-	public void setList(Cursor CursorBase)
-	{
-		curseur = CursorBase;
-		listeDebut = new ArrayList<String>();
-		listeFin = new ArrayList<String>();
-		listeId = new ArrayList<String>();
-		
-	     while (curseur.moveToNext() ) 
-	     {
-	    	 listeId.add(curseur.getString(0)); // 0 is the first column
-	    	 listeDebut.add(curseur.getString(1)); // 0 is the first column
-	    	 listeFin.add(curseur.getString(2)); // 0 is the first column
-	     }
-		mInflater = LayoutInflater.from(leContext);
+        //android.util.Log.w("textString", "creerFenetreCommentaire position="+position);
+        constantsCursor = dbHelper.selectDatePointage(db, position);
+        if (constantsCursor == null) {
+            //android.util.Log.w("Return", "constantsCursor is null");
+            //constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+        if (constantsCursor.getCount() == 0) {
+            //android.util.Log.w("Return", "constantsCursor == 0");
+            constantsCursor.close();
+            dbHelper.close();
+            return;
+        }
+
+
+        debut = "";
+        debut = constantsCursor.getString(1); // 0 is the first column
+        fin = "";
+        fin = constantsCursor.getString(2); // 0 is the first column
+        commentaire = "";
+        commentaire = constantsCursor.getString(3);
+
+        if (debut.length() > 0) {
+            try {
+                date = olddateFormat.parse(debut);
+                debut = (String) newdateFormat.format(date);
+            } catch (Exception e) {
+
+            }
+        }
+
+        if (fin.length() > 0) {
+            try {
+                date = olddateFormat.parse(fin);
+                fin = (String) newdateFormat.format(date);
+            } catch (Exception e) {
+
+            }
+        }
+
+        constantsCursor.close();
+        dbHelper.close();
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle(context.getString(R.string.addcomment));
+        String titre;
+        titre = debut;
+
+        if (fin != null) {
+            if (fin.length() > 0) {
+                titre = titre + "   " + context.getString(R.string.dateto) + " " + fin;
+            }
+        }
+        //android.util.Log.w("titre", "titre="+titre);
+        alert.setMessage(titre);
+        final EditText editText = new EditText(context);
+
+        editText.setTag(position);
+        alert.setView(editText);
+
+        editText.setText(commentaire);
+
+        alert.setNegativeButton(context.getString(R.string.cancel), null);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Cursor constantsCursor = null;
+                        DatabaseHelper dbHelper = null;
+                        SQLiteDatabase db;
+                        int position = (Integer) editText.getTag();
+
+                        String commentaire = editText.getText().toString();
+                        // android.util.Log.w("commentaire=", commentaire);
+                        dbHelper = new DatabaseHelper(editText.getContext());
+                        db = dbHelper.getWritableDatabase();
+
+
+                        constantsCursor = dbHelper.selectDatePointage(db, position);
+                        if (constantsCursor == null) {
+                            //android.util.Log.w("constantsCursor=", "null");
+                            //constantsCursor.close();
+                            dbHelper.close();
+                            return;
+                        }
+                        if (constantsCursor.getCount() == 0) {
+                            //android.util.Log.w("constantsCursor=", "0");
+                            constantsCursor.close();
+                            dbHelper.close();
+                            return;
+                        }
+                        dbHelper.updateEnregistrementPointage(db, position, dbHelper.COMMENTAIRE, commentaire);
+                        constantsCursor.close();
+                        dbHelper.close();
+
+                    }
+                }
+        );
+        alert.show();
+    }
+
+
+    public void setList(Cursor CursorBase) {
+        curseur = CursorBase;
+        listeDebut = new ArrayList<String>();
+        listeFin = new ArrayList<String>();
+        listeId = new ArrayList<String>();
+
+        while (curseur.moveToNext()) {
+            listeId.add(curseur.getString(0)); // 0 is the first column
+            listeDebut.add(curseur.getString(1)); // 0 is the first column
+            listeFin.add(curseur.getString(2)); // 0 is the first column
+        }
+        mInflater = LayoutInflater.from(leContext);
         calcul = new Calcul(leContext);
-	}
-	
-	@Override
-	public int getCount() {
-		return listeId.size() ;
-	}
+    }
 
-	@Override
-	public Object getItem(int position) {
-		return listeId.get(position) ;
-	}
+    @Override
+    public int getCount() {
+        return listeId.size();
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
+    @Override
+    public Object getItem(int position) {
+        return listeId.get(position);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		  LinearLayout layoutItem;
-		  SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(leContext);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-		  int Id;
-		 
-		  //(1) : Réutilisation des layouts
-		  if (convertView == null)
-		  {
-		  	//Initialisation de notre item à partir du  layout XML "personne_layout.xml"
-		    layoutItem = (LinearLayout) mInflater.inflate(R.layout.listepointage, parent, false);
-		  } 
-		  else 
-		  {
-		  	layoutItem = (LinearLayout) convertView;
-		  }
-		  
-		  TextView debut = (TextView)layoutItem.findViewById(R.id.datedebut);
-		  TextView fin = (TextView)layoutItem.findViewById(R.id.datefin);
-		  TextView lecumul = (TextView)layoutItem.findViewById(R.id.cumulunitaire);
-		  TextView lapause = (TextView)layoutItem.findViewById(R.id.cumulpauseunitaire);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LinearLayout layoutItem;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(leContext);
 
-		  long cumul;
-		  
+        int Id;
 
-		  SimpleDateFormat newdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
-		  SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //(1) : Réutilisation des layouts
+        if (convertView == null) {
+            //Initialisation de notre item à partir du  layout XML "personne_layout.xml"
+            layoutItem = (LinearLayout) mInflater.inflate(R.layout.listepointage, parent, false);
+        } else {
+            layoutItem = (LinearLayout) convertView;
+        }
 
-			String option_a_la_seconde = "0";
-			try
-			{
-				option_a_la_seconde = preferences.getString("pointagealaseconde", "0");
-			}
-			catch(Exception All)
-			{
-				//Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
-			}
-			//android.util.Log.w("refresh", "option_a_la_seconde="+option_a_la_seconde);
+        TextView debut = (TextView) layoutItem.findViewById(R.id.datedebut);
+        TextView fin = (TextView) layoutItem.findViewById(R.id.datefin);
+        TextView lecumul = (TextView) layoutItem.findViewById(R.id.cumulunitaire);
+        TextView lapause = (TextView) layoutItem.findViewById(R.id.cumulpauseunitaire);
 
-			if("0".equals(option_a_la_seconde))
-			{
-				olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			}
-
-		  Id = -1;
-		  Id = Integer.parseInt(listeId.get(position)) ;
-		 // android.util.Log.w("ListeId=", "Id=" + Id);
-		  debut.setTag(Id);
-		  debut.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {
-				  Integer position = (Integer) v.getTag();
-				  creerFenetreModification(v.getContext(), position, 1);
-			  }
-
-		  });
-
-			debut.setOnLongClickListener(new View.OnLongClickListener() {
-				@Override
-				public boolean onLongClick(View v) {
-					Integer position = (Integer) v.getTag();
-					supprimer_pointage(v.getContext(), position, 1);
-					return true;
-				}
-			});
-
-		  fin.setTag(Id);
-		  fin.setOnClickListener(new OnClickListener() {
-			  @Override
-			  public void onClick(View v) {
-				  Integer position = (Integer) v.getTag();
-				  creerFenetreModification(v.getContext(), position, 2);
-			  }
-
-		  });
-
-			fin.setOnLongClickListener(new View.OnLongClickListener() {
-				@Override
-				public boolean onLongClick(View v) {
-					Integer position = (Integer) v.getTag();
-					supprimer_pointage(v.getContext(), position, 2);
-					return true;
-				}
-			});
+        long cumul;
 
 
-		  lecumul.setTag(Id);
-		  lecumul.setOnClickListener( new OnClickListener() 
-		  {
-				@Override
-				public void onClick(View v)
-				{
-					Integer position = (Integer)v.getTag();
-					creerFenetreCommentaire(v.getContext(),position);
-				}
-			        	
-			});
-		  
-		  //debut.setText((String)ListeDebut.get(position) );
-		  fin.setText((String)listeFin.get(position) );
-		  
-		  if(listeDebut.get(position).length()>0)
-		  {
-			 
-			  try 
-			  {
-				Date date  = olddateFormat.parse((String)listeDebut.get(position));
-				debut.setText((String)newdateFormat.format(date));  
-			  } 
-			  catch (ParseException e) 
-			  {
-				  debut.setText("");
-				  lecumul.setText("");
-				//Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
-			  }
-			 
-		  }
-		  else
-		  {
-			  lecumul.setText("");
-			  debut.setText("");
-		  }
-		  
-		  if(listeFin.get(position).length()>0 )
-		  {
-			  try 
-			  {
-                    Date d_debut  = olddateFormat.parse((String)listeDebut.get(position));
-                    Date d_fin  = olddateFormat.parse((String)listeFin.get(position));
+        SimpleDateFormat newdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-                    GregorianCalendar c_debut = new GregorianCalendar();
-                    c_debut.setTime(d_debut);
-                    GregorianCalendar c_fin = new GregorianCalendar();
-                    c_fin.setTime(d_fin);
+        String option_a_la_seconde = "0";
+        try {
+            option_a_la_seconde = preferences.getString("pointagealaseconde", "0");
+        } catch (Exception All) {
+            //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
+        }
+        //android.util.Log.w("refresh", "option_a_la_seconde="+option_a_la_seconde);
 
-                    fin.setText((String)newdateFormat.format(d_fin));
+        if ("0".equals(option_a_la_seconde)) {
+            olddateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        }
 
-                    Calcul.Spointage s = calcul.CalculTemps(c_debut,c_fin,0);
-                    cumul = s.temps_pointage;
-                    cumul = cumul / 60;//Min
+        Id = -1;
+        Id = Integer.parseInt(listeId.get(position));
+        // android.util.Log.w("ListeId=", "Id=" + Id);
+        debut.setTag(Id);
+        debut.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer position = (Integer) v.getTag();
+                creerFenetreModification(v.getContext(), position, 1);
+            }
 
-                    String format = "0";
-                    try
-                    {
-                      format = preferences.getString("formataffichage", "0");
-                    }
-                    catch(Exception All)
-                    {
-                      //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
-                    }
+        });
+
+        debut.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Integer position = (Integer) v.getTag();
+                supprimer_pointage(v.getContext(), position, 1);
+                return true;
+            }
+        });
+
+        fin.setTag(Id);
+        fin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer position = (Integer) v.getTag();
+                creerFenetreModification(v.getContext(), position, 2);
+            }
+
+        });
+
+        fin.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Integer position = (Integer) v.getTag();
+                supprimer_pointage(v.getContext(), position, 2);
+                return true;
+            }
+        });
 
 
-				  	if(s.temps_pause>0)
-					{
-                        s.temps_pause /= 60;
-						if (s.temps_pause<60)
-						{
-							lapause.setText(leContext.getString(R.string.tpause) + " "+ s.temps_pause + "min");
-						}
-						else if(cumul < 1440)
-						{
-							lapause.setText(leContext.getString(R.string.tpause) + " " + (int)(s.temps_pause/60) + "h " +
-									(int)(s.temps_pause%60) + "min" );
-						}
-						else
-						{
-							if(format.equals("0"))
-							{
-								lapause.setText(leContext.getString(R.string.tpause) + " " + (int)(s.temps_pause/60) + "h " +
-										(int)(s.temps_pause%60) + "min" );
-							}
-							else
-							{
-								int min = (int) (cumul % 1440);
-								int nbjour =  (int) (cumul/ 1440);
-								lapause.setText(leContext.getString(R.string.tpause) + " " +
-                                        (int)(nbjour) + leContext.getString(R.string.jourarrondi) + " " +
-												(int)(min/60) + "h " +
-												(int)(min%60) + "min");
-							}
-						}
-					}
-				  	else lapause.setText("");
+        lecumul.setTag(Id);
+        lecumul.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer position = (Integer) v.getTag();
+                creerFenetreCommentaire(v.getContext(), position);
+            }
 
-                    if (cumul<60)
-                    {
-                        lecumul.setText(cumul + "min");
-                    }
-                    else if(cumul < 1440)
-                    {
-                          lecumul.setText((int)(cumul/60) + "h " +
-                                    (int)(cumul%60) + "min" );
-                    }
-                    else
-                    {
-                        if(format.equals("0"))
-                        {
-                            lecumul.setText((int)(cumul/60) + "h " +
-                                    (int)(cumul%60) + "min" );
-                        }
-                        else
-                        {
-                          int min = (int) (cumul % 1440);
-                          int nbjour =  (int) (cumul/ 1440);
-                          lecumul.setText(
-                                  (int)(nbjour) + leContext.getString(R.string.jourarrondi) + " " +
-                                  (int)(min/60) + "h " +
-                                  (int)(min%60) + "min");
+        });
+
+        //debut.setText((String)ListeDebut.get(position) );
+        fin.setText((String) listeFin.get(position));
+
+        if (listeDebut.get(position).length() > 0) {
+
+            try {
+                Date date = olddateFormat.parse((String) listeDebut.get(position));
+                debut.setText((String) newdateFormat.format(date));
+            } catch (ParseException e) {
+                debut.setText("");
+                lecumul.setText("");
+                //Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            lecumul.setText("");
+            debut.setText("");
+        }
+
+        if (listeFin.get(position).length() > 0) {
+            try {
+                Date d_debut = olddateFormat.parse((String) listeDebut.get(position));
+                Date d_fin = olddateFormat.parse((String) listeFin.get(position));
+
+                GregorianCalendar c_debut = new GregorianCalendar();
+                c_debut.setTime(d_debut);
+                GregorianCalendar c_fin = new GregorianCalendar();
+                c_fin.setTime(d_fin);
+
+                fin.setText((String) newdateFormat.format(d_fin));
+
+                Calcul.Spointage s = calcul.CalculTemps(c_debut, c_fin, 0);
+                cumul = s.temps_pointage;
+                cumul = cumul / 60;//Min
+
+                String format = "0";
+                try {
+                    format = preferences.getString("formataffichage", "0");
+                } catch (Exception All) {
+                    //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
+                }
+
+
+                if (s.temps_pause > 0) {
+                    s.temps_pause /= 60;
+                    if (s.temps_pause < 60) {
+                        lapause.setText(leContext.getString(R.string.tpause) + " " + s.temps_pause + "min");
+                    } else if (cumul < 1440) {
+                        lapause.setText(leContext.getString(R.string.tpause) + " " + (int) (s.temps_pause / 60) + "h " +
+                                (int) (s.temps_pause % 60) + "min");
+                    } else {
+                        if (format.equals("0")) {
+                            lapause.setText(leContext.getString(R.string.tpause) + " " + (int) (s.temps_pause / 60) + "h " +
+                                    (int) (s.temps_pause % 60) + "min");
+                        } else {
+                            int min = (int) (cumul % 1440);
+                            int nbjour = (int) (cumul / 1440);
+                            lapause.setText(leContext.getString(R.string.tpause) + " " +
+                                    (int) (nbjour) + leContext.getString(R.string.jourarrondi) + " " +
+                                    (int) (min / 60) + "h " +
+                                    (int) (min % 60) + "min");
                         }
                     }
-			  } 
-			  catch (ParseException e) 
-			  {
-				  fin.setText("");
-				  lecumul.setText("");
-                  lapause.setText("");
-				//Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
-			  }
-		  }
-		  else
-		  {
-			  fin.setText("");
-			  lecumul.setText("");
-              lapause.setText("");
-		  }
-		
-		  //layoutItem.setBackgroundColor(Color.BLUE);
-	 
-		  return layoutItem;
-	}
+                } else lapause.setText("");
 
+                if (cumul < 60) {
+                    lecumul.setText(cumul + "min");
+                } else if (cumul < 1440) {
+                    lecumul.setText((int) (cumul / 60) + "h " +
+                            (int) (cumul % 60) + "min");
+                } else {
+                    if (format.equals("0")) {
+                        lecumul.setText((int) (cumul / 60) + "h " +
+                                (int) (cumul % 60) + "min");
+                    } else {
+                        int min = (int) (cumul % 1440);
+                        int nbjour = (int) (cumul / 1440);
+                        lecumul.setText(
+                                (int) (nbjour) + leContext.getString(R.string.jourarrondi) + " " +
+                                        (int) (min / 60) + "h " +
+                                        (int) (min % 60) + "min");
+                    }
+                }
+            } catch (ParseException e) {
+                fin.setText("");
+                lecumul.setText("");
+                lapause.setText("");
+                //Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            fin.setText("");
+            lecumul.setText("");
+            lapause.setText("");
+        }
 
+        //layoutItem.setBackgroundColor(Color.BLUE);
+
+        return layoutItem;
+    }
 
 
 }

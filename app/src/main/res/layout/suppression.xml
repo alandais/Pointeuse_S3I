@@ -1,72 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:orientation="vertical"
-  android:id="@+id/layout_delete">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/layout_delete">
 
-<DatePicker android:id="@+id/calendrierD"
- android:layout_width="wrap_content"
- android:layout_gravity="center"
- android:layout_height="wrap_content"
- android:startYear="2000"
- android:endYear="2100"
-	android:datePickerMode="spinner"
-	android:calendarViewShown="false"
-/>
+    <DatePicker
+        android:id="@+id/calendrierD"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:startYear="2000"
+        android:endYear="2100"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false" />
 
- <RadioGroup
-	android:id="@+id/radiogroupD"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal"
-	android:checkedButton="@+id/trijourD"
-	android:layout_marginTop="0dp"
-	android:layout_marginBottom="0dp"
-	
-	>
-		<RadioButton
-		android:id="@+id/trijourD"
-		android:layout_width="0px"
-		android:layout_weight="1"
-		android:layout_height="wrap_content"
-		android:text="@string/jour"
-		android:textSize="10sp"
-		/>
-		
-		<RadioButton
-		android:id="@+id/trisemaineD"
-		android:layout_width="0px"
-		android:layout_weight="1"
-		android:layout_height="wrap_content"
-		android:text="@string/semaine"
-		android:textSize="10sp"
-		/>
-		<RadioButton
-		android:id="@+id/trimoisD"
-		android:layout_weight="1"
-		android:layout_width="0px"
-		android:layout_height="wrap_content"
-		android:text="@string/mois"
-		android:textSize="10sp"
-		/>
-		<RadioButton
-		android:id="@+id/trianneeD"
-		android:layout_weight="1"
-		android:layout_width="0px"
-		android:layout_height="wrap_content"
-		android:text="@string/annee"
-		android:textSize="10sp"
-		/>
-	</RadioGroup>
-	
-	<ListView
-		android:id="@+id/MaListeViewDelete"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="14sp"
-	>
-</ListView>
- 
+    <RadioGroup
+        android:id="@+id/radiogroupD"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/trijourD"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+
+        >
+
+        <RadioButton
+            android:id="@+id/trijourD"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/jour"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/trisemaineD"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/semaine"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/trimoisD"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:text="@string/mois"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/trianneeD"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:text="@string/annee"
+            android:textSize="10sp" />
+    </RadioGroup>
+
+    <ListView
+        android:id="@+id/MaListeViewDelete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"></ListView>
+
 </LinearLayout>

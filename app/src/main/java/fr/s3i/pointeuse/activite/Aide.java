@@ -18,52 +18,45 @@ import fr.s3i.pointeuse.R;
  * 			= 2 Aide paramétres
  * 
  */
-public class Aide extends Activity 
-{
-	    TextView messageAide;
-	    int idAide = 1;
-	    public void onCreate(Bundle savedInstanceState) 
-	    {
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-			try
-			{
-				String theme = preferences.getString("theme", "AppThemeNoir");
+public class Aide extends Activity {
+    TextView messageAide;
+    int idAide = 1;
 
-				if("AppThemeNoir".equals(theme) )
-				{
-					setTheme(R.style.AppThemeNoir);
-				}
-			}
-			catch(Exception All)
-			{
-				//Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
-			}
+    public void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        try {
+            String theme = preferences.getString("theme", "AppThemeNoir");
 
-	        super.onCreate(savedInstanceState);
+            if ("AppThemeNoir".equals(theme)) {
+                setTheme(R.style.AppThemeNoir);
+            }
+        } catch (Exception All) {
+            //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
+        }
 
-	        setContentView(R.layout.aide);
-	        messageAide = (TextView) findViewById(R.id.aide01 );
-	      
-	        Intent data = this.getIntent();
-	        Bundle extras = data.getExtras();
-	        
-	        idAide =  extras.getInt("NumAide");	
-	        
-	        afficheAide();
-	        messageAide.setSingleLine(false);
-	        
-	    }
-	    
-	    public void afficheAide()
-	    {
-	    	if (idAide == 1)
-	    		messageAide.setText(getString(R.string.txtaide1));
-	    	
-	    	else if  (idAide == 2)
-	    		messageAide.setText(getString(R.string.txtaide2));
-	    }
-	    
-	    
-	  
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.aide);
+        messageAide = (TextView) findViewById(R.id.aide01);
+
+        Intent data = this.getIntent();
+        Bundle extras = data.getExtras();
+
+        idAide = extras.getInt("NumAide");
+
+        afficheAide();
+        messageAide.setSingleLine(false);
+
+    }
+
+    public void afficheAide() {
+        if (idAide == 1)
+            messageAide.setText(getString(R.string.txtaide1));
+
+        else if (idAide == 2)
+            messageAide.setText(getString(R.string.txtaide2));
+    }
+
+
 }
 

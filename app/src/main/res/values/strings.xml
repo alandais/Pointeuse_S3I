@@ -34,84 +34,85 @@
     <string name="pointagealasecondedescription">Count the seconds in the calcul</string>
 
 
-
     <string name="prefformat">Display check in/out format</string>
     <string name="prefformat1">Defined format of check in/out</string>
-    
+
     <string name="jourarrondi">d</string>
-    <string name="erreurchangementdate1">The start time must be less than the end time</string> 
-    <string name="erreurchangementdate2">The end time must be greater than the start time</string> 
-    
-  <string name="widget_name">Working Time</string>
+    <string name="erreurchangementdate1">The start time must be less than the end time</string>
+    <string name="erreurchangementdate2">The end time must be greater than the start time</string>
+
+    <string name="widget_name">Working Time</string>
     <string name="app_name">Working Time</string>
-    
-     <string name="feedback">Add a feedback</string>
-     
-     <string name="noter">Note this application!</string>
+
+    <string name="feedback">Add a feedback</string>
+
+    <string name="noter">Note this application!</string>
     <string name="noter2">Note this application on the android market!</string>
-    
-     <string name="aucunpointage">No check-in</string> 
-    <string name="insertiontermine">Insert ended</string> 
-     <string name="dateto">to</string> 
-     <string name="aidecommentaire">Ok for validate</string>
+
+    <string name="aucunpointage">No check-in</string>
+    <string name="insertiontermine">Insert ended</string>
+    <string name="dateto">to</string>
+    <string name="aidecommentaire">Ok for validate</string>
     <string name="cancel">Cancel</string>
-  <string name="addcomment">Add a comment</string>
-   <string name="commentaire">comment</string>
-      
-    
-         <string name="aucun">none</string>
-         
-         <string name="prefgenerale">General Preference</string>   
-      
-      <string name="prefsep">The separator character for the backup file (CSV)</string>   
-      <string name="prefsep1">Separator</string>  
-      <string name="prefmail">Enter your Email address</string>
-      
-          <string name="prefarrondi">Rounding check in</string>  
-          <string name="prefarrondi1">Check-in are no longer at the minute but calculated by rounding</string>  
-        
-     <string name="jour">Day</string>
-      <string name="semaine">Week</string>
-       <string name="mois">Month</string>
-        <string name="annee">Year</string>
+    <string name="addcomment">Add a comment</string>
+    <string name="commentaire">comment</string>
+
+
+    <string name="aucun">none</string>
+
+    <string name="prefgenerale">General Preference</string>
+
+    <string name="prefsep">The separator character for the backup file (CSV)</string>
+    <string name="prefsep1">Separator</string>
+    <string name="prefmail">Enter your Email address</string>
+
+    <string name="prefarrondi">Rounding check in</string>
+    <string name="prefarrondi1">Check-in are no longer at the minute but calculated by rounding</string>
+
+    <string name="jour">Day</string>
+    <string name="semaine">Week</string>
+    <string name="mois">Month</string>
+    <string name="annee">Year</string>
     <string name="heure1">Hour / Min</string>
-     <string name="heure2">Day / Hour / Min</string>
-             <string name="inserer">Insert a check-in/out</string>
-              <string name="pointagerapide">Fast check in/out</string>
-              
-                   <string name="duree">Working time:</string>
-            
+    <string name="heure2">Day / Hour / Min</string>
+    <string name="heure3">hundredth time</string>
+    <string name="inserer">Insert a check-in/out</string>
+    <string name="pointagerapide">Fast check in/out</string>
+
+    <string name="duree">Working time:</string>
+
     <string name="savepointage">Saving check-in</string>
-     <string name="choisir">Choose your sofware</string>
-     <string name="listeP">Check in/out list</string>
-      <string name="numero">Number</string>
-      <string name="debut">In</string>
-       <string name="fin">Out</string>
-       
-	<string name="pasdepointage">There is no check in</string>
-	 <string name="somme">Sum=</string>
-		<string name="suppressionPointage">Remove check in</string> 
-		<string name="validersuppressionPointage">Confirm the removal of check in</string> 
-		 <string name="param">Parameters</string>    
-		 <string name="save">Backup</string>   
-		<string name="help">Help</string>   
-	  <string name="err_email2">Please enter your email address in the preferences!</string>
-	  <string name="err_email5">Error when generating the backup file!</string>
-	
-	   <string name="pointer">Check in/out</string>
-	     <string name="calendrier">Calendar</string>
+    <string name="choisir">Choose your sofware</string>
+    <string name="listeP">Check in/out list</string>
+    <string name="numero">Number</string>
+    <string name="debut">In</string>
+    <string name="fin">Out</string>
+
+    <string name="pasdepointage">There is no check in</string>
+    <string name="somme">Sum=</string>
+    <string name="suppressionPointage">Remove check in</string>
+    <string name="validersuppressionPointage">Confirm the removal of check in</string>
+    <string name="param">Parameters</string>
+    <string name="save">Backup</string>
+    <string name="help">Help</string>
+    <string name="err_email2">Please enter your email address in the preferences!</string>
+    <string name="err_email5">Error when generating the backup file!</string>
+
+    <string name="pointer">Check in/out</string>
+    <string name="depointer">Check out</string>
+    <string name="calendrier">Calendar</string>
     <string name="parametres">Parameters</string>
 
-	   <string name="debutpointage">Check in at</string>
-	   <string name="finpointage">Check out</string>
-	    <string name="debuter">Add a new check in</string>
-	   <string name="tempstravail">Working time:\n</string>
-	    <string name="tempstravail1">Working time:</string>
-	    <string name="validation1">Validate</string>
-	     <string name="validationinsertion">Validate the insertion of the new check in</string>
-	      <string name="oui1">Yes</string>   
-	         <string name="non1">No</string>
-	         <string name="suppression">Delete check in</string>
+    <string name="debutpointage">Check in at</string>
+    <string name="finpointage">Check out</string>
+    <string name="debuter">Add a new check in</string>
+    <string name="tempstravail">Working time:\n</string>
+    <string name="tempstravail1">Working time:</string>
+    <string name="validation1">Validate</string>
+    <string name="validationinsertion">Validate the insertion of the new check in</string>
+    <string name="oui1">Yes</string>
+    <string name="non1">No</string>
+    <string name="suppression">Delete check in</string>
 	 
 	   <string name="txtaide1">Working time:\n
 \n

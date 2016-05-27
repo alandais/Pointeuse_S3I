@@ -1,4 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/exit" android:title="Supprimer"  />
-    <item android:id="@+id/refresh" android:title="Paramètres"  />
+    <item
+        android:id="@+id/exit"
+        android:title="Supprimer" />
+    <item
+        android:id="@+id/refresh"
+        android:title="Paramètres" />
 </menu> 

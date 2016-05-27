@@ -27,8 +27,8 @@ import fr.s3i.pointeuse.persistance.DatabaseHelper;
 public class ReglagePauses extends ActionBarActivity {
 
     SQLiteDatabase db;
-    private Cursor constantsCursor=null;
-    private DatabaseHelper dbHelper=null;
+    private Cursor constantsCursor = null;
+    private DatabaseHelper dbHelper = null;
     ListView maListe;
     ListeDesPausesAdapter adapter;
     private InterstitialAd interstitial;
@@ -36,28 +36,24 @@ public class ReglagePauses extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        try
-        {
+        try {
             String theme = preferences.getString("theme", "AppThemeNoir");
 
-            if("AppThemeNoir".equals(theme) )
-            {
+            if ("AppThemeNoir".equals(theme)) {
                 setTheme(R.style.AppThemeNoir);
             }
 
-        }
-        catch(Exception All)
-        {
+        } catch (Exception All) {
             //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pauses);
 
-        dbHelper = new DatabaseHelper(this) ;
+        dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
 
-        maListe = (ListView)findViewById(R.id.MaListeViewPause);
+        maListe = (ListView) findViewById(R.id.MaListeViewPause);
         TextView textView = new TextView(this);
         textView.setText(getString(R.string.titre_pause));
 
@@ -70,33 +66,33 @@ public class ReglagePauses extends ActionBarActivity {
 
     String debut_pause = "";
     String fin_pause = "";
-    private TimePickerDialog.OnTimeSetListener valide_debut =  new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener valide_debut = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            debut_pause = String.format("%02d:%02d",hourOfDay,minute);
-            TimePickerDialog temp = new TimePickerDialog(view.getContext() , valide_fin, 0, 0, true);
+            debut_pause = String.format("%02d:%02d", hourOfDay, minute);
+            TimePickerDialog temp = new TimePickerDialog(view.getContext(), valide_fin, 0, 0, true);
             temp.show();
         }
     };
-    private TimePickerDialog.OnTimeSetListener valide_fin =  new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener valide_fin = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            fin_pause = String.format("%02d:%02d",hourOfDay,minute);
+            fin_pause = String.format("%02d:%02d", hourOfDay, minute);
             dbHelper.insereNouvellePause(db, debut_pause, fin_pause);
             refresh();
         }
     };
 
-    public void ajouterPause()
-    {
-        TimePickerDialog temp = new TimePickerDialog(this , valide_debut, 0, 0, true);
+    public void ajouterPause() {
+        TimePickerDialog temp = new TimePickerDialog(this, valide_debut, 0, 0, true);
         temp.show();
     }
+
     public void refresh() {
 
         constantsCursor = dbHelper.getAllPause(db);
-        if (constantsCursor == null)return;
+        if (constantsCursor == null) return;
         //android.util.Log.e("Return", "constantsCursor="+constantsCursor.getCount());
 
-        adapter = new ListeDesPausesAdapter(this,this);
+        adapter = new ListeDesPausesAdapter(this, this);
         adapter.setList(constantsCursor);
         maListe.setAdapter(adapter);
 
@@ -104,8 +100,7 @@ public class ReglagePauses extends ActionBarActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         constantsCursor.close();
         dbHelper.close();
@@ -128,8 +123,7 @@ public class ReglagePauses extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case DELETE:
                 suppression();
                 break;
@@ -142,27 +136,21 @@ public class ReglagePauses extends ActionBarActivity {
     }
 
     private void suppression() {
-        long row ;
+        long row;
 
         //android.util.Log.e("Constants", "Taille="+adapter.ListeCheckBox.size());
 
-        for(int i=0; i < adapter.listeEtat.size();i++)
-        {
+        for (int i = 0; i < adapter.listeEtat.size(); i++) {
 
-            if(adapter.listeEtat.get(i))
-            {
-                try
-                {
+            if (adapter.listeEtat.get(i)) {
+                try {
                     row = Long.parseLong(adapter.listeId.get(i));
 
-                    if (row >= 0)
-                    {
+                    if (row >= 0) {
                         dbHelper.deleteEnregistrementPause(db, row);
                     }
-                }
-                catch(Exception e)
-                {
-                   // android.util.Log.w("Constants", "Exception capture ="+e.getMessage());
+                } catch (Exception e) {
+                    // android.util.Log.w("Constants", "Exception capture ="+e.getMessage());
                 }
             }
 
@@ -173,12 +161,9 @@ public class ReglagePauses extends ActionBarActivity {
     private void affiche_pub() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String masquer_pub = "0";
-        try
-        {
+        try {
             masquer_pub = preferences.getString("supprimer_pub", "0");
-        }
-        catch(Exception All)
-        {
+        } catch (Exception All) {
             //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
@@ -192,7 +177,7 @@ public class ReglagePauses extends ActionBarActivity {
                 .addTestDevice("XX")
                 .build();
 
-        if("0".equals(masquer_pub)){
+        if ("0".equals(masquer_pub)) {
             // Begin loading your interstitial.
             interstitial.loadAd(adRequest);
 

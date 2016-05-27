@@ -23,76 +23,71 @@ import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.adaptaters.ListeDesPointagesDeleteAdapter;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 
-public class Suppression extends ActionBarActivity
-{ 
-	ListeDesPointagesDeleteAdapter adapter;
-	ListView MaListe;
-	SQLiteDatabase db;
-	private Cursor constantsCursor=null;
-	private DatabaseHelper dbHelper=null;
-	DatePicker dp;
-	RadioGroup rg;
-	
-	private static final int  SUPPRESSION = Menu.FIRST;
-	
-	Button btnDelete;
-	
-	public void onCreate(Bundle savedInstanceState)
-    {
+public class Suppression extends ActionBarActivity {
+    ListeDesPointagesDeleteAdapter adapter;
+    ListView MaListe;
+    SQLiteDatabase db;
+    private Cursor constantsCursor = null;
+    private DatabaseHelper dbHelper = null;
+    DatePicker dp;
+    RadioGroup rg;
+
+    private static final int SUPPRESSION = Menu.FIRST;
+
+    Button btnDelete;
+
+    public void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        try
-        {
+        try {
             String theme = preferences.getString("theme", "AppThemeNoir");
 
-            if("AppThemeNoir".equals(theme) )
-            {
+            if ("AppThemeNoir".equals(theme)) {
                 setTheme(R.style.AppThemeNoir);
             }
-        }
-        catch(Exception All)
-        {
+        } catch (Exception All) {
             //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.suppression);
 
-        dp = (DatePicker)this.findViewById(R.id.calendrierD);
-        dp.init(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), new OnDateChangedListener(){
+        dp = (DatePicker) this.findViewById(R.id.calendrierD);
+        dp.init(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), new OnDateChangedListener() {
 
-        @Override
-        public void onDateChanged(DatePicker view, int year,
-                int monthOfYear, int dayOfMonth) {
+            @Override
+            public void onDateChanged(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
 
                 refresh();
 
-        }});
+            }
+        });
 
-        rg = (RadioGroup)this.findViewById(R.id.radiogroupD);
-        rg.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+        rg = (RadioGroup) this.findViewById(R.id.radiogroupD);
+        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            refresh();
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                refresh();
 
-        }});
+            }
+        });
 
-        dbHelper = new DatabaseHelper(this) ;
+        dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
 
-        MaListe = (ListView)findViewById(R.id.MaListeViewDelete);
+        MaListe = (ListView) findViewById(R.id.MaListeViewDelete);
         refresh();
     }
-	 
-	void refresh()
-	{
+
+    void refresh() {
         int Id = rg.getCheckedRadioButtonId();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String conditions;
 
-        int jour,mois,annee;
+        int jour, mois, annee;
         jour = dp.getDayOfMonth();
         mois = dp.getMonth();//Commence a 0
         annee = dp.getYear();
@@ -105,131 +100,110 @@ public class Suppression extends ActionBarActivity
 
         Date LaDate = c.getTime();
 
-        if(Id == R.id.trijourD)
-        {
-            conditions= "( strftime('%j',DATE_DEBUT) = strftime('%j','"+dateFormat.format(LaDate)+"') " +
-                    " and strftime('%Y',DATE_DEBUT) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) " +
+        if (Id == R.id.trijourD) {
+            conditions = "( strftime('%j',DATE_DEBUT) = strftime('%j','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_DEBUT) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) " +
 
-             " or ( strftime('%j',DATE_FIN) = strftime('%j','"+dateFormat.format(LaDate)+"') " +
-             " and strftime('%Y',DATE_FIN) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) ";
+                    " or ( strftime('%j',DATE_FIN) = strftime('%j','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_FIN) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) ";
 
-            constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
-            if(constantsCursor==null)return ;
-        }
-        else if(Id == R.id.trisemaineD)
-        {
-            conditions= "( strftime('%W',DATE_DEBUT) = strftime('%W','"+dateFormat.format(LaDate)+"') " +
-            " and strftime('%Y',DATE_DEBUT) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) " +
+            constantsCursor = dbHelper.getSomeDatePointage(db, conditions);
+            if (constantsCursor == null) return;
+        } else if (Id == R.id.trisemaineD) {
+            conditions = "( strftime('%W',DATE_DEBUT) = strftime('%W','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_DEBUT) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) " +
 
-             " or ( strftime('%W',DATE_FIN) = strftime('%W','"+dateFormat.format(LaDate)+"') " +
-             " and strftime('%Y',DATE_FIN) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) ";
+                    " or ( strftime('%W',DATE_FIN) = strftime('%W','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_FIN) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) ";
 
-            constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
-            if(constantsCursor==null)return ;
+            constantsCursor = dbHelper.getSomeDatePointage(db, conditions);
+            if (constantsCursor == null) return;
 
-        }
-        else if(Id == R.id.trimoisD)
-        {
-            conditions= "( strftime('%m',DATE_DEBUT) = strftime('%m','"+dateFormat.format(LaDate)+"') " +
-            " and strftime('%Y',DATE_DEBUT) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) " +
+        } else if (Id == R.id.trimoisD) {
+            conditions = "( strftime('%m',DATE_DEBUT) = strftime('%m','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_DEBUT) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) " +
 
-             " or ( strftime('%m',DATE_FIN) = strftime('%m','"+dateFormat.format(LaDate)+"') " +
-             " and strftime('%Y',DATE_FIN) = strftime('%Y','"+dateFormat.format(LaDate)+"') ) ";
+                    " or ( strftime('%m',DATE_FIN) = strftime('%m','" + dateFormat.format(LaDate) + "') " +
+                    " and strftime('%Y',DATE_FIN) = strftime('%Y','" + dateFormat.format(LaDate) + "') ) ";
 
-            constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
-            if(constantsCursor==null)return ;
-        }
-        else if(Id == R.id.trianneeD)
-        {
-            conditions= "strftime('%Y',DATE_DEBUT) = strftime('%Y','"+dateFormat.format(LaDate)+"') " +
-             " or strftime('%Y',DATE_FIN) = strftime('%Y','"+dateFormat.format(LaDate)+"') ";
+            constantsCursor = dbHelper.getSomeDatePointage(db, conditions);
+            if (constantsCursor == null) return;
+        } else if (Id == R.id.trianneeD) {
+            conditions = "strftime('%Y',DATE_DEBUT) = strftime('%Y','" + dateFormat.format(LaDate) + "') " +
+                    " or strftime('%Y',DATE_FIN) = strftime('%Y','" + dateFormat.format(LaDate) + "') ";
 
-            constantsCursor=dbHelper.getSomeDatePointage(db, conditions) ;
-            if(constantsCursor==null)return ;
-        }
-        else
-        {
-            constantsCursor=dbHelper.getAllPointage(db) ;
+            constantsCursor = dbHelper.getSomeDatePointage(db, conditions);
+            if (constantsCursor == null) return;
+        } else {
+            constantsCursor = dbHelper.getAllPointage(db);
         }
 
-        if(constantsCursor.getCount()==0)
-        {
-             //message.setText("Il n'y a aucun pointeuse");
+        if (constantsCursor.getCount() == 0) {
+            //message.setText("Il n'y a aucun pointeuse");
             // return;
         }
 
-        if (constantsCursor == null)return;
+        if (constantsCursor == null) return;
 
         adapter = new ListeDesPointagesDeleteAdapter(this);
         adapter.setList(constantsCursor);
         MaListe.setAdapter(adapter);
 
         constantsCursor.close();
-	}
+    }
 
-	public void lance_suppression()
-	{
-        long row ;
+    public void lance_suppression() {
+        long row;
 
         // android.util.Log.w("Constants", "Taille="+adapter.ListeCheckBox.size());
 
-        for(int i=0; i < adapter.ListeEtat.size();i++)
-        {
+        for (int i = 0; i < adapter.ListeEtat.size(); i++) {
 
-            if(adapter.ListeEtat.get(i))
-            {
-                try
-                {
+            if (adapter.ListeEtat.get(i)) {
+                try {
                     row = Long.parseLong(adapter.ListeId.get(i));
 
-                    if (row >= 0)
-                    {
+                    if (row >= 0) {
                         dbHelper.deleteEnregistrementPointage(db, row);
                     }
-                }
-                catch(Exception e)
-                {
-                     //android.util.Log.w("Constants", "Exception capture ="+e.getMessage());
+                } catch (Exception e) {
+                    //android.util.Log.w("Constants", "Exception capture ="+e.getMessage());
                 }
             }
 
         }
         refresh();
-	}
-	 
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
+    }
 
-		super.onCreateOptionsMenu(menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-
-			menu.add(0, SUPPRESSION, 0, getString(R.string.validersuppressionPointage) )
-					.setIcon(android.R.drawable.ic_menu_delete);
-
-					return true;
-		  }
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		// Handle all of the possible menu actions.
-		switch (item.getItemId())
-		{
-			case SUPPRESSION:
-				lance_suppression();
-				break;
+        super.onCreateOptionsMenu(menu);
 
 
-		}
-		return super.onOptionsItemSelected(item);
-	}
+        menu.add(0, SUPPRESSION, 0, getString(R.string.validersuppressionPointage))
+                .setIcon(android.R.drawable.ic_menu_delete);
+
+        return true;
+    }
 
     @Override
-    public void onDestroy() 
-    {
-      super.onDestroy();
-      constantsCursor.close();
-      dbHelper.close();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle all of the possible menu actions.
+        switch (item.getItemId()) {
+            case SUPPRESSION:
+                lance_suppression();
+                break;
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        constantsCursor.close();
+        dbHelper.close();
     }
 
 }
