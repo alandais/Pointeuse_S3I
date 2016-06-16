@@ -41,6 +41,7 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
 
     private ArrayList<String> listeDebut;
     private ArrayList<String> listeFin;
+    private ArrayList<String> listeCommentaires;
 
     ArrayList<String> listeId;
 
@@ -450,7 +451,7 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
                         dbHelper.updateEnregistrementPointage(db, position, dbHelper.COMMENTAIRE, commentaire);
                         constantsCursor.close();
                         dbHelper.close();
-
+                        parent.refresh();
                     }
                 }
         );
@@ -463,11 +464,13 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
         listeDebut = new ArrayList<String>();
         listeFin = new ArrayList<String>();
         listeId = new ArrayList<String>();
+        listeCommentaires = new ArrayList<String>();
 
         while (curseur.moveToNext()) {
             listeId.add(curseur.getString(0)); // 0 is the first column
             listeDebut.add(curseur.getString(1)); // 0 is the first column
             listeFin.add(curseur.getString(2)); // 0 is the first column
+            listeCommentaires.add(curseur.getString(3));
         }
         mInflater = LayoutInflater.from(leContext);
         calcul = new Calcul(leContext);
@@ -505,8 +508,8 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
 
         TextView debut = (TextView) layoutItem.findViewById(R.id.datedebut);
         TextView fin = (TextView) layoutItem.findViewById(R.id.datefin);
+        TextView commentaireActivite = (TextView) layoutItem.findViewById(R.id.commentaireActivite);
         TextView lecumul = (TextView) layoutItem.findViewById(R.id.cumulunitaire);
-        TextView lapause = (TextView) layoutItem.findViewById(R.id.cumulpauseunitaire);
 
         long cumul;
 
@@ -568,8 +571,8 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
         });
 
 
-        lecumul.setTag(Id);
-        lecumul.setOnClickListener(new OnClickListener() {
+        commentaireActivite.setTag(Id);
+        commentaireActivite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer position = (Integer) v.getTag();
@@ -619,30 +622,6 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
                 } catch (Exception All) {
                     //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
                 }
-
-
-                if (s.temps_pause > 0) {
-                    s.temps_pause /= 60;
-                    if (s.temps_pause < 60) {
-                        lapause.setText(leContext.getString(R.string.tpause) + " " + s.temps_pause + "min");
-                    } else if (cumul < 1440) {
-                        lapause.setText(leContext.getString(R.string.tpause) + " " + (int) (s.temps_pause / 60) + "h " +
-                                (int) (s.temps_pause % 60) + "min");
-                    } else {
-                        if (format.equals("0")) {
-                            lapause.setText(leContext.getString(R.string.tpause) + " " + (int) (s.temps_pause / 60) + "h " +
-                                    (int) (s.temps_pause % 60) + "min");
-                        } else {
-                            int min = (int) (cumul % 1440);
-                            int nbjour = (int) (cumul / 1440);
-                            lapause.setText(leContext.getString(R.string.tpause) + " " +
-                                    (int) (nbjour) + leContext.getString(R.string.jourarrondi) + " " +
-                                    (int) (min / 60) + "h " +
-                                    (int) (min % 60) + "min");
-                        }
-                    }
-                } else lapause.setText("");
-
                 if (cumul < 60) {
                     lecumul.setText(cumul + "min");
                 } else if (cumul < 1440) {
@@ -664,16 +643,19 @@ public class ListeDesPointagesAdapter extends BaseAdapter {
             } catch (ParseException e) {
                 fin.setText("");
                 lecumul.setText("");
-                lapause.setText("");
                 //Toast.makeText(LeContext, "Erreur=" +e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } else {
             fin.setText("");
             lecumul.setText("");
-            lapause.setText("");
         }
 
-        //layoutItem.setBackgroundColor(Color.BLUE);
+        if (listeCommentaires.get(position).length() > 0) {
+
+            commentaireActivite.setText(listeCommentaires.get(position));
+        } else {
+            commentaireActivite.setText("");
+        }
 
         return layoutItem;
     }

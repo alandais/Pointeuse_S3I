@@ -2,6 +2,7 @@ package fr.s3i.pointeuse.widget;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.AlarmManager;
@@ -90,9 +91,7 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        // v1.5 fix that doesn't call onDelete Action
         final String action = intent.getAction();
-        //android.util.Log.w("action",action);
 
         if (alarmManager == null) {
             monService = new Intent(context, Rafraichissement.class);
@@ -121,12 +120,6 @@ public class PointageWidgetProvider extends AppWidgetProvider {
 
                 NotificationManager notificationManager =
                         (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-              /*  Notification noty = new Notification(R.drawable.icon, message,
-			    		System.currentTimeMillis());
-			    
-			    noty.setLatestEventInfo(context, "Notice", message, contentIntent);
-			    
-			    notificationManager.notify(1, noty);*/
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                 Notification notification = builder.setContentIntent(contentIntent)
@@ -137,68 +130,42 @@ public class PointageWidgetProvider extends AppWidgetProvider {
 
                 pointageEnCours = false;
 
-                // alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtTime, pendingIntent);//Toutes les minutes
-                //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), PERIODE* 1000, pendingIntent);//Toutes les minutes
-               /* alarmManager.cancel(pendingIntent);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-                } else {
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-                }*/
             } else if (intent.getAction().equals(ACTION_START_REFRESH_WIDGET)) {
-		    	/* //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), PERIODE* 1000, pendingIntent);//Toutes les minutes
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
                 } else {
                     alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-                }*/
+                }
             }
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
-                //e.printStackTrace();
+                android.util.Log.w("action","impossible d'envoyer le pointage");
             }
         }
     }
 
 
     public void pointe(Context context) {
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widgetlayout);
         dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
         dernierEnregistrement = dbHelper.getLastEnregistrementPointage(db);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
-        Date fin = null;
-        String date1 = dateFormat.format(date);
 
         try {
-            fin = dateFormat.parse(date1);
-        } catch (ParseException e1) {
-            fin = null;
-            //android.util.Log.w("Exception e1", e1.getMessage());
-            db.close();
-            dbHelper.close();
-            return;
-        }
-
-        try {
-            if (dernierEnregistrement.getString(1).length() == 0) {
-                dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_DEBUT, dateFormat.format(date));
+            if (dernierEnregistrement.getString(2).length() != 0) {
+                dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
             } else {
                 dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_FIN, dateFormat.format(date));
-                dbHelper.insereNouveauPointage(db, "", "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.finpointage) + " " + dateFormat.format(date);
             }
         } catch (Exception e) {
             android.util.Log.w("Exception Pointage=", "message = " + e.getMessage());
-//    		dbHelper.insereNouveauPointage(db, "", "");
-//    		dateFormat = new SimpleDateFormat("HH:mm");
-//    		message =  context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
         }
 
         if (!dernierEnregistrement.isClosed()) {

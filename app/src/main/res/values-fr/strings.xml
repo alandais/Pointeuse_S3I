@@ -26,9 +26,9 @@
     <string name="aidecommentaire">Ok pour valider</string>
     <string name="cancel">Annuler</string>
     <string name="addcomment">Ajouter un commentaire</string>
-    <string name="commentaire">Commentaire</string>
-    <string name="widget_name">Pointage</string>
-    <string name="app_name">Pointage</string>
+    <string name="commentaire">Activité</string>
+    <string name="widget_name">Pointe Oburo.o</string>
+    <string name="app_name">Oburo.o</string>
 
     <string name="aucun">aucun</string>
 
@@ -53,7 +53,7 @@
 
     <string name="duree">Durée de travail:</string>
 
-    <string name="savepointage">Sauvegarde des pointages</string>
+    <string name="savepointage">[Oburo.o S3i] Export de vos pointages</string>
     <string name="choisir">Choisir le logiciel</string>
     <string name="listeP">Liste des pointages du</string>
     <string name="numero">Numéro</string>
@@ -65,7 +65,7 @@
     <string name="suppressionPointage">Suppression de pointage</string>
     <string name="validersuppressionPointage">Valider la suppression des pointages</string>
     <string name="param">Paramètres</string>
-    <string name="save">Sauvegarde</string>
+    <string name="save">Exporter</string>
     <string name="help">Aide</string>
     <string name="err_email2">Veuillez enregistrer votre adresse email dans les préférences!</string>
     <string name="err_email5">Erreur lors de la génération du fichier de backup!</string>
@@ -77,8 +77,11 @@
     <string name="debutpointage">Pointage \"Début du travail\" à</string>
     <string name="finpointage">Pointage \"Fin du travail\" à</string>
     <string name="debuter">Débuter un nouveau pointage</string>
-    <string name="tempstravail"> Temps de travail:\n</string>
-    <string name="tempstravail1"> Temps de travail:</string>
+    <string name="tempstravail">Temps de travail:\n</string>
+    <string name="tempstravail1">Temps de travail:</string>
+    <string name="travailencours">En cours: </string>
+    <string name="travailfait">Réalisé: </string>
+    <string name="travailsemaine">Sem.: </string>
 
     <string name="validation1">Validation</string>
     <string name="validationinsertion">Valider l\'insertion du nouveau pointage</string>
@@ -86,64 +89,25 @@
     <string name="non1">Non</string>
     <string name="suppression">Suppression de pointage</string>
 	 
- <string name="txtaide1">Pointage:\n
-\n
-\tCette application permet de calculer facilement ses heures de travail par une simple pression sur l\'écran. Le calcul est automatique. L\'alternance début et fin de travail est automatique.\n
-\n
-\n
-Ajouter un pointage:\n
-\n
-\tPour ajouter un pointage depuis l\'application, il suffit d\'appuyer sur le bouton «Pointage rapide». L\'heure du pointage sera celle du téléphone. Le coup déclenchera un début de pointage, le second une fin.\n
-\tEn cas d\'oubli, il est possible d\'insérer un pointage avec le bouton «Insérer un pointage».\n
-\n
-Ajouter un commentaire:\n\n
-\tPour ajouter un commentaire sur un pointage il suffit de cliquer sur celui ci depuis le calendrier puis de rentrer le texte.\nAppuyer sur Ok pour valider ou Annuler pour ... annuler.
-\n
-\n
-Sauvegarde:\n
-\n
-\tIl est possible de sauvegarder au format CSV (Excel) par e mail l\'ensemble des pointages. Une adresse e mail doit au-préalablement être saisie dans les paramètres. Les paramètres du fichier CSV sont aussi modifiable dans la section paramètres.\n
-\n
-Visualisation des pointages :\n
-\n
-\tDans l\'onglet calendrier, on peut visualiser l\'ensemble des pointages, par jour / semaine / mois ou année. Il suffit de sélectionner une date via le calendrier puis la période choisie pour celle-ci. L\'affichage se fera automatiquement après chaque validation de date ou de période.\n
-\n
-\nWidget:
-\n
-\tUn widget est disponible depuis le bureau. Il permettra de pointer rapidement mais aussi de visualiser le temps de travail en cours.\n
-</string>
-<string name="txtaide2">Arrondis:\n
- \n
-\tL\'arrondi des pointages permet d\'arrondir les pointages à une valeur inférieure.\n
-\tPar exemple un pointage de 1h02min sera considéré comme un pointage de 1h si on l\'arrondit à plus 5min.\n
-\t1h54min sera lui arrondi à 1h50min.\n
-\n
-Adresse Email\n
-\n
-\tC\'est l\'adresse qui sera utilisée pour la réception des données de sauvegarde.\n
-\tL\'envoi de l\'email s\'effectuera à partir d\'une application mail android qui sera sélectionnée par l\'utilisateur au moment de la sauvegarde\n
-\n
-Séparateur:\n
-\tLe séparateur est celui souhaité lors de la sauvegarde au format CSV.\n
-\tCela permet de récupérer directement les pointages dans un tableau excel.\n
-	</string>
+ <string name="txtaide1">principal_fr.txt</string>
+<string name="txtaide2">param_fr.txt</string>
     <string name="suppression_pointage_unitaire">Supprimer un pointage</string>
-    <string name="ajouter_pause">Ajouter une pause</string>
     <string name="banner_ad_unit_id_pointer"></string>
     <string name="confirmation_suppression_pause">Veuillez confirmer la suppression de la pause</string>
-    <string name="reglages_pauses">Ajouter / Supprimer les pauses</string>
     <string name="suppression_pointage_unitaire_message">Etes-vous sur de vouloir supprimer ce pointage?</string>
-    <string name="supprimer_pub">Supprimer pub</string>
-    <string name="supprimer_pub_description">Supprimer la publicité interstitiel</string>
-    <string name="titre_pause">Liste des pauses:</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_description">Sélectionner un thème. Le changement prendra effet aprés redémarrage de l\'application.</string>
     <string name="theme_white">Blanc</string>
     <string name="titre_theme">Sélectionner un thème</string>
     <string name="tdebut">Début:</string>
     <string name="tfin">Fin:</string>
-    <string name="tpause">Pauses:</string>
-    <string name="dontpause">Pauses:</string>
 
+    <string name="licence">License</string>
+    <string name="libelleS3I">S3I ?</string>
+    <string name="copyright">    Oburo.o  Copyright (C) 2016  S3I
+    This program comes with ABSOLUTELY NO WARRANTY; voir le menu License pour les détails
+    This is free software, and you are welcome to redistribute it
+    under certain conditions; voir le menu License pour les details.
+</string>
 
 </resources>

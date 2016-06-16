@@ -52,9 +52,7 @@
             android:layout_width="wrap_content"
             android:src="@drawable/bandeau_s3i"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:tag="http://www.s3i.fr"
-            android:onClick="openBrowser" />
+            android:layout_gravity="bottom" />
     </FrameLayout>
 
 </LinearLayout>

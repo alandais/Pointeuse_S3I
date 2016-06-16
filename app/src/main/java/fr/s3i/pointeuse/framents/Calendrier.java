@@ -29,6 +29,7 @@ import fr.s3i.pointeuse.adaptaters.ListeDesPointagesAdapter;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.utils.Calcul;
+import fr.s3i.pointeuse.utils.Utilitaire;
 
 /*
  * 
@@ -200,62 +201,7 @@ public class Calendrier extends Fragment {
         }
         Calcul.Spointage s = adapter.getCalcul().somme(adapter.getListeDebut(), adapter.getListeFin(), Integer.parseInt(arrondi));
         long lasomme = s.temps_pointage / 60;
-        long lespauses = s.temps_pause / 60;
-        String texte_pause = "";
-        if (lespauses > 0) {
-            texte_pause = " - ";
-            if (lespauses < 60) {
-                texte_pause += getString(R.string.dontpause) + " " + lespauses + "min";
-            } else if (lasomme < 1440) {
-                texte_pause += getString(R.string.dontpause) + " " + (int) (lespauses / 60) + "h " + (int) (lespauses % 60) + "min";
-            } else {
-                if (format.equals("0")) {
-                    texte_pause += getString(R.string.dontpause) + " " + (int) (lespauses / 60) + "h " + (int) (lespauses % 60) + "min";
-                } else {
-                    int min = (int) (lespauses % 1440);
-                    int nbjour = (int) (lespauses / 1440);
-                    texte_pause += getString(R.string.dontpause) + " " +
-                            (int) (nbjour) + getString(R.string.jourarrondi) + " " +
-                            (int) (min / 60) + "h " +
-                            (int) (min % 60) + "min";
-                }
-
-            }
-        }
-        Double sommeReel = new Double((long) lasomme);
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2); //arrondi à 2 chiffres apres la virgules
-        df.setMinimumFractionDigits(2);
-        df.setDecimalSeparatorAlwaysShown(true);
-
-        if (lasomme < 60) {
-            if (format.equals("2")) {
-                message.setText(getString(R.string.somme) + " " + df.format(sommeReel / 60) + " h");
-            } else {
-                message.setText(getString(R.string.somme) + " " + lasomme + "min" + texte_pause);
-            }
-        } else if (lasomme < 1440) {
-            if (format.equals("2")) {
-                message.setText(getString(R.string.somme) + " " + df.format(sommeReel / 60) + " h");
-                System.out.println("temps = " + lasomme + " double = " + Double.toString(lasomme / 60) + " reel = " + (sommeReel / 60));
-            } else {
-                message.setText(getString(R.string.somme) + " " + (int) (lasomme / 60) + "h " + (int) (lasomme % 60) + "min" + texte_pause);
-            }
-        } else {
-            if (format.equals("0")) {
-                message.setText(getString(R.string.somme) + " " + (int) (lasomme / 60) + "h " + (int) (lasomme % 60) + "min" + texte_pause);
-            } else if (format.equals("1")) {
-                int min = (int) (lasomme % 1440);
-                int nbjour = (int) (lasomme / 1440);
-                message.setText(getString(R.string.somme) + " " +
-                        (int) (nbjour) + getString(R.string.jourarrondi) + " " +
-                        (int) (min / 60) + "h " +
-                        (int) (min % 60) + "min" + texte_pause);
-            } else {
-                message.setText(getString(R.string.somme) + df.format(sommeReel / 60) + " h");
-            }
-
-        }
+        message.setText(getString(R.string.somme)+ Utilitaire.formatAffichage(getContext(),lasomme));
     }
 
     @Override

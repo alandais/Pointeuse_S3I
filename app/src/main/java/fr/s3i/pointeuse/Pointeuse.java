@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import fr.s3i.pointeuse.activite.Aide;
-import fr.s3i.pointeuse.activite.ReglagePauses;
 import fr.s3i.pointeuse.activite.Suppression;
 import fr.s3i.pointeuse.framents.Calendrier;
 import fr.s3i.pointeuse.framents.Pointer;
@@ -62,6 +62,8 @@ public class Pointeuse extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        Toast.makeText(this, R.string.copyright , Toast.LENGTH_SHORT).show();
+
 
         setContentView(R.layout.activity_main);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -85,7 +87,8 @@ public class Pointeuse extends ActionBarActivity {
     private static final int PARAMETRE = Menu.FIRST + 1;
     private static final int BACKUP = Menu.FIRST + 2;
     private static final int HELP = Menu.FIRST + 3;
-    private static final int PAUSE = Menu.FIRST + 4;
+    private static final int LICENCE = Menu.FIRST + 4;
+    private static final int S3I = Menu.FIRST + 5;
 
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
@@ -97,7 +100,10 @@ public class Pointeuse extends ActionBarActivity {
                 .setIcon(android.R.drawable.ic_dialog_email);
         menu.add(0, HELP, 0, getString(R.string.help))
                 .setIcon(android.R.drawable.ic_menu_help);
-        menu.add(0, PAUSE, 0, getString(R.string.reglages_pauses));
+        menu.add(0, LICENCE, 0, getString(R.string.licence))
+                .setIcon(android.R.drawable.ic_menu_info_details);
+        menu.add(0, S3I, 0, getString(R.string.libelleS3I))
+                .setIcon(android.R.drawable.ic_menu_info_details);
 
         //return true;
         super.onCreateOptionsMenu(menu);
@@ -117,8 +123,11 @@ public class Pointeuse extends ActionBarActivity {
             case HELP:
                 aide();
                 break;
-            case PAUSE:
-                pause();
+            case LICENCE:
+                license();
+                break;
+            case S3I:
+                infoS3i();
                 break;
             case BACKUP:
                 //Utilitaire.verifyStoragePermissions(this);
@@ -146,8 +155,16 @@ public class Pointeuse extends ActionBarActivity {
         this.startActivity(con);
     }
 
-    public void pause() {
-        Intent con = new Intent(this, ReglagePauses.class);
+    public void license() {
+        Intent con = new Intent(this, Aide.class);
+        con.putExtra("NumAide", 3);
         this.startActivity(con);
     }
+
+    public void infoS3i() {
+        Intent con = new Intent(this, Aide.class);
+        con.putExtra("NumAide", 4);
+        this.startActivity(con);
+    }
+
 }

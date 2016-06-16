@@ -9,17 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "POINTAGE";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public static final String ID = "_ID";
     public static final String DATE_DEBUT = "DATE_DEBUT";
     public static final String DATE_FIN = "DATE_FIN";
     public static final String COMMENTAIRE = "COMMENTAIRE";
-
-    public static final String TABLE_PAUSE = "TABLE_PAUSE";
-    public static final String PAUSE_ID = "_ID";
-    public static final String PAUSE_DEBUT = "_DEBUT";
-    public static final String PAUSE_FIN = "_FIN";
 
     public Context context;
 
@@ -30,7 +25,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        long id;
         //android.util.Log.w("Constants", "onCreate");
         db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
 
@@ -45,30 +39,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(requete);
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAUSE);
-
-        db.execSQL("CREATE TABLE " + TABLE_PAUSE + " (" + PAUSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                PAUSE_DEBUT + " text," +
-                PAUSE_FIN + " text)");
-
-        id = insereNouveauPointage(db, "", "");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //android.util.Log.w("Constants", "Maj de la base");
-        if (oldVersion == 1 && newVersion == 2) {
-            db.execSQL("ALTER TABLE POINTAGE ADD COMMENTAIRE TEXT");
-        }
-        if (oldVersion < 3) {
-            db.execSQL("DROP INDEX IF EXISTS INDEX_" + DATABASE_NAME);
-            String requete = "CREATE INDEX INDEX_" + DATABASE_NAME +
-                    " ON " + DATABASE_NAME + "(" + DATE_DEBUT + ")";
-            db.execSQL(requete);
-
-            db.execSQL("CREATE TABLE " + TABLE_PAUSE + " (" + PAUSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    PAUSE_DEBUT + " text," +
-                    PAUSE_FIN + " text)");
+        if (oldVersion == 3 && newVersion == 4) {
+            db.execSQL("DROP TABLE TABLE_PAUSE");
         }
     }
 
@@ -97,11 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //---deletes a particular title---
     public boolean deleteEnregistrementPointage(SQLiteDatabase db, long rowId) {
         return db.delete(DATABASE_NAME, ID + "=" + rowId, null) > 0;
-    }
-
-    //---deletes a particular title---
-    public boolean purge_pointage_vide(SQLiteDatabase db) {
-        return db.delete(DATABASE_NAME, DATE_DEBUT + "='' AND " + DATE_FIN + " = ''", null) > 0;
     }
 
     //---retrieves all the titles---
@@ -183,78 +155,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         initialValues.put(DATE_DEBUT, date_debut);
         initialValues.put(DATE_FIN, date_fin);
         initialValues.put(COMMENTAIRE, "");
-        long retour = db.insert(DATABASE_NAME, null, initialValues);
-        return retour;
+        return db.insert(DATABASE_NAME, null, initialValues);
     }
 
-    /*****************************************/
-    /*********** TABLE PAUSE **************/
-    /*****************************************/
-
-    public boolean updateEnregistrementPause(SQLiteDatabase db, long rowId, String colonne, String valeur) {
-        ContentValues args = new ContentValues();
-        args.put(colonne, valeur);
-        return db.update(TABLE_PAUSE, args,
-                PAUSE_ID + "=" + rowId, null) > 0;
-    }
-
-    public boolean deleteEnregistrementPause(SQLiteDatabase db, long rowId) {
-        return db.delete(TABLE_PAUSE, PAUSE_ID + "=" + rowId, null) > 0;
-    }
-
-    public Cursor getAllPause(SQLiteDatabase db) {
-        return db.query(TABLE_PAUSE, new String[]{
-                        PAUSE_ID,
-                        PAUSE_DEBUT,
-                        PAUSE_FIN},
-                null,
-                null,
-                null,
-                null,
-                null);
-    }
-
-    //---retrieves all the titles---
-    public Cursor getSomeDatePause(SQLiteDatabase db, String conditions) {
-        return db.query(true, TABLE_PAUSE, new String[]{
-                        PAUSE_ID,
-                        PAUSE_DEBUT,
-                        PAUSE_FIN},
-                conditions,
-                null,
-                null,
-                null,
-                null,
-                null);
-    }
-
-    //---retrieves a particular title---
-    public Cursor selectDatePause(SQLiteDatabase db, long rowId) throws SQLException {
-        Cursor mCursor =
-                db.query(true, TABLE_PAUSE, new String[]{
-                                PAUSE_ID,
-                                PAUSE_DEBUT,
-                                PAUSE_FIN},
-                        PAUSE_ID + "=" + rowId,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
-
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
-
-    //---insert a title into the database---
-    public long insereNouvellePause(SQLiteDatabase db, String date_debut, String date_fin) {
+    public long insereNouveauPointage(SQLiteDatabase db, String date_debut, String date_fin,String commentaire) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(PAUSE_DEBUT, date_debut);
-        initialValues.put(PAUSE_FIN, date_fin);
-        long retour = db.insert(TABLE_PAUSE, null, initialValues);
-        //android.util.Log.w("Insere pause", "retour="+retour + "Debut="+date_debut+" Fin="+date_fin);
-        return retour;
+        initialValues.put(DATE_DEBUT, date_debut);
+        initialValues.put(DATE_FIN, date_fin);
+        initialValues.put(COMMENTAIRE, commentaire);
+        return db.insert(DATABASE_NAME, null, initialValues);
     }
+
 }

@@ -40,7 +40,7 @@
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent">
 
 
@@ -67,6 +67,25 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left">
+
+        <TextView
+            android:id="@+id/commentaireActivite"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLength="30"
+            android:layout_gravity="left"></TextView>
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent">
 
         <TextView
@@ -77,16 +96,6 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_gravity="right"></TextView>
-
-        <TextView
-            android:id="@+id/cumulpauseunitaire"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="fill_parent"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_gravity="right"></TextView>
-
 
     </LinearLayout>
 

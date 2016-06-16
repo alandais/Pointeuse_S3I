@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <TextView
-        android:id="@+id/aide01"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></TextView>
+    <WebView
+        android:id="@+id/webaide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></WebView>
 </ScrollView>

@@ -33,9 +33,6 @@
             android:name=".activite.Aide"
             android:label="@string/app_name"></activity>
         <activity
-            android:name=".activite.ReglagePauses"
-            android:label="@string/reglages_pauses"></activity>
-        <activity
             android:name=".activite.Suppression"
             android:label="@string/app_name"></activity>
         <activity

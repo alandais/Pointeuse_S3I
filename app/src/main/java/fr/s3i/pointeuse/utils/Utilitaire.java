@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,11 +20,13 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.ExceptionParser;
+
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.R;
 
 public class Utilitaire {
-    public final static String FILENAME = "PointeuseS3I.dat";
+    public final static String FILENAME = "oburoS3I.csv";
 
 
     public static void sendbymail(Context leContext) {
@@ -31,8 +35,9 @@ public class Utilitaire {
         try {
             email = preferences.getString("email", "inconnu");
         } catch (Exception All) {
+            android.util.Log.w( "Echec" , All.getMessage());
             return;
-            //Toast.makeText(this, "Echec=" + All.getMessage() , Toast.LENGTH_SHORT).show();
+
         }
 
         if (email.equals("inconnu")) {
@@ -118,10 +123,11 @@ public class Utilitaire {
         constantsCursor = dbHelper.getAllPointage(db);
         if (constantsCursor == null) {
             erreur = 1;
+            android.util.Log.d("Erreur"," Erreur 1 base vide"   );
             return erreur;
         }
 
-        //android.util.Log.w("EXTRA_STREAM",leContext.getFilesDir() + "  "+  leContext.getFilesDir().getAbsolutePath()   );
+        android.util.Log.d("EXTRA_STREAM",leContext.getFilesDir() + "  "+  leContext.getFilesDir().getAbsolutePath()   );
 
         try {
 
@@ -155,13 +161,21 @@ public class Utilitaire {
                     commentaire = constantsCursor.getString(3);
 
                     if (debut.length() > 0) {
-                        date = olddateFormat.parse(debut);
-                        debut = (String) newdateFormat.format(date);
+                        try {
+                            date = olddateFormat.parse(debut);
+                            debut = (String) newdateFormat.format(date);
+                        }catch (ParseException ex){
+                            debut = "";
+                        }
                     }
 
                     if (fin.length() > 0) {
-                        date = olddateFormat.parse(fin);
-                        fin = (String) newdateFormat.format(date);
+                        try {
+                            date = olddateFormat.parse(fin);
+                            fin = (String) newdateFormat.format(date);
+                        }catch (ParseException ex){
+                            fin = "";
+                        }
                     }
                     if (commentaire == null) {
                         commentaire = " ";
@@ -185,13 +199,58 @@ public class Utilitaire {
             constantsCursor.close();
             dbHelper.close();
             db.close();
-            // TODO Auto-generated catch block
-            //Log.e("Erreur de generation", "Erreur=" + e.getMessage());
             erreur = 2;
+            android.util.Log.d("Erreur"," Erreur 2 Exception "  + e.getMessage() );
             return erreur;
         }
         return 0;
     }
 
+    static public String formatAffichage(Context leContext, Long temps){
+        Double tempsReel = new Double(temps);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2); //arrondi à 2 chiffres apres la virgules
+        df.setMinimumFractionDigits(2);
+        df.setDecimalSeparatorAlwaysShown(true);
+        String format = "0";
+        String texteAffichage = new String();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(leContext);
+        try {
+            format = preferences.getString("formataffichage", "0");
+        } catch (Exception All) {
+            android.util.Log.w("Echec", All.getMessage());
+        }
+
+        if (temps < 60) {
+            if (format.equals("2")) {
+                texteAffichage = (df.format(tempsReel / 60)) + " H";
+            } else {
+                texteAffichage = temps + "Min";
+
+            }
+
+        } else if (temps < 1440) {
+            if (format.equals("2")) {
+                texteAffichage = (df.format(tempsReel / 60)) + " H";
+            } else {
+                texteAffichage = temps / 60 + "H" + temps % 60 + "Min";
+            }
+        } else {
+            android.util.Log.d("format" , format);
+
+            if (format.equals("0")) {
+                texteAffichage = temps / 60 + "H" + temps % 60 + "Min";
+            } else if (format.equals("1")) {
+                int min = (int) (temps % 1440);
+                int nbjour = (int) (temps / 1440);
+                texteAffichage = (int) (nbjour) + leContext.getString(R.string.jourarrondi) + " " +
+                                (int) (min / 60) + "h " +
+                                (int) (min % 60) + "min";
+            } else {
+                texteAffichage = (df.format(tempsReel / 60)) + " H";
+            }
+        }
+        return texteAffichage;
+    }
 
 }
