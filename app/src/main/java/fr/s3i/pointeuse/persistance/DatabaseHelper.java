@@ -51,7 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //---opens the database---
     public SQLiteDatabase open() throws SQLException {
-        return this.getWritableDatabase();
+        SQLiteDatabase db =  this.getWritableDatabase();
+        purge_pointage_vide(db);
+        return db;
     }
 
     //---closes the database---
@@ -69,6 +71,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         args.put(colonne, valeur);
         return db.update(DATABASE_NAME, args,
                 ID + "=" + rowId, null) > 0;
+    }
+
+    //---deletes a particular title---
+    public boolean purge_pointage_vide(SQLiteDatabase db) {
+        db.delete(DATABASE_NAME, DATE_DEBUT + "=''", null);
+        return db.delete(DATABASE_NAME, DATE_DEBUT + " IS NULL", null) > 0;
     }
 
     //---deletes a particular title---

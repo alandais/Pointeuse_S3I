@@ -37,8 +37,8 @@
     <string name="erreurchangementdate1">The start time must be less than the end time</string>
     <string name="erreurchangementdate2">The end time must be greater than the start time</string>
 
-    <string name="widget_name">AtWork Check</string>
-    <string name="app_name">AtWork</string>
+    <string name="widget_name">Oburo.O Check</string>
+    <string name="app_name">Oburo.O</string>
 
     <string name="feedback">Add a feedback</string>
 
@@ -113,14 +113,14 @@
     <string name="non1">No</string>
     <string name="suppression">Delete check in</string>
 	 
-	   <string name="txtaide1">principal_en</string>
-	  <string name="txtaide2">param_en</string>
+	   <string name="txtaide1">principal_en.txt</string>
+	  <string name="txtaide2">param_en.txt</string>
     <string name="ajouter_pointage">Add a check-in</string>
     <string name="confirmation_suppression">Confirm the removal of check-in</string>
 
-    <string name="license">License</string>
+    <string name="licence">License</string>
     <string name="libelleS3I">S3I ?</string>
-    <string name="copyright">    Oburo.o  Copyright (C) 2016  S3I
+    <string name="copyright">    Oburo.O  Copyright (C) 2016  S3I
     This program comes with ABSOLUTELY NO WARRANTY; voir le menu License pour les détails
     This is free software, and you are welcome to redistribute it
     under certain conditions; voir le menu License pour les details.

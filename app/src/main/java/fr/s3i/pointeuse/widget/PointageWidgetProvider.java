@@ -21,9 +21,13 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.google.android.gms.cast.CastRemoteDisplayLocalService;
+
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.service.Rafraichissement;
+
+import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
 public class PointageWidgetProvider extends AppWidgetProvider {
     public static String ACTION_WIDGET_CONFIGURE = "ConfigureWidget";
@@ -39,7 +43,6 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     private static PendingIntent pendingIntent;
     private static AlarmManager alarmManager;
     final static public int PERIODE = 60;
-    Intent monService;
 
     private boolean pointageEnCours = false;
     int[] appWidgetIds;
@@ -48,35 +51,33 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         this.appWidgetIds = appWidgetIds;
         int N = appWidgetIds.length;
-        //android.util.Log.w("onUpdate=true","onUpdate N=");
+        android.util.Log.d("onUpdate=true","onUpdate N=");
         for (int i = 0; i < N; i++) {
             int appWidgetId = appWidgetIds[i];
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-        monService = new Intent(context, Rafraichissement.class);
-        pendingIntent = PendingIntent.getService(context, 0, monService, 0);
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+//        monService = new Intent(context, Rafraichissement.class);
+//        pendingIntent = PendingIntent.getService(context, 0, monService, 0);
+//        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, PointageWidgetProvider.class);
         intent.setAction(ACTION_START_REFRESH_WIDGET);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.cancel(pi);
-        //alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
+//        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        alarmManager.cancel(pi);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
+//        } else {
+//            alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
+//        }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-        } else {
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-        }
-
-        // alarmManager.set(AlarmManager.RTC_WAKEUP,  Calendar.getInstance().getTimeInMillis(), pendingIntent);//Toutes les minutes
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), PERIODE*1000, pendingIntent);//Toutes les minutes
         pointageEnCours = false;
 
     }
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         // Prepare widget views
+        android.util.Log.d("UPDATEAPP", "début de l'update app widget");
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widgetlayout);
         Intent active = new Intent(context, PointageWidgetProvider.class);
         active.setAction(ACTION_WIDGET_RECEIVER);
@@ -93,11 +94,11 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
         final String action = intent.getAction();
 
-        if (alarmManager == null) {
-            monService = new Intent(context, Rafraichissement.class);
-            pendingIntent = PendingIntent.getService(context, 0, monService, 0);
-            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        }
+//        if (alarmManager == null) {
+//            monService = new Intent(context, Rafraichissement.class);
+//            pendingIntent = PendingIntent.getService(context, 0, monService, 0);
+//            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        }
 
         if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
             final int appWidgetId = intent.getExtras().getInt(
@@ -130,18 +131,24 @@ public class PointageWidgetProvider extends AppWidgetProvider {
 
                 pointageEnCours = false;
 
-            } else if (intent.getAction().equals(ACTION_START_REFRESH_WIDGET)) {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-                } else {
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-                }
+            }else {
+                android.util.Log.d("RECEIVE", "démarrage service");
+                Intent monService;
+                monService = new Intent(context, Rafraichissement.class);
+                context.startService(monService);
             }
-            try {
-                pendingIntent.send();
-            } catch (PendingIntent.CanceledException e) {
-                android.util.Log.w("action","impossible d'envoyer le pointage");
-            }
+//            else if (intent.getAction().equals(ACTION_START_REFRESH_WIDGET)) {
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
+//                } else {
+//                    alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
+//                }
+//            }
+//            try {
+//                pendingIntent.send();
+//            } catch (PendingIntent.CanceledException e) {
+//                android.util.Log.w("action","impossible d'envoyer le pointage");
+//            }
         }
     }
 
@@ -155,7 +162,12 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         Date date = new Date();
 
         try {
-            if (dernierEnregistrement.getString(2).length() != 0) {
+            if (dernierEnregistrement == null ){
+                dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
+                dateFormat = new SimpleDateFormat("HH:mm");
+                message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
+
+            }else if (dernierEnregistrement.getString(2).length() != 0) {
                 dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
@@ -177,10 +189,11 @@ public class PointageWidgetProvider extends AppWidgetProvider {
 
     }
 
-    @Override
+
+        @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         context.stopService(new Intent(context, Rafraichissement.class));
-        alarmManager.cancel(pendingIntent);
+        //alarmManager.cancel(pendingIntent);
         super.onDeleted(context, appWidgetIds);
     }
 

@@ -1,4 +1,4 @@
-Oburo.o:
+Oburo.O:
 
 	Cette application permet de calculer facilement ses heures de travail par une simple pression sur l'écran.
 Le calcul est automatique.

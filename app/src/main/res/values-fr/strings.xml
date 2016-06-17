@@ -27,8 +27,8 @@
     <string name="cancel">Annuler</string>
     <string name="addcomment">Ajouter un commentaire</string>
     <string name="commentaire">Activité</string>
-    <string name="widget_name">Pointe Oburo.o</string>
-    <string name="app_name">Oburo.o</string>
+    <string name="widget_name">Pointe Oburo.O</string>
+    <string name="app_name">Oburo.O</string>
 
     <string name="aucun">aucun</string>
 
@@ -53,7 +53,7 @@
 
     <string name="duree">Durée de travail:</string>
 
-    <string name="savepointage">[Oburo.o S3i] Export de vos pointages</string>
+    <string name="savepointage">[Oburo.O S3i] Export de vos pointages</string>
     <string name="choisir">Choisir le logiciel</string>
     <string name="listeP">Liste des pointages du</string>
     <string name="numero">Numéro</string>
@@ -104,7 +104,7 @@
 
     <string name="licence">License</string>
     <string name="libelleS3I">S3I ?</string>
-    <string name="copyright">    Oburo.o  Copyright (C) 2016  S3I
+    <string name="copyright">    Oburo.O  Copyright (C) 2016  S3I
     This program comes with ABSOLUTELY NO WARRANTY; voir le menu License pour les détails
     This is free software, and you are welcome to redistribute it
     under certain conditions; voir le menu License pour les details.

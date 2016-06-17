@@ -37,7 +37,7 @@ public class Rafraichissement extends Service {
     DatabaseHelper dbHelper;
     SQLiteDatabase db;
     private final IBinder mBinder = new LocalBinder();
-
+    private long tempsCourant = 0;
 
     public class LocalBinder extends Binder {
         Rafraichissement getService() {
@@ -61,24 +61,29 @@ public class Rafraichissement extends Service {
     @Override
     public int onStartCommand(Intent intent,int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        MonRefresh();
-        //1.8
-        try {
-            AlarmManager alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-            PendingIntent pendingIntent = PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
-            }
-        } catch (Exception e) {
+        android.util.Log.d("START", "tempCourant : " + Long.toString(tempsCourant ++));
 
-        }
+        refreshWidget();
+
+
+        programmeProchainRaffraichissement(intent);
+
         return START_STICKY;
     }
 
-    public void MonRefresh() {
+    private void programmeProchainRaffraichissement(Intent intent){
+        AlarmManager alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
+        }
+
+    }
+    public void refreshWidget() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String affichage = getString(R.string.debuter);
 
@@ -96,7 +101,7 @@ public class Rafraichissement extends Service {
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widgetlayout);
 
         dbHelper = new DatabaseHelper(this);
-        db = dbHelper.getWritableDatabase();
+        db = dbHelper.open();
         Date maintenant = new Date();
         android.util.Log.d("DATE", "Dateformat="+dateFormat.format(maintenant));
         String conditions = "( strftime('%j',DATE_DEBUT) = strftime('%j','" + dateFormat.format(maintenant) + "') " +
@@ -152,16 +157,15 @@ public class Rafraichissement extends Service {
 
         // Push update for this widget to the home screen
 
-
         ComponentName thisWidget = new ComponentName(this, PointageWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(this);
         manager.updateAppWidget(thisWidget, remoteViews);
 
-        Intent clickintent = new Intent(this, PointageWidgetProvider.class);
-        clickintent.setAction(PointageWidgetProvider.ACTION_WIDGET_RECEIVER);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, clickintent, 0);
-        remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, pendingIntent);
-        manager.updateAppWidget(thisWidget, remoteViews);
+//        Intent clickintent = new Intent(this, PointageWidgetProvider.class);
+//        clickintent.setAction(PointageWidgetProvider.ACTION_WIDGET_RECEIVER);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, clickintent, 0);
+//        remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, pendingIntent);
+//        manager.updateAppWidget(thisWidget, remoteViews);
     }
 
 

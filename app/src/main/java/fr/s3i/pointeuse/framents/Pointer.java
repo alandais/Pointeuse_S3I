@@ -287,8 +287,12 @@ public class Pointer extends Fragment {
     	/*Toast.makeText(this, "dernierEnregistrement =  " + dernierEnregistrement.getLong(0) +
     				" - Debut = " + dernierEnregistrement.getString(2) + " Fin= " + 
     				dernierEnregistrement.getString(3), Toast.LENGTH_SHORT).show();*/
-
-        if (dernierEnregistrement == null || dernierEnregistrement.getString(2).length() > 0) {
+        if (dernierEnregistrement.getCount() == 0 ){
+            dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
+            dateFormat = new SimpleDateFormat("HH:mm");
+            message = getString(R.string.debutpointage) + " " + dateFormat.format(date);
+            Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        } else if (dernierEnregistrement.getString(2).length() > 0) {
             dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
             dateFormat = new SimpleDateFormat("HH:mm");
             message = getString(R.string.debutpointage) + " " + dateFormat.format(date);

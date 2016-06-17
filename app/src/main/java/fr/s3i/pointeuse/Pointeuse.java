@@ -62,7 +62,8 @@ public class Pointeuse extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        Toast.makeText(this, R.string.copyright , Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, R.string.copyright , Toast.LENGTH_LONG);
+        toast.show();
 
 
         setContentView(R.layout.activity_main);

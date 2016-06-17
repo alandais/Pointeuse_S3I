@@ -1,4 +1,4 @@
-Oburo.o:
+Oburo.O:
 
 	This application makes working hours counting easy as a simple touch of the screen. The calculation is automatic. The alternation between check in and  out work is automatic.
 

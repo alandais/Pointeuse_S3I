@@ -102,7 +102,7 @@ public class Calendrier extends Fragment {
         });
 
         dbHelper = new DatabaseHelper(this.getContext());
-        db = dbHelper.getWritableDatabase();
+        db = dbHelper.open();
 
         maListe = (ListView) v.findViewById(R.id.MaListeView);
 
