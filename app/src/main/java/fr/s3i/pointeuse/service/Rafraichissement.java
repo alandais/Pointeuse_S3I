@@ -73,14 +73,19 @@ public class Rafraichissement extends Service {
     }
 
     private void programmeProchainRaffraichissement(Intent intent){
-        AlarmManager alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
+        try{
+            AlarmManager alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+            PendingIntent pendingIntent = PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
-        } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
+            } else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
+            }
+        }catch(Exception e){
+            android.util.Log.w("RESTART", "Erreur à la relance du service de rafraichissement");
         }
+
 
     }
     public void refreshWidget() {
@@ -159,13 +164,13 @@ public class Rafraichissement extends Service {
 
         ComponentName thisWidget = new ComponentName(this, PointageWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(this);
+
+        Intent clickintent = new Intent(this, PointageWidgetProvider.class);
+        clickintent.setAction(PointageWidgetProvider.ACTION_WIDGET_RECEIVER);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, clickintent, 0);
+        remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, pendingIntent);
         manager.updateAppWidget(thisWidget, remoteViews);
 
-//        Intent clickintent = new Intent(this, PointageWidgetProvider.class);
-//        clickintent.setAction(PointageWidgetProvider.ACTION_WIDGET_RECEIVER);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, clickintent, 0);
-//        remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, pendingIntent);
-//        manager.updateAppWidget(thisWidget, remoteViews);
     }
 
 

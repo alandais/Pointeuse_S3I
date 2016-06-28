@@ -2,10 +2,6 @@
 
 <resources>
 
-
-    <string name="dontpause">Breaks: </string>
-    <string name="tpause">Breaks: </string>
-
     <string name="tdebut">In: </string>
     <string name="tfin">Out: </string>
 
@@ -14,8 +10,6 @@
 
     <string name="theme_description"> Select a theme. The change will take effect after restarting the application.</string>
     <string name="titre_theme">Select a theme</string>
-
-    <string name="supprimer_pub_description">Delete the interstitial ads</string>
 
     <string name="confirmation_suppression_pause">Confirm the removal of breaks</string>
 

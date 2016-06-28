@@ -39,7 +39,6 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     SQLiteDatabase db;
     Cursor dernierEnregistrement;
 
-
     private static PendingIntent pendingIntent;
     private static AlarmManager alarmManager;
     final static public int PERIODE = 60;
@@ -57,19 +56,19 @@ public class PointageWidgetProvider extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
 
-//        monService = new Intent(context, Rafraichissement.class);
-//        pendingIntent = PendingIntent.getService(context, 0, monService, 0);
-//        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+ /*       Intent monService = new Intent(context, Rafraichissement.class);
+        pendingIntent = PendingIntent.getService(context, 0, monService, 0);
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, PointageWidgetProvider.class);
         intent.setAction(ACTION_START_REFRESH_WIDGET);
-//        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        alarmManager.cancel(pi);
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-//        } else {
-//            alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-//        }
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pi);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
+        } else {
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
+        }*/
 
         pointageEnCours = false;
 
@@ -87,6 +86,11 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, actionPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+    // démarrage du service
+        Intent monService;
+        monService = new Intent(context, Rafraichissement.class);
+        context.startService(monService);
+
     }
 
     @Override
@@ -132,10 +136,7 @@ public class PointageWidgetProvider extends AppWidgetProvider {
                 pointageEnCours = false;
 
             }else {
-                android.util.Log.d("RECEIVE", "démarrage service");
-                Intent monService;
-                monService = new Intent(context, Rafraichissement.class);
-                context.startService(monService);
+                android.util.Log.d("RECEIVE", "démarrage ??");
             }
 //            else if (intent.getAction().equals(ACTION_START_REFRESH_WIDGET)) {
 //                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -162,16 +163,19 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         Date date = new Date();
 
         try {
-            if (dernierEnregistrement == null ){
+            if (dernierEnregistrement.getCount() == 0 ){
+                android.util.Log.d("pointage widget", "tentative d'insertion base vide");
                 dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
 
             }else if (dernierEnregistrement.getString(2).length() != 0) {
+                android.util.Log.d("pointage widget", "tentative d'insertion tous pointage clos");
                 dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
             } else {
+                android.util.Log.d("pointage widget", "tentative d'update de cloture pointage");
                 dbHelper.updateEnregistrementPointage(db, dernierEnregistrement.getLong(0), dbHelper.DATE_FIN, dateFormat.format(date));
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.finpointage) + " " + dateFormat.format(date);
