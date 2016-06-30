@@ -1,3 +1,22 @@
+/*
+ * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ *
+ *     This file is part of Oburo.O
+ *     Oburo.O is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package fr.s3i.pointeuse.service;
 
 import java.text.DecimalFormat;
@@ -41,14 +60,14 @@ public class Rafraichissement extends Service {
 
     public class LocalBinder extends Binder {
         Rafraichissement getService() {
-            android.util.Log.d("LocalBinder","LocalBinder");
+            android.util.Log.d("LocalBinder", "LocalBinder");
             return Rafraichissement.this;
         }
     }
 
     @Override
     public void onCreate() {
-        android.util.Log.d("onCreate","OK");
+        android.util.Log.d("onCreate", "OK");
         super.onCreate();
     }
 
@@ -59,10 +78,10 @@ public class Rafraichissement extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent,int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        android.util.Log.d("START", "tempCourant : " + Long.toString(tempsCourant ++));
+        android.util.Log.d("START", "tempCourant : " + Long.toString(tempsCourant++));
 
         refreshWidget();
 
@@ -72,8 +91,8 @@ public class Rafraichissement extends Service {
         return START_STICKY;
     }
 
-    private void programmeProchainRaffraichissement(Intent intent){
-        try{
+    private void programmeProchainRaffraichissement(Intent intent) {
+        try {
             AlarmManager alarmManager = (AlarmManager) this.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
             PendingIntent pendingIntent = PendingIntent.getService(this.getApplicationContext(), 0, intent, 0);
 
@@ -82,12 +101,13 @@ public class Rafraichissement extends Service {
             } else {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + PointageWidgetProvider.PERIODE * 1000, pendingIntent);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             android.util.Log.w("RESTART", "Erreur à la relance du service de rafraichissement");
         }
 
 
     }
+
     public void refreshWidget() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String affichage = getString(R.string.debuter);
@@ -108,7 +128,7 @@ public class Rafraichissement extends Service {
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.open();
         Date maintenant = new Date();
-        android.util.Log.d("DATE", "Dateformat="+dateFormat.format(maintenant));
+        android.util.Log.d("DATE", "Dateformat=" + dateFormat.format(maintenant));
         String conditions = "( strftime('%j',DATE_DEBUT) = strftime('%j','" + dateFormat.format(maintenant) + "') " +
                 " and strftime('%Y',DATE_DEBUT) = strftime('%Y','" + dateFormat.format(maintenant) + "') ) " +
 
@@ -123,7 +143,7 @@ public class Rafraichissement extends Service {
             while (curseurEnreg.moveToNext()) {
                 listeDebut.add(curseurEnreg.getString(1)); // 0 is the first column
                 listeFin.add(curseurEnreg.getString(2)); // 0 is the first column
-                if("".equals(curseurEnreg.getString(2))){
+                if ("".equals(curseurEnreg.getString(2))) {
                     affichage = getString(R.string.travailencours);
                 }
                 android.util.Log.d("Enregistrement parcouru", curseurEnreg.getString(1) + " / " + curseurEnreg.getString(2));

@@ -1,3 +1,22 @@
+/*
+ * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ *
+ *     This file is part of Oburo.O
+ *     Oburo.O is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package fr.s3i.pointeuse.utils;
 
 import java.io.File;
@@ -20,8 +39,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.ExceptionParser;
-
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.R;
 
@@ -35,7 +52,7 @@ public class Utilitaire {
         try {
             email = preferences.getString("email", "inconnu");
         } catch (Exception All) {
-            android.util.Log.w( "Echec" , All.getMessage());
+            android.util.Log.w("Echec", All.getMessage());
             return;
 
         }
@@ -123,11 +140,11 @@ public class Utilitaire {
         constantsCursor = dbHelper.getAllPointage(db);
         if (constantsCursor == null) {
             erreur = 1;
-            android.util.Log.d("Erreur"," Erreur 1 base vide"   );
+            android.util.Log.d("Erreur", " Erreur 1 base vide");
             return erreur;
         }
 
-        android.util.Log.d("EXTRA_STREAM",leContext.getFilesDir() + "  "+  leContext.getFilesDir().getAbsolutePath()   );
+        android.util.Log.d("EXTRA_STREAM", leContext.getFilesDir() + "  " + leContext.getFilesDir().getAbsolutePath());
 
         try {
 
@@ -164,7 +181,7 @@ public class Utilitaire {
                         try {
                             date = olddateFormat.parse(debut);
                             debut = (String) newdateFormat.format(date);
-                        }catch (ParseException ex){
+                        } catch (ParseException ex) {
                             debut = "";
                         }
                     }
@@ -173,7 +190,7 @@ public class Utilitaire {
                         try {
                             date = olddateFormat.parse(fin);
                             fin = (String) newdateFormat.format(date);
-                        }catch (ParseException ex){
+                        } catch (ParseException ex) {
                             fin = "";
                         }
                     }
@@ -200,13 +217,13 @@ public class Utilitaire {
             dbHelper.close();
             db.close();
             erreur = 2;
-            android.util.Log.d("Erreur"," Erreur 2 Exception "  + e.getMessage() );
+            android.util.Log.d("Erreur", " Erreur 2 Exception " + e.getMessage());
             return erreur;
         }
         return 0;
     }
 
-    static public String formatAffichage(Context leContext, Long temps){
+    static public String formatAffichage(Context leContext, Long temps) {
         Double tempsReel = new Double(temps);
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2); //arrondi à 2 chiffres apres la virgules
@@ -236,7 +253,7 @@ public class Utilitaire {
                 texteAffichage = temps / 60 + "H" + temps % 60 + "Min";
             }
         } else {
-            android.util.Log.d("format" , format);
+            android.util.Log.d("format", format);
 
             if (format.equals("0")) {
                 texteAffichage = temps / 60 + "H" + temps % 60 + "Min";
@@ -244,8 +261,8 @@ public class Utilitaire {
                 int min = (int) (temps % 1440);
                 int nbjour = (int) (temps / 1440);
                 texteAffichage = (int) (nbjour) + leContext.getString(R.string.jourarrondi) + " " +
-                                (int) (min / 60) + "h " +
-                                (int) (min % 60) + "min";
+                        (int) (min / 60) + "h " +
+                        (int) (min % 60) + "min";
             } else {
                 texteAffichage = (df.format(tempsReel / 60)) + " H";
             }

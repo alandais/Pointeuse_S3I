@@ -1,3 +1,22 @@
+/*
+ * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ *
+ *     This file is part of Oburo.O
+ *     Oburo.O is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package fr.s3i.pointeuse.widget;
 
 import java.text.ParseException;
@@ -21,13 +40,9 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.google.android.gms.cast.CastRemoteDisplayLocalService;
-
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.service.Rafraichissement;
-
-import static com.google.android.gms.cast.CastRemoteDisplayLocalService.startService;
 
 public class PointageWidgetProvider extends AppWidgetProvider {
     public static String ACTION_WIDGET_CONFIGURE = "ConfigureWidget";
@@ -50,25 +65,11 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         this.appWidgetIds = appWidgetIds;
         int N = appWidgetIds.length;
-        android.util.Log.d("onUpdate=true","onUpdate N=");
+        android.util.Log.d("onUpdate=true", "onUpdate N=");
         for (int i = 0; i < N; i++) {
             int appWidgetId = appWidgetIds[i];
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-
- /*       Intent monService = new Intent(context, Rafraichissement.class);
-        pendingIntent = PendingIntent.getService(context, 0, monService, 0);
-        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(context, PointageWidgetProvider.class);
-        intent.setAction(ACTION_START_REFRESH_WIDGET);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.cancel(pi);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-        } else {
-            alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
-        }*/
 
         pointageEnCours = false;
 
@@ -86,7 +87,7 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         remoteViews.setOnClickPendingIntent(R.id.monbouttonwidget, actionPendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-    // démarrage du service
+        // démarrage du service
         Intent monService;
         monService = new Intent(context, Rafraichissement.class);
         context.startService(monService);
@@ -135,21 +136,23 @@ public class PointageWidgetProvider extends AppWidgetProvider {
 
                 pointageEnCours = false;
 
-            }else {
+            } else {
                 android.util.Log.d("RECEIVE", "démarrage ??");
+
             }
-//            else if (intent.getAction().equals(ACTION_START_REFRESH_WIDGET)) {
-//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-//                } else {
-//                    alarmManager.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+1000, pendingIntent);
-//                }
-//            }
-//            try {
-//                pendingIntent.send();
-//            } catch (PendingIntent.CanceledException e) {
-//                android.util.Log.w("action","impossible d'envoyer le pointage");
-//            }
+            Intent monService = new Intent(context, Rafraichissement.class);
+            pendingIntent = PendingIntent.getService(context, 0, monService, 0);
+            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+            // Intent intent = new Intent(context, PointageWidgetProvider.class);
+            intent.setAction(ACTION_START_REFRESH_WIDGET);
+            PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            alarmManager.cancel(pi);
+            // redémarrage du service
+            monService = new Intent(context, Rafraichissement.class);
+            context.startService(monService);
+
+
         }
     }
 
@@ -163,13 +166,13 @@ public class PointageWidgetProvider extends AppWidgetProvider {
         Date date = new Date();
 
         try {
-            if (dernierEnregistrement.getCount() == 0 ){
+            if (dernierEnregistrement.getCount() == 0) {
                 android.util.Log.d("pointage widget", "tentative d'insertion base vide");
                 dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
                 message = context.getString(R.string.debutpointage) + " " + dateFormat.format(date);
 
-            }else if (dernierEnregistrement.getString(2).length() != 0) {
+            } else if (dernierEnregistrement.getString(2).length() != 0) {
                 android.util.Log.d("pointage widget", "tentative d'insertion tous pointage clos");
                 dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
                 dateFormat = new SimpleDateFormat("HH:mm");
@@ -194,7 +197,7 @@ public class PointageWidgetProvider extends AppWidgetProvider {
     }
 
 
-        @Override
+    @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         context.stopService(new Intent(context, Rafraichissement.class));
         //alarmManager.cancel(pendingIntent);

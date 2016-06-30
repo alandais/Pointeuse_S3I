@@ -1,3 +1,22 @@
+/*
+ * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ *
+ *     This file is part of Oburo.O
+ *     Oburo.O is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package fr.s3i.pointeuse.persistance;
 
 import android.content.ContentValues;
@@ -51,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //---opens the database---
     public SQLiteDatabase open() throws SQLException {
-        SQLiteDatabase db =  this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         purge_pointage_vide(db);
         return db;
     }
@@ -166,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(DATABASE_NAME, null, initialValues);
     }
 
-    public long insereNouveauPointage(SQLiteDatabase db, String date_debut, String date_fin,String commentaire) {
+    public long insereNouveauPointage(SQLiteDatabase db, String date_debut, String date_fin, String commentaire) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(DATE_DEBUT, date_debut);
         initialValues.put(DATE_FIN, date_fin);

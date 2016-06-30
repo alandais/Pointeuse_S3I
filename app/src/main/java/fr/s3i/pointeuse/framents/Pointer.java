@@ -1,3 +1,22 @@
+/*
+ * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ *
+ *     This file is part of Oburo.O
+ *     Oburo.O is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package fr.s3i.pointeuse.framents;
 
 import java.text.ParseException;
@@ -130,8 +149,7 @@ public class Pointer extends Fragment {
 
         if (dernierEnregistrement != null) {
             try {
-                if (!(dernierEnregistrement.getString(2).length() > 0))
-                {
+                if (!(dernierEnregistrement.getString(2).length() > 0)) {
                     //android.util.Log.w("debut=", (String)dernierEnregistrement.getString(1));
                     debut = dateFormat.parse((String) dernierEnregistrement.getString(1));
 
@@ -143,7 +161,7 @@ public class Pointer extends Fragment {
                     Calcul calcul = new Calcul(this.getContext());
                     Calcul.Spointage s = calcul.CalculTemps(c_debut, c_fin, 0);
                     long temps = s.temps_pointage / 60;
-                    String affichageTemps = Utilitaire.formatAffichage(this.getContext(),temps);
+                    String affichageTemps = Utilitaire.formatAffichage(this.getContext(), temps);
                     etatEnCours.setText(getString(R.string.tempstravail1) + affichageTemps);
                 }
             } catch (Exception e) {
@@ -162,7 +180,6 @@ public class Pointer extends Fragment {
         alarmManager.cancel(pi);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000, pi);
     }
-
 
 
     public void creerFenetreDateHeure() {
@@ -192,12 +209,13 @@ public class Pointer extends Fragment {
         alert.setNegativeButton(getString(R.string.cancel), null);
         alert.setPositiveButton(getString(R.string.oui1), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                saisirDateFin( );
+                saisirDateFin();
             }
         });
         alert.show();
 
     }
+
     public void saisirDateFin() {
         jour = nouvelleDate.getDayOfMonth();
         mois = nouvelleDate.getMonth();//Commence a 0
@@ -240,12 +258,13 @@ public class Pointer extends Fragment {
         alert.setNegativeButton(getString(R.string.cancel), null);
         alert.setPositiveButton(getString(R.string.oui1), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                insereNouveauPointage( );
+                insereNouveauPointage();
             }
         });
         alert.show();
 
     }
+
     public void insereNouveauPointage() {
         //Recupere la date et l'heure
         Cursor constantsCursor = null;
@@ -270,7 +289,7 @@ public class Pointer extends Fragment {
         Date nouvelleDateFin = c.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        dbHelper.insereNouveauPointage(db, dateFormat.format(nouvelleDateDebut), dateFormat.format(nouvelleDateFin),commentaire.getText().toString());
+        dbHelper.insereNouveauPointage(db, dateFormat.format(nouvelleDateDebut), dateFormat.format(nouvelleDateFin), commentaire.getText().toString());
 
         String message = getString(R.string.insertiontermine);
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
@@ -285,9 +304,9 @@ public class Pointer extends Fragment {
         String message;
 
     	/*Toast.makeText(this, "dernierEnregistrement =  " + dernierEnregistrement.getLong(0) +
-    				" - Debut = " + dernierEnregistrement.getString(2) + " Fin= " + 
+                    " - Debut = " + dernierEnregistrement.getString(2) + " Fin= " +
     				dernierEnregistrement.getString(3), Toast.LENGTH_SHORT).show();*/
-        if (dernierEnregistrement.getCount() == 0 ){
+        if (dernierEnregistrement.getCount() == 0) {
             dbHelper.insereNouveauPointage(db, dateFormat.format(date), "");
             dateFormat = new SimpleDateFormat("HH:mm");
             message = getString(R.string.debutpointage) + " " + dateFormat.format(date);
