@@ -1,3 +1,5 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="GPLV3">
+    <LanguageOptions name="JAVA" />
+  </settings>
 </component>
