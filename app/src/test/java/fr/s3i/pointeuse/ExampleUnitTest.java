@@ -1,4 +1,4 @@
-package fr.s3i.pointeuses3i;
+package fr.s3i.pointeuse;
 
 import org.junit.Test;
 
