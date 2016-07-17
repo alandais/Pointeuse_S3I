@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 import fr.s3i.pointeuse.business.communs.entities.Entity;
-import com.aurya.communs.interactors.boundaries.Translator;
+import fr.s3i.pointeuse.business.communs.interactors.boundaries.Translator;
 
 public interface InTranslator<T extends Entity, U> extends Translator<T, U>
 {
