@@ -46,6 +46,8 @@ public interface PointageIn extends InBoundary
 
     void modifierCommentaire(long id, String commentaire);
 
+    void supprimer(long id);
+
     void exporter();
 
 }

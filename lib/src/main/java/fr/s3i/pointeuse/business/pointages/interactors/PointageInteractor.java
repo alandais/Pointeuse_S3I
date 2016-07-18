@@ -140,6 +140,11 @@ public class PointageInteractor extends Interactor<PointageOut> implements Point
     }
 
     @Override
+    public void supprimer(long id) {
+        repository.supprimer(id);
+    }
+
+    @Override
     public void exporter()
     {
         if (envoi != null)
@@ -156,7 +161,7 @@ public class PointageInteractor extends Interactor<PointageOut> implements Point
                 export.append(infos.getFin());
                 export.append(preferences.getExportSeparateur());
                 export.append(infos.getDuree());
-                export.append(System.lineSeparator());
+                export.append("\n");
             }
             envoi.envoyer(preferences.getExportDestinataire(), R.get("mail_sujet"), R.get("mail_corps"), R.get("mail_nom_piece_jointe"),
                     export.toString().getBytes());

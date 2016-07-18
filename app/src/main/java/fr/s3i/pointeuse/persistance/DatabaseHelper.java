@@ -100,6 +100,11 @@ public class DatabaseHelper extends SQLiteOpenHelper implements PointageReposito
     }
 
     @Override
+    public void supprimer(Long id) {
+        db.delete(DATABASE_NAME, ID + "=" + id, null);
+    }
+
+    @Override
     public List<Pointage> recupererTout() {
         return requeter(null, null);
     }

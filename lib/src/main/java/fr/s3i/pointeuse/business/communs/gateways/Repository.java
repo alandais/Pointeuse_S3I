@@ -28,6 +28,8 @@ public interface Repository<T, U extends Entity<T>>
 
     void persister(U entity);
 
+    void supprimer(T id);
+
     U recuperer(T id);
 
     List<U> recupererTout();
