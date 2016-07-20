@@ -21,8 +21,7 @@ package fr.s3i.pointeuse.business.communs.interactors.boundaries.out;
 
 import fr.s3i.pointeuse.business.communs.interactors.boundaries.Boundary;
 
-public interface OutBoundary extends Boundary
-{
+public interface OutBoundary extends Boundary {
 
     void onError(String message);
 

@@ -32,14 +32,14 @@ public class Preferences implements PointagePreferences {
 
     private final SharedPreferences preferences;
 
-    private static final String PREF_DATE_FORMAT = "";
-    private static final String PREF_DELAI_FORMAT = "";
-    private static final String PREF_PRECISION = "";
-    private static final String PREF_ARRONDI = "";
-    private static final String PREF_EXPORT_SEPARATEUR = "";
-    private static final String PREF_EXPORT_DESTINATAIRE = "";
-    private static final String PREF_TEMPS_TRAVAIL_MINIMUM_PAR_SEMAINE_EN_HEURES = "";
-    private static final String PREF_TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES = "";
+    private static final String PREF_DATE_FORMAT = "DATE_FORMAT";
+    private static final String PREF_DELAI_FORMAT = "DELAI_FORMAT";
+    private static final String PREF_PRECISION = "PRECISION";
+    private static final String PREF_ARRONDI = "ARRONDI";
+    private static final String PREF_EXPORT_SEPARATEUR = "EXPORT_SEPARATEUR";
+    private static final String PREF_EXPORT_DESTINATAIRE = "EXPORT_DESTINATAIRE";
+    private static final String PREF_TEMPS_TRAVAIL_MINIMUM_PAR_SEMAINE_EN_HEURES = "TEMPS_TRAVAIL_MINIMUM_PAR_SEMAINE_EN_HEURES";
+    private static final String PREF_TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES = "TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES";
 
     public Preferences(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);

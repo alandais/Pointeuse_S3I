@@ -24,8 +24,7 @@ import java.util.Date;
 import fr.s3i.pointeuse.business.communs.R;
 import fr.s3i.pointeuse.business.communs.entities.Entity;
 
-public class Pointage extends Entity<Long>
-{
+public class Pointage extends Entity<Long> {
 
     private Date debut;
 
@@ -33,50 +32,40 @@ public class Pointage extends Entity<Long>
 
     private String commentaire;
 
-    public Pointage(Date debut)
-    {
+    public Pointage(Date debut) {
         this.setDebut(debut);
     }
 
-    public Date getDebut()
-    {
+    public Date getDebut() {
         return debut;
     }
 
-    public void setDebut(Date debut)
-    {
+    public void setDebut(Date debut) {
         this.debut = debut;
     }
 
-    public Date getFin()
-    {
+    public Date getFin() {
         return fin;
     }
 
-    public void setFin(Date fin)
-    {
+    public void setFin(Date fin) {
         this.fin = fin;
     }
 
-    public String getCommentaire()
-    {
+    public String getCommentaire() {
         return commentaire;
     }
 
-    public void setCommentaire(String commentaire)
-    {
+    public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
     }
 
     @Override
-    public String getErrorMessage()
-    {
-        if (debut == null)
-        {
+    public String getErrorMessage() {
+        if (debut == null) {
             return R.get("erreur2");
         }
-        if (debut.after(fin))
-        {
+        if (debut.after(fin)) {
             return R.get("erreur3");
         }
         return null;

@@ -21,20 +21,16 @@ package fr.s3i.pointeuse.business.communs.entities;
 
 import fr.s3i.pointeuse.business.communs.R;
 
-public abstract class Entity<T>
-{
+public abstract class Entity<T> {
 
     private T id = null;
 
-    public T getId()
-    {
+    public T getId() {
         return id;
     }
 
-    public void setId(T id)
-    {
-        if (this.id != null)
-        {
+    public void setId(T id) {
+        if (this.id != null) {
             throw new IllegalStateException(R.get("erreur1"));
         }
         this.id = id;

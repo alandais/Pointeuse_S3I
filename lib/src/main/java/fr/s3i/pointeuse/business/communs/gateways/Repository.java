@@ -23,8 +23,7 @@ import java.util.List;
 
 import fr.s3i.pointeuse.business.communs.entities.Entity;
 
-public interface Repository<T, U extends Entity<T>>
-{
+public interface Repository<T, U extends Entity<T>> {
 
     void persister(U entity);
 

@@ -17,37 +17,32 @@
  *
  */
 
-package fr.s3i.pointeuse.business.pointages.interactors.boundaries.in;
+package fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import fr.s3i.pointeuse.business.communs.interactors.boundaries.in.InBoundary;
+/**
+ * Created by Adrien on 19/07/2016.
+ */
+public class PointageInfoListe {
 
-public interface PointageIn extends InBoundary
-{
+    private List<PointageInfo> pointages = new ArrayList<>();
 
-    void pointer();
+    private String dureeTotale;
 
-    void listerJour(Date date);
+    public PointageInfoListe(Collection<PointageInfo> pointages, String dureeTotale) {
+        this.pointages.addAll(pointages);
+        this.dureeTotale = dureeTotale;
+    }
 
-    void listerSemaine(Date date);
+    public List<PointageInfo> getPointages() {
+        return pointages;
+    }
 
-    void listerMois(Date date);
-
-    void listerAnnee(Date date);
-
-    void modifier(long id, Date debut, Date fin, String commentaire);
-
-    void modifierPointage(long id, Date debut, Date fin);
-
-    void modifierDebut(long id, Date debut);
-
-    void modifierFin(long id, Date fin);
-
-    void modifierCommentaire(long id, String commentaire);
-
-    void supprimer(long id);
-
-    void exporter();
+    public String getDureeTotale() {
+        return dureeTotale;
+    }
 
 }

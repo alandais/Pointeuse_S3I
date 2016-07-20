@@ -17,19 +17,19 @@
  *
  */
 
-package fr.s3i.pointeuse.business.pointages.interactors.boundaries.out;
+package fr.s3i.pointeuse.business.pointages.interactors.pointer.boundaries.in;
 
-import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.business.pointages.interactors.boundaries.out.model.ListePointageInfo;
-import fr.s3i.pointeuse.business.pointages.interactors.boundaries.out.model.PointageInfo;
+import java.util.Date;
 
-public interface PointageOut extends OutBoundary
-{
+import fr.s3i.pointeuse.business.communs.interactors.boundaries.in.InBoundary;
 
-    void pointage(PointageInfo pointage);
+/**
+ * Created by Adrien on 19/07/2016.
+ */
+public interface PointerIn extends InBoundary {
 
-    void listePointages(ListePointageInfo pointages);
+    void pointer();
 
-    void export(String data);
+    void inserer(Date debut, Date fin, String commentaire);
 
 }

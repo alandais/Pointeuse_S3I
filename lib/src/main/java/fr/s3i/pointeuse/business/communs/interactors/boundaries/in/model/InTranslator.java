@@ -25,8 +25,7 @@ import java.util.List;
 import fr.s3i.pointeuse.business.communs.entities.Entity;
 import fr.s3i.pointeuse.business.communs.interactors.boundaries.Translator;
 
-public interface InTranslator<T extends Entity, U> extends Translator<T, U>
-{
+public interface InTranslator<T extends Entity, U> extends Translator<T, U> {
 
     T translate(U model);
 

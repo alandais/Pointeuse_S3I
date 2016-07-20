@@ -17,50 +17,16 @@
  *
  */
 
-package fr.s3i.pointeuse.business.pointages.interactors.boundaries.out.model;
+package fr.s3i.pointeuse.business.pointages.interactors.pointer.boundaries.out;
 
-public class PointageInfo
-{
+import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.OutBoundary;
+import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 
-    private final long id;
+/**
+ * Created by Adrien on 19/07/2016.
+ */
+public interface PointerOut extends OutBoundary {
 
-    private final String debut;
-
-    private final String fin;
-
-    private final String duree;
-
-    public PointageInfo(long id, String debut, String fin, String duree)
-    {
-        this.id = id;
-        this.debut = debut;
-        this.fin = fin;
-        this.duree = duree;
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public String getDebut()
-    {
-        return debut;
-    }
-
-    public String getFin()
-    {
-        return fin;
-    }
-
-    public boolean isComplete()
-    {
-        return fin != null & !"".equals(fin);
-    }
-
-    public String getDuree()
-    {
-        return duree;
-    }
+    void onPointageInsere(PointageInfo pointage);
 
 }
