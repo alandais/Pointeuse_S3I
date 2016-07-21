@@ -19,16 +19,17 @@
 
 package fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import fr.s3i.pointeuse.business.communs.Contexte;
-import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.model.OutTranslator;
+import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.translator.OutTranslator;
 import fr.s3i.pointeuse.business.pointages.entities.Pointage;
 import fr.s3i.pointeuse.business.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model.PointageInfoListe;
-import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.utils.Calculs;
+import fr.s3i.pointeuse.business.pointages.services.PointageService;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -39,23 +40,27 @@ public class PointageInfoListeTranslator implements OutTranslator<List<Pointage>
 
     private final PointagePreferences preferences;
 
-    private final Calculs calculs;
+    private final PointageService pointageService;
 
     public PointageInfoListeTranslator(Contexte contexte) {
         this.pointageInfoTranslator = contexte.getService(PointageInfoTranslator.class);
         this.preferences = contexte.getService(PointagePreferences.class);
-        this.calculs = contexte.getService(Calculs.class);
+        this.pointageService = contexte.getService(PointageService.class);
     }
 
     @Override
     public PointageInfoListe translate(List<Pointage> pointages) {
         List<PointageInfo> pointageInfos = pointageInfoTranslator.translate(pointages);
-        String formatDuree = calculs.formatDuree(calculs.calculDureeTotale(pointages));
+        String formatDuree = pointageService.formatDuree(pointageService.calculDureeTotale(pointages));
         return new PointageInfoListe(pointageInfos, formatDuree);
     }
 
     @Override
     public List<PointageInfoListe> translate(Collection<List<Pointage>> entities) {
-        return null;
+        List<PointageInfoListe> result = new ArrayList<>();
+        for (List<Pointage> entity : entities) {
+            result.add(translate(entity));
+        }
+        return result;
     }
 }

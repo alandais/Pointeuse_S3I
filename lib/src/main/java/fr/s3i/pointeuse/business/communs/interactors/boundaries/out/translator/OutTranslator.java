@@ -17,18 +17,17 @@
  *
  */
 
-package fr.s3i.pointeuse.business.communs.interactors.boundaries.in.model;
+package fr.s3i.pointeuse.business.communs.interactors.boundaries.out.translator;
 
 import java.util.Collection;
 import java.util.List;
 
-import fr.s3i.pointeuse.business.communs.entities.Entity;
 import fr.s3i.pointeuse.business.communs.interactors.boundaries.Translator;
 
-public interface InTranslator<T extends Entity, U> extends Translator<T, U> {
+public interface OutTranslator<T, U> extends Translator<T, U> {
 
-    T translate(U model);
+    U translate(T entity);
 
-    List<T> translate(Collection<U> models);
+    List<U> translate(Collection<T> entities);
 
 }

@@ -30,12 +30,18 @@ public class PointageInfo {
 
     private final String fin;
 
+    private final String heureDebut;
+
+    private final String heureFin;
+
     private final String duree;
 
-    public PointageInfo(long id, String debut, String fin, String duree) {
+    public PointageInfo(long id, String debut, String fin, String heureDebut, String heureFin, String duree) {
         this.id = id;
         this.debut = debut;
         this.fin = fin;
+        this.heureDebut = heureDebut;
+        this.heureFin = heureFin;
         this.duree = duree;
     }
 
@@ -49,6 +55,14 @@ public class PointageInfo {
 
     public String getFin() {
         return fin;
+    }
+
+    public String getHeureDebut() {
+        return heureDebut;
+    }
+
+    public String getHeureFin() {
+        return heureFin;
     }
 
     public boolean isComplete() {

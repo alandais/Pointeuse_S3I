@@ -24,10 +24,10 @@ import java.util.Collection;
 import java.util.List;
 
 import fr.s3i.pointeuse.business.communs.Contexte;
-import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.model.OutTranslator;
+import fr.s3i.pointeuse.business.communs.interactors.boundaries.out.translator.OutTranslator;
 import fr.s3i.pointeuse.business.pointages.entities.Pointage;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.utils.Calculs;
+import fr.s3i.pointeuse.business.pointages.services.PointageService;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -35,19 +35,21 @@ import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.ut
 
 public class PointageInfoTranslator implements OutTranslator<Pointage, PointageInfo> {
 
-    private final Calculs calculs;
+    private final PointageService pointageService;
 
     public PointageInfoTranslator(Contexte contexte) {
-        this.calculs = contexte.getService(Calculs.class);
+        this.pointageService = contexte.getService(PointageService.class);
     }
 
     @Override
     public PointageInfo translate(Pointage pointage) {
         long id = pointage.getId();
-        String debut = calculs.formatDate(pointage.getDebut());
-        String fin = calculs.formatDate(pointage.getFin());
-        String duree = calculs.formatDuree(calculs.calculDuree(pointage));
-        return new PointageInfo(id, debut, fin, duree);
+        String debut = pointageService.formatDate(pointage.getDebut());
+        String fin = pointageService.formatDate(pointage.getFin());
+        String heureDebut = pointageService.formatHeure(pointage.getDebut());
+        String heureFin = pointageService.formatHeure(pointage.getFin());
+        String duree = pointageService.formatDuree(pointageService.calculDuree(pointage));
+        return new PointageInfo(id, debut, fin, heureDebut, heureFin, duree);
     }
 
     @Override

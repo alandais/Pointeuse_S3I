@@ -33,6 +33,7 @@ public class Preferences implements PointagePreferences {
     private final SharedPreferences preferences;
 
     private static final String PREF_DATE_FORMAT = "DATE_FORMAT";
+    private static final String PREF_HEURE_FORMAT = "HEURE_FORMAT";
     private static final String PREF_DELAI_FORMAT = "DELAI_FORMAT";
     private static final String PREF_PRECISION = "PRECISION";
     private static final String PREF_ARRONDI = "ARRONDI";
@@ -48,6 +49,11 @@ public class Preferences implements PointagePreferences {
     @Override
     public String getDateFormat() {
         return preferences.getString(PREF_DATE_FORMAT, "yyyy-MM-dd HH:mm:ss");
+    }
+
+    @Override
+    public String getHeureFormat() {
+        return preferences.getString(PREF_HEURE_FORMAT, "HH:mm");
     }
 
     @Override

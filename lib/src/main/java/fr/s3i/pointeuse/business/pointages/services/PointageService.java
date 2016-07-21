@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.utils;
+package fr.s3i.pointeuse.business.pointages.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,11 +32,11 @@ import fr.s3i.pointeuse.business.pointages.gateways.PointagePreferences;
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class Calculs {
+public class PointageService {
 
     private final PointagePreferences preferences;
 
-    public Calculs(Contexte contexte) {
+    public PointageService(Contexte contexte) {
         this.preferences = contexte.getService(PointagePreferences.class);
     }
 
@@ -114,6 +114,14 @@ public class Calculs {
             return "";
         }
         SimpleDateFormat sdf = new SimpleDateFormat(preferences.getDateFormat());
+        return sdf.format(date);
+    }
+
+    public String formatHeure(Date date) {
+        if (date == null) {
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(preferences.getHeureFormat());
         return sdf.format(date);
     }
 

@@ -22,9 +22,13 @@ package fr.s3i.pointeuse.business.pointages.interactors.pointer;
 import java.util.Date;
 
 import fr.s3i.pointeuse.business.communs.Contexte;
+import fr.s3i.pointeuse.business.communs.R;
+import fr.s3i.pointeuse.business.communs.gateways.NotificationSystem;
+import fr.s3i.pointeuse.business.communs.gateways.ToastSystem;
 import fr.s3i.pointeuse.business.communs.interactors.Interactor;
 import fr.s3i.pointeuse.business.pointages.entities.Pointage;
 import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
 import fr.s3i.pointeuse.business.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.business.pointages.interactors.pointer.boundaries.out.PointerOut;
@@ -38,10 +42,16 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageInfoTranslator translator;
 
+    private final ToastSystem toastSystem;
+
+    private final NotificationSystem notificationSystem;
+
     public PointerInteractor(Contexte contexte) {
         super(contexte.getService(PointerOut.class));
         this.repository = contexte.getService(PointageRepository.class);
         this.translator = contexte.getService(PointageInfoTranslator.class);
+        this.toastSystem = contexte.getService(ToastSystem.class);
+        this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
 
     @Override
@@ -52,7 +62,17 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         } else {
             pointage = new Pointage(new Date());
         }
-        persister(pointage);
+
+        PointageInfo pointageInfo = persister(pointage);
+        if (pointageInfo != null) {
+            if (pointageInfo.isComplete()) {
+                toastSystem.notifier(R.get("toast_pointage_complet", pointageInfo.getHeureDebut()));
+                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageInfo.getHeureFin(), pointageInfo.getDuree()));
+            } else {
+                toastSystem.notifier(R.get("toast_pointage_partiel", pointageInfo.getHeureFin()));
+                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_debut_travail", pointageInfo.getHeureDebut()));
+            }
+        }
     }
 
     @Override
@@ -60,17 +80,25 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         Pointage pointage = new Pointage(debut);
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
-        persister(pointage);
+
+        PointageInfo pointageInfo = persister(pointage);
+        if (pointageInfo != null) {
+            toastSystem.notifier(R.get("toast_pointage_insere"));
+        }
     }
 
-    private void persister(Pointage pointage) {
+    private PointageInfo persister(Pointage pointage) {
+        PointageInfo pointageInfo = null;
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
+            pointageInfo = translator.translate(pointage);
             repository.persister(pointage);
-            out.onPointageInsere(translator.translate(pointage));
+            out.onPointageInsere(pointageInfo);
         } else {
             out.onError(erreur);
+            toastSystem.notifier(erreur);
         }
+        return pointageInfo;
     }
 
 }

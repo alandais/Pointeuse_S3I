@@ -23,11 +23,11 @@ import fr.s3i.pointeuse.business.communs.gateways.Preferences;
 
 public interface PointagePreferences extends Preferences {
 
-    public enum Arrondi {
+    enum Arrondi {
         AUCUN, _10_MINUTES, _15_MINUTES, _30_MINUTES, _1HEURE
     }
 
-    public enum DelaiFormat {
+    enum DelaiFormat {
         JOUR_HEURE_MINUTE, HEURE_MINUTE, DIXIEME_HEURE
     }
 
@@ -37,6 +37,13 @@ public interface PointagePreferences extends Preferences {
      * @return Format des dates.
      */
     String getDateFormat();
+
+    /**
+     * Format d'affichage des heures, au format utilisé par la méthode {@link String#format(String, Object...)}.
+     *
+     * @return Format des dates.
+     */
+    String getHeureFormat();
 
     /**
      * Format d'affichage des délais.

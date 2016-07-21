@@ -26,7 +26,7 @@ import fr.s3i.pointeuse.business.communs.composition.Composant;
 import fr.s3i.pointeuse.business.communs.composition.Module;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
-import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.utils.Calculs;
+import fr.s3i.pointeuse.business.pointages.services.PointageService;
 
 /**
  * Created by Adrien on 20/07/2016.
@@ -35,7 +35,7 @@ public class ModulePointage extends Module {
 
     public ModulePointage(Contexte contexte) {
         super(contexte,
-                Composant.creer(Calculs.class, new Calculs(contexte)),
+                Composant.creer(PointageService.class, new PointageService(contexte)),
                 Composant.creer(PointageInfoTranslator.class, new PointageInfoTranslator(contexte)),
                 Composant.creer(PointageInfoListeTranslator.class, new PointageInfoListeTranslator(contexte)));
     }
