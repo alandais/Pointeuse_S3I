@@ -17,15 +17,27 @@
  *
  */
 
+package fr.s3i.pointeuse.notification;
 
+import android.content.Context;
+import android.widget.Toast;
 
+import fr.s3i.pointeuse.business.communs.gateways.ToastSystem;
 
+/**
+ * Created by Adrien on 22/07/2016.
+ */
+public class ToastService implements ToastSystem {
 
-apply plugin: 'java'
+    private final Context context;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    public ToastService(Context context1) {
+        this.context = context1;
+    }
 
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    @Override
+    public void notifier(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
 }

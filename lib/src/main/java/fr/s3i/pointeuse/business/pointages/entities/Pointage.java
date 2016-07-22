@@ -65,7 +65,7 @@ public class Pointage extends Entity<Long> {
         if (debut == null) {
             return R.get("erreur2");
         }
-        if (debut.after(fin)) {
+        if (fin != null && debut.after(fin)) {
             return R.get("erreur3");
         }
         return null;

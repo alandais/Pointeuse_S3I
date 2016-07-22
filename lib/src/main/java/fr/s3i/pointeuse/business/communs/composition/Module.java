@@ -28,15 +28,20 @@ import fr.s3i.pointeuse.business.communs.Contexte;
  */
 public abstract class Module extends Contexte {
 
-    public Module(Contexte contexte, Composant... composants) {
-        for (Composant composant : composants) {
-            ajouterComposant(composant);
-        }
-        contexte.enregistrerModule(this);
+    private final Contexte contexte;
+
+    public Module(Contexte contexte) {
+        this.contexte = contexte;
     }
 
     public Collection<Composant<?, ?>> getComposants() {
         return cache;
+    }
+
+    @Override
+    public <I, C extends I> void enregistrerService(Class<I> type, C implementation) {
+        super.enregistrerService(type, implementation);
+        contexte.enregistrerService(type, implementation);
     }
 
 }

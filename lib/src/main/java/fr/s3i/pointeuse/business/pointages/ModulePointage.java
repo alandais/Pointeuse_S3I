@@ -26,6 +26,8 @@ import fr.s3i.pointeuse.business.communs.composition.Composant;
 import fr.s3i.pointeuse.business.communs.composition.Module;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
 import fr.s3i.pointeuse.business.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
+import fr.s3i.pointeuse.business.pointages.interactors.pointer.PointerInteractor;
+import fr.s3i.pointeuse.business.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.business.pointages.services.PointageService;
 
 /**
@@ -34,10 +36,10 @@ import fr.s3i.pointeuse.business.pointages.services.PointageService;
 public class ModulePointage extends Module {
 
     public ModulePointage(Contexte contexte) {
-        super(contexte,
-                Composant.creer(PointageService.class, new PointageService(contexte)),
-                Composant.creer(PointageInfoTranslator.class, new PointageInfoTranslator(contexte)),
-                Composant.creer(PointageInfoListeTranslator.class, new PointageInfoListeTranslator(contexte)));
+        super(contexte);
+        enregistrerService(PointageService.class, new PointageService(contexte));
+        enregistrerService(PointageInfoTranslator.class, new PointageInfoTranslator(contexte));
+        enregistrerService(PointageInfoListeTranslator.class, new PointageInfoListeTranslator(contexte));
     }
 
     @Override

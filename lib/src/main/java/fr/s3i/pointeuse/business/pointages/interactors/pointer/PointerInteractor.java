@@ -66,10 +66,10 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageInfo pointageInfo = persister(pointage);
         if (pointageInfo != null) {
             if (pointageInfo.isComplete()) {
-                toastSystem.notifier(R.get("toast_pointage_complet", pointageInfo.getHeureDebut()));
+                toastSystem.notifier(R.get("toast_pointage_complet", pointageInfo.getHeureFin()));
                 notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageInfo.getHeureFin(), pointageInfo.getDuree()));
             } else {
-                toastSystem.notifier(R.get("toast_pointage_partiel", pointageInfo.getHeureFin()));
+                toastSystem.notifier(R.get("toast_pointage_partiel", pointageInfo.getHeureDebut()));
                 notificationSystem.notifier(R.get("notification_titre"), R.get("notification_debut_travail", pointageInfo.getHeureDebut()));
             }
         }
@@ -91,8 +91,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageInfo pointageInfo = null;
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
-            pointageInfo = translator.translate(pointage);
             repository.persister(pointage);
+            pointageInfo = translator.translate(pointage);
             out.onPointageInsere(pointageInfo);
         } else {
             out.onError(erreur);

@@ -32,14 +32,15 @@ public class Contexte {
 
     protected final Set<Composant<?, ?>> cache = new HashSet<>();
 
-    public void enregistrerModule(Module module) {
-        for (Composant<?, ?> composant : module.getComposants()) {
-            ajouterComposant(composant);
-        }
-    }
-
     public <I, C extends I> void enregistrerService(Class<I> type, C implementation) {
         ajouterComposant(Composant.creer(type, implementation));
+    }
+
+    public <I> void detruireService(Class<I> type) {
+        Composant<I, I> composant = retrouverComposant(type);
+        if (composant != null) {
+            cache.remove(composant);
+        }
     }
 
     public <I> I getService(Class<I> type) {
@@ -50,16 +51,16 @@ public class Contexte {
         return composant.getComposant();
     }
 
-    protected void ajouterComposant(Composant<?, ?> composant) {
+    private void ajouterComposant(Composant<?, ?> composant) {
         if (!cache.add(composant)) {
             throw new IllegalStateException("Le contexte contient déjà une implémentation de " + composant.getType().getSimpleName());
         }
     }
 
-    protected <I> Composant<I, ? extends I> retrouverComposant(Class<I> type) {
+    private <I> Composant<I, I> retrouverComposant(Class<I> type) {
         for (Composant<?, ?> composant : cache) {
             if (composant.getType().equals(type)) {
-                return (Composant<I, ? extends I>) composant;
+                return (Composant<I, I>) composant;
             }
         }
         return null;

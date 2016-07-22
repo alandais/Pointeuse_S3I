@@ -17,15 +17,24 @@
  *
  */
 
+package fr.s3i.pointeuse.notification;
 
+import android.content.Context;
 
+import fr.s3i.pointeuse.business.communs.gateways.NotificationSystem;
 
+/**
+ * Created by Adrien on 22/07/2016.
+ */
+public class NotificationService implements NotificationSystem {
 
-apply plugin: 'java'
+    public NotificationService(Context context) {
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
 
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
+    @Override
+    public void notifier(String titre, String description) {
+        // TODO
+    }
+
 }
