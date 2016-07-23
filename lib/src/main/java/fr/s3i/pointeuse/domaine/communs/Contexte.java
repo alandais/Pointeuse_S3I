@@ -36,14 +36,14 @@ public class Contexte {
     }
 
     public <I> void detruireService(Class<I> type) {
-        Composant<I, I> composant = retrouverComposant(type);
+        Composant<I, ? extends I> composant = retrouverComposant(type);
         if (composant != null) {
             cache.remove(composant);
         }
     }
 
     public <I> I getService(Class<I> type) {
-        Composant<I, ?> composant = retrouverComposant(type);
+        Composant<I, ? extends I> composant = retrouverComposant(type);
         if (composant == null) {
             throw new IllegalStateException("Le contexte doit contenir une implémentation de " + type.getSimpleName());
         }
@@ -56,10 +56,11 @@ public class Contexte {
         }
     }
 
-    private <I> Composant<I, I> retrouverComposant(Class<I> type) {
+    @SuppressWarnings("unchecked")
+    private <I> Composant<I, ? extends I> retrouverComposant(Class<I> type) {
         for (Composant<?, ?> composant : cache) {
             if (composant.getType().equals(type)) {
-                return (Composant<I, I>) composant;
+                return (Composant<I, ? extends I>) composant;
             }
         }
         return null;
