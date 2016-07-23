@@ -30,7 +30,6 @@ import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.notification.NotificationService;
 import fr.s3i.pointeuse.notification.ToastService;
 import fr.s3i.pointeuse.persistance.DatabaseDummy;
-import fr.s3i.pointeuse.persistance.DatabaseHelper;
 import fr.s3i.pointeuse.preferences.Preferences;
 
 /**
