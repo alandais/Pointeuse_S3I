@@ -27,8 +27,8 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 
 public interface PointageRepository extends Repository<Long, Pointage> {
 
-    List<Pointage> recuperer(Date debut, Date fin);
+    List<Pointage> recupererEntre(Date debut, Date fin);
 
-    Pointage recupererDernier();
+    List<Pointage> recupererEnCours();
 
 }

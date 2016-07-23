@@ -72,7 +72,7 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public List<Pointage> recuperer(Date debut, Date fin) {
+    public List<Pointage> recupererEntre(Date debut, Date fin) {
         ContentValues filtreDebut = mapper.getFiltre(debut);
         ContentValues filtreFin = mapper.getFiltre(fin);
         Cursor resultat = table.selectBetween(db, filtreDebut, filtreFin);
@@ -81,11 +81,11 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public Pointage recupererDernier() {
+    public List<Pointage> recupererEnCours() {
         ContentValues filtre = mapper.getFiltreDernier();
         Cursor resultat = table.select(db, filtre);
         resultat.moveToFirst();
-        return mapper.mapper(resultat);
+        return mapper.mapperListe(resultat);
     }
 
     @Override

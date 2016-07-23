@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer;
 
 import java.util.Date;
+import java.util.List;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.R;
@@ -56,10 +57,23 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     @Override
     public void pointer() {
-        Pointage pointage = repository.recupererDernier();
-        if (pointage != null && pointage.getFin() == null) {
+        Pointage pointage;
+        List<Pointage> pointages = repository.recupererEnCours();
+        if (pointages.size() > 1) {
+            // Cas bizarre : il y a plusieurs pointages en cours, on ne plante pas et on corrige la base de données
+            out.onError("Plusieurs pointages sont en cours, conservation et mise à jour du plus récent uniquement");
+            for (int i = 0; i < pointages.size() - 1; i++) {
+                repository.supprimer(pointages.get(i).getId());
+            }
+            pointage = pointages.get(pointages.size() - 1);
+        }
+        else if (pointages.size() == 1) {
+            // Cas normal pointage en cours
+            pointage = pointages.get(0);
             pointage.setFin(new Date());
-        } else {
+        }
+        else {
+            // Cas normal nouveau pointage
             pointage = new Pointage();
             pointage.setDebut(new Date());
         }

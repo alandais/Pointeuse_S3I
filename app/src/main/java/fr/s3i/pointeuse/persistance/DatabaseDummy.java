@@ -38,16 +38,17 @@ public class DatabaseDummy implements PointageRepository {
     private long nextId = 0;
 
     @Override
-    public List<Pointage> recuperer(Date debut, Date fin) {
+    public List<Pointage> recupererEntre(Date debut, Date fin) {
         return null;
     }
 
     @Override
-    public Pointage recupererDernier() {
-        if (nextId > 0) {
-            return repository.get(nextId-1);
+    public List<Pointage> recupererEnCours() {
+        List<Pointage> retour = new ArrayList<>();
+        if (nextId > 0 && repository.get(nextId-1).getFin() == null) {
+            retour.add(repository.get(nextId-1));
         }
-        return null;
+        return retour;
     }
 
     @Override
