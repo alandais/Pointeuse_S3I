@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.persistance.dao;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -45,8 +46,8 @@ public class PointageDao implements Closeable, PointageRepository {
     private final PointageMapper mapper = new PointageMapper();
     private final SQLiteDatabase db;
 
-    public PointageDao(DatabaseHelper database) {
-        this.database = database;
+    public PointageDao(Context context) {
+        this.database = new DatabaseHelper(context);
         db = database.getWritableDatabase();
         table = database.getTablePointage();
     }
@@ -54,7 +55,16 @@ public class PointageDao implements Closeable, PointageRepository {
     @Override
     public void persister(Pointage entity) {
         ContentValues values = mapper.mapper(entity);
-        table.insert(db, values);
+        if (entity.getId() == null) {
+            // insert
+            long id = table.insert(db, values);
+            entity.setId(id);
+        }
+        else {
+            // update
+            ContentValues filtre = mapper.getFiltre(entity);
+            table.update(db, values, filtre);
+        }
     }
 
     @Override
@@ -68,7 +78,9 @@ public class PointageDao implements Closeable, PointageRepository {
         ContentValues filtre = mapper.getFiltre(id);
         Cursor resultat = table.select(db, filtre);
         resultat.moveToFirst();
-        return mapper.mapper(resultat);
+        Pointage pointage = mapper.mapper(resultat);
+        resultat.close();
+        return pointage;
     }
 
     @Override
@@ -85,18 +97,23 @@ public class PointageDao implements Closeable, PointageRepository {
         ContentValues filtre = mapper.getFiltreDernier();
         Cursor resultat = table.select(db, filtre);
         resultat.moveToFirst();
-        return mapper.mapperListe(resultat);
+        List<Pointage> pointages = mapper.mapperListe(resultat);
+        resultat.close();
+        return pointages;
     }
 
     @Override
     public List<Pointage> recupererTout() {
         Cursor resultat = table.select(db, new ContentValues());
-        return mapper.mapperListe(resultat);
+        List<Pointage> pointages = mapper.mapperListe(resultat);
+        resultat.close();
+        return pointages;
     }
 
     @Override
     public void close() throws IOException {
         db.close();
+        database.close();
     }
 
 }

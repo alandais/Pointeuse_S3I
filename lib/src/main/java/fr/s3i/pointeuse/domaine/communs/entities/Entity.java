@@ -30,7 +30,7 @@ public abstract class Entity<T> {
     }
 
     public void setId(T id) {
-        if (this.id != null) {
+        if (this.id != null && !this.id.equals(id)) {
             throw new IllegalStateException(R.get("erreur1"));
         }
         this.id = id;

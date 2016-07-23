@@ -27,9 +27,9 @@ import fr.s3i.pointeuse.domaine.communs.gateways.ToastSystem;
 import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.persistance.dao.PointageDao;
 import fr.s3i.pointeuse.service.notification.NotificationService;
 import fr.s3i.pointeuse.service.notification.ToastService;
-import fr.s3i.pointeuse.persistance.DatabaseDummy;
 import fr.s3i.pointeuse.service.preferences.Preferences;
 
 /**
@@ -60,10 +60,10 @@ public class PointageApplication extends Application {
     }
 
     private void chargerModulePointage() {
-        contexte.enregistrerService(PointagePreferences.class, new Preferences(this.getBaseContext()));
-        contexte.enregistrerService(PointageRepository.class, new DatabaseDummy());
-        contexte.enregistrerService(ToastSystem.class, new ToastService(this.getBaseContext()));
-        contexte.enregistrerService(NotificationSystem.class, new NotificationService(this.getBaseContext()));
+        contexte.enregistrerService(PointagePreferences.class, new Preferences(this.getApplicationContext()));
+        contexte.enregistrerService(PointageRepository.class, new PointageDao(this.getApplicationContext()));
+        contexte.enregistrerService(ToastSystem.class, new ToastService(this.getApplicationContext()));
+        contexte.enregistrerService(NotificationSystem.class, new NotificationService(this.getApplicationContext()));
         modulePointage = new ModulePointage(contexte);
     }
 

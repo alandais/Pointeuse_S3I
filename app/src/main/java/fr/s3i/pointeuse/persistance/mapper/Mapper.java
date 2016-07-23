@@ -45,4 +45,6 @@ public abstract class Mapper<T extends Entity<?>> {
         return resultat;
     }
 
+    public abstract ContentValues getFiltre(T pointage);
+
 }

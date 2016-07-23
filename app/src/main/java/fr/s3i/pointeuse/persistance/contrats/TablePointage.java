@@ -46,6 +46,11 @@ public class TablePointage extends Table {
     }
 
     @Override
+    public String[] getColonnesCle() {
+        return new String[] { COL_ID } ;
+    }
+
+    @Override
     public String[] getColonnes() {
         return COLONNES;
     }

@@ -40,7 +40,9 @@ public class PointageMapper extends Mapper<Pointage> {
     @Override
     public ContentValues mapper(Pointage pointage) {
         ContentValues retour = new ContentValues();
-        retour.put(TablePointage.COL_ID, pointage.getId().toString());
+        if (pointage.getId() != null) {
+            retour.put(TablePointage.COL_ID, pointage.getId());
+        }
         retour.put(TablePointage.COL_DATE_DEBUT, formatDate(pointage.getDebut()));
         retour.put(TablePointage.COL_DATE_FIN, formatDate(pointage.getFin()));
         retour.put(TablePointage.COL_COMMENTAIRE, pointage.getCommentaire());
@@ -54,6 +56,11 @@ public class PointageMapper extends Mapper<Pointage> {
         Date dateFin = parseDate(curseur.getString(2));
         String commentaire = curseur.getString(3);
         return getPointage(id, dateDebut, dateFin, commentaire);
+    }
+
+    @Override
+    public ContentValues getFiltre(Pointage pointage) {
+        return getFiltre(pointage.getId());
     }
 
     public ContentValues getFiltre(long id) {
@@ -85,6 +92,9 @@ public class PointageMapper extends Mapper<Pointage> {
     }
 
     private String formatDate(Date date) {
+        if (date == null) {
+            return null;
+        }
         return DATE_FORMAT.format(date);
     }
 

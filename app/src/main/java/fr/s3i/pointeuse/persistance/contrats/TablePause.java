@@ -32,6 +32,11 @@ public class TablePause extends Table {
     }
 
     @Override
+    public String[] getColonnesCle() {
+        return new String[0];
+    }
+
+    @Override
     public String[] getColonnes() {
         return new String[0];
     }

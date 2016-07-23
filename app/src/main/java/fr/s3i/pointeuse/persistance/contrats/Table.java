@@ -22,6 +22,7 @@ package fr.s3i.pointeuse.persistance.contrats;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public abstract class Table {
     public static final String TYPE_TEXT = "TEXT";
 
     public abstract String getNom();
+
+    public abstract String[] getColonnesCle();
 
     public abstract String[] getColonnes();
 
@@ -62,22 +65,35 @@ public abstract class Table {
     }
 
     public long insert(SQLiteDatabase db, ContentValues values) {
-        return db.insert(getNom(), null, values);
+        long id = db.insert(getNom(), null, values);
+        if(id == -1) {
+            // TODO meilleure gestion des exceptions, il faut que ça puisse remonter dans l'interactor (PersitanceException ?)
+            throw new IllegalStateException();
+        }
+        return id;
     }
 
-    public int delete(SQLiteDatabase db, ContentValues filters) {
-        StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, Object> filter : filters.valueSet()  ) {
-            if (filter.getValue() != null) {
-                builder.append(filter.getKey());
-                builder.append('=');
-                builder.append(filter.getValue());
-            }
-        }
-        return db.delete(getNom(), builder.toString(), null);
+    public int update(SQLiteDatabase db, ContentValues values, ContentValues filter) {
+        return db.update(getNom(), values, getWhere(filter), null);
+    }
+
+    public int delete(SQLiteDatabase db, ContentValues filter) {
+        return db.delete(getNom(), getWhere(filter), null);
     }
 
     public Cursor select(SQLiteDatabase db, ContentValues filter, String orderBy) {
+        return db.query(getNom(), getColonnes(), getWhere(filter), null, null, null, orderBy);
+    }
+
+    public int count(SQLiteDatabase db, ContentValues filter) {
+        Cursor curseur = db.query(getNom(), getColonnesCle(), getWhere(filter), null, null, null, null);
+        int count = curseur.getCount();
+        curseur.close();
+        return count;
+    }
+
+    @NonNull
+    private String getWhere(ContentValues filter) {
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, Object> entry : filter.valueSet()  ) {
             builder.append(entry.getKey());
@@ -89,7 +105,7 @@ public abstract class Table {
                 builder.append(" IS NULL");
             }
         }
-        return db.query(getNom(), getColonnes(), builder.toString(), null, null, null, orderBy);
+        return builder.toString();
     }
 
 }
