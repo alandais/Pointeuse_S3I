@@ -19,69 +19,95 @@
 
 package fr.s3i.pointeuse.presentation;
 
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.Date;
-
-import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.presentation.pointer.PointerVue;
 
 public class Pointeuse extends AppCompatActivity {
-
-    private Contexte contexte;
-
-    private PointerIn controleur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pointeuse);
 
-        contexte = ((PointageApplication)getApplication()).getContexte();
-        contexte.enregistrerService(PointerOut.class, vue);
-        contexte.enregistrerService(PointerIn.class, new PointerInteractor(contexte));
-
-        controleur = contexte.getService(PointerIn.class);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    static class PagerAdapter extends FragmentStatePagerAdapter {
 
-        contexte.detruireService(PointerOut.class);
-        contexte.detruireService(PointerIn.class);
-    }
-
-    public void pointer(View v) {
-        controleur.pointer();
-    }
-
-    public void inserer(Date debut, Date fin, String commentaire) {
-
-    }
-
-    private class PointeuseVue implements PointerOut {
-
-        @Override
-        public void onPointageInsere(PointageInfo pointage) {
-            Log.i(PointeuseVue.class.getSimpleName(), "Insertion pointage réussie.");
+        public PagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public void onError(String message) {
-            Log.e(PointeuseVue.class.getSimpleName(), message);
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new PointerVue();
+            }
+            return DesignDemoFragment.newInstance(position);
         }
 
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Pointage rapide"; // TODO changer pour utiliser les strings resources
+                case 1:
+                    return "Insérer un pointage";
+            }
+            return "What?";
+        }
     }
 
-    private final PointerOut vue = new PointeuseVue();
+    // Fragment utilisé en développement, pour remplacer une vue pas encore développée
+    public static class DesignDemoFragment extends Fragment {
+        private static final String TAB_POSITION = "tab_position";
+
+        public DesignDemoFragment() {
+
+        }
+
+        public static DesignDemoFragment newInstance(int tabPosition) {
+            DesignDemoFragment fragment = new DesignDemoFragment();
+            Bundle args = new Bundle();
+            args.putInt(TAB_POSITION, tabPosition);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            Bundle args = getArguments();
+            int tabPosition = args.getInt(TAB_POSITION);
+            TextView tv = new TextView(getActivity());
+            tv.setGravity(Gravity.CENTER);
+            tv.setText("Text in Tab #" + tabPosition);
+            return tv;
+        }
+    }
 
 }

@@ -77,10 +77,10 @@ public class PointageInfo {
 
     public String toInfoString() {
         if (isComplete()) {
-            return R.get("info_pointage_en_cours", getDuree());
+            return R.get("info_pointage_termine", getDuree());
         }
         else {
-            return R.get("info_pointage_termine", getDuree());
+            return R.get("info_pointage_en_cours", getDuree());
         }
     }
 
