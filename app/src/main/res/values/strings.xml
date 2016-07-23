@@ -19,5 +19,6 @@
 
 <resources>
     <string name="app_name">Pointeuse S3I</string>
-    <string name="pointer">Pointer</string>
+    <string name="pointer">Pointage rapide</string>
+    <string name="inserer">Insérer un pointage</string>
 </resources>

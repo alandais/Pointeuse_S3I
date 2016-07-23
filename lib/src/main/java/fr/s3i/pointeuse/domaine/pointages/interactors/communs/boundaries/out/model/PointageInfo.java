@@ -19,6 +19,8 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model;
 
+import fr.s3i.pointeuse.domaine.communs.R;
+
 /**
  * Created by Adrien on 19/07/2016.
  */
@@ -71,6 +73,15 @@ public class PointageInfo {
 
     public String getDuree() {
         return duree;
+    }
+
+    public String toInfoString() {
+        if (isComplete()) {
+            return R.get("info_pointage_en_cours", getDuree());
+        }
+        else {
+            return R.get("info_pointage_termine", getDuree());
+        }
     }
 
     @Override
