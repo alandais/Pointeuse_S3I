@@ -25,11 +25,9 @@ import android.support.annotation.NonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import fr.s3i.pointeuse.business.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.persistance.contrats.TablePointage;
 
 /**

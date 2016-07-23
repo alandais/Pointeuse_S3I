@@ -19,20 +19,10 @@
 
 package fr.s3i.pointeuse.persistance.database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import fr.s3i.pointeuse.business.pointages.entities.Pointage;
-import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.persistance.contrats.TablePause;
 import fr.s3i.pointeuse.persistance.contrats.TablePointage;
 

@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import fr.s3i.pointeuse.business.pointages.entities.Pointage;
-import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.persistance.database.DatabaseHelper;
 import fr.s3i.pointeuse.persistance.contrats.TablePointage;
 import fr.s3i.pointeuse.persistance.mapper.PointageMapper;

@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.s3i.pointeuse.business.pointages.entities.Pointage;
-import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 
 /**
  * Created by Adrien on 22/07/2016.

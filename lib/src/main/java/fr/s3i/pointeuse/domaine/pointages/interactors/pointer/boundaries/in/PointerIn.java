@@ -17,32 +17,17 @@
  *
  */
 
-package fr.s3i.pointeuse.persistance.mapper;
+package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.s3i.pointeuse.domaine.communs.entities.Entity;
+import java.util.Date;
 
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 19/07/2016.
  */
-public abstract class Mapper<T extends Entity<?>> {
+public interface PointerIn extends fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary {
 
-    public abstract ContentValues mapper(T pointage);
+    void pointer();
 
-    public abstract T mapper(Cursor curseur);
-
-    public List<T> mapperListe(Cursor curseur) {
-        List<T> resultat = new ArrayList<>();
-        curseur.move(-1);
-        while (curseur.moveToNext()) {
-            resultat.add(mapper(curseur));
-        }
-        return resultat;
-    }
+    void inserer(Date debut, Date fin, String commentaire);
 
 }

@@ -17,32 +17,27 @@
  *
  */
 
-package fr.s3i.pointeuse.persistance.mapper;
+package fr.s3i.pointeuse.service.notification;
 
-import android.content.ContentValues;
-import android.database.Cursor;
+import android.content.Context;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.s3i.pointeuse.domaine.communs.entities.Entity;
+import fr.s3i.pointeuse.domaine.communs.gateways.ToastSystem;
 
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 22/07/2016.
  */
-public abstract class Mapper<T extends Entity<?>> {
+public class ToastService implements ToastSystem {
 
-    public abstract ContentValues mapper(T pointage);
+    private final Context context;
 
-    public abstract T mapper(Cursor curseur);
+    public ToastService(Context context1) {
+        this.context = context1;
+    }
 
-    public List<T> mapperListe(Cursor curseur) {
-        List<T> resultat = new ArrayList<>();
-        curseur.move(-1);
-        while (curseur.moveToNext()) {
-            resultat.add(mapper(curseur));
-        }
-        return resultat;
+    @Override
+    public void notifier(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
 }

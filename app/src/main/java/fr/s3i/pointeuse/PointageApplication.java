@@ -21,16 +21,16 @@ package fr.s3i.pointeuse;
 
 import android.app.Application;
 
-import fr.s3i.pointeuse.business.communs.Contexte;
-import fr.s3i.pointeuse.business.communs.gateways.NotificationSystem;
-import fr.s3i.pointeuse.business.communs.gateways.ToastSystem;
-import fr.s3i.pointeuse.business.pointages.ModulePointage;
-import fr.s3i.pointeuse.business.pointages.gateways.PointagePreferences;
-import fr.s3i.pointeuse.business.pointages.gateways.PointageRepository;
-import fr.s3i.pointeuse.notification.NotificationService;
-import fr.s3i.pointeuse.notification.ToastService;
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
+import fr.s3i.pointeuse.domaine.communs.gateways.ToastSystem;
+import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.service.notification.NotificationService;
+import fr.s3i.pointeuse.service.notification.ToastService;
 import fr.s3i.pointeuse.persistance.DatabaseDummy;
-import fr.s3i.pointeuse.preferences.Preferences;
+import fr.s3i.pointeuse.service.preferences.Preferences;
 
 /**
  * Created by Adrien on 21/07/2016.

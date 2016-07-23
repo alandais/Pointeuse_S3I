@@ -17,32 +17,32 @@
  *
  */
 
-package fr.s3i.pointeuse.persistance.mapper;
-
-import android.content.ContentValues;
-import android.database.Cursor;
+package fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import fr.s3i.pointeuse.domaine.communs.entities.Entity;
-
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 19/07/2016.
  */
-public abstract class Mapper<T extends Entity<?>> {
+public class PointageInfoListe {
 
-    public abstract ContentValues mapper(T pointage);
+    private List<PointageInfo> pointages = new ArrayList<>();
 
-    public abstract T mapper(Cursor curseur);
+    private String dureeTotale;
 
-    public List<T> mapperListe(Cursor curseur) {
-        List<T> resultat = new ArrayList<>();
-        curseur.move(-1);
-        while (curseur.moveToNext()) {
-            resultat.add(mapper(curseur));
-        }
-        return resultat;
+    public PointageInfoListe(Collection<PointageInfo> pointages, String dureeTotale) {
+        this.pointages.addAll(pointages);
+        this.dureeTotale = dureeTotale;
+    }
+
+    public List<PointageInfo> getPointages() {
+        return pointages;
+    }
+
+    public String getDureeTotale() {
+        return dureeTotale;
     }
 
 }

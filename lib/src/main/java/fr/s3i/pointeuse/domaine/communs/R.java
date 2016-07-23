@@ -17,32 +17,22 @@
  *
  */
 
-package fr.s3i.pointeuse.persistance.mapper;
+package fr.s3i.pointeuse.domaine.communs;
 
-import android.content.ContentValues;
-import android.database.Cursor;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
-import java.util.ArrayList;
-import java.util.List;
+public final class R {
 
-import fr.s3i.pointeuse.domaine.communs.entities.Entity;
+    private static final ResourceBundle R = PropertyResourceBundle.getBundle("resources", Locale.getDefault());
 
-/**
- * Created by Adrien on 23/07/2016.
- */
-public abstract class Mapper<T extends Entity<?>> {
+    public static String get(String name) {
+        return R.getString(name);
+    }
 
-    public abstract ContentValues mapper(T pointage);
-
-    public abstract T mapper(Cursor curseur);
-
-    public List<T> mapperListe(Cursor curseur) {
-        List<T> resultat = new ArrayList<>();
-        curseur.move(-1);
-        while (curseur.moveToNext()) {
-            resultat.add(mapper(curseur));
-        }
-        return resultat;
+    public static String get(String name, Object... args) {
+        return String.format(R.getString(name), args);
     }
 
 }

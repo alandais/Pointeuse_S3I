@@ -17,32 +17,25 @@
  *
  */
 
-package fr.s3i.pointeuse.persistance.mapper;
+package fr.s3i.pointeuse.domaine.communs.entities;
 
-import android.content.ContentValues;
-import android.database.Cursor;
+import fr.s3i.pointeuse.domaine.communs.R;
 
-import java.util.ArrayList;
-import java.util.List;
+public abstract class Entity<T> {
 
-import fr.s3i.pointeuse.domaine.communs.entities.Entity;
+    private T id = null;
 
-/**
- * Created by Adrien on 23/07/2016.
- */
-public abstract class Mapper<T extends Entity<?>> {
-
-    public abstract ContentValues mapper(T pointage);
-
-    public abstract T mapper(Cursor curseur);
-
-    public List<T> mapperListe(Cursor curseur) {
-        List<T> resultat = new ArrayList<>();
-        curseur.move(-1);
-        while (curseur.moveToNext()) {
-            resultat.add(mapper(curseur));
-        }
-        return resultat;
+    public T getId() {
+        return id;
     }
+
+    public void setId(T id) {
+        if (this.id != null) {
+            throw new IllegalStateException(R.get("erreur1"));
+        }
+        this.id = id;
+    }
+
+    public abstract String getErrorMessage();
 
 }
