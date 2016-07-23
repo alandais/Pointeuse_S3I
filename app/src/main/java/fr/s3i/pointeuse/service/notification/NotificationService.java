@@ -19,8 +19,11 @@
 
 package fr.s3i.pointeuse.service.notification;
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.support.v4.app.NotificationCompat;
 
+import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 
 /**
@@ -28,13 +31,21 @@ import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
  */
 public class NotificationService implements NotificationSystem {
 
-    public NotificationService(Context context) {
+    private final Context context;
 
+    public NotificationService(Context context) {
+        this.context = context;
     }
 
     @Override
     public void notifier(String titre, String description) {
-        // TODO
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle(titre)
+                .setContentText(description);
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, builder.build());
     }
 
 }
