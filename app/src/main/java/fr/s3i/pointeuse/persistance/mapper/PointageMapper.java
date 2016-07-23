@@ -76,8 +76,9 @@ public class PointageMapper extends Mapper<Pointage> {
 
     @NonNull
     private Pointage getPointage(Long id, Date dateDebut, Date dateFin, String commentaire) {
-        Pointage pointage = new Pointage(dateDebut);
+        Pointage pointage = new Pointage();
         pointage.setId(id);
+        pointage.setDebut(dateDebut);
         pointage.setFin(dateFin);
         pointage.setCommentaire(commentaire);
         return pointage;

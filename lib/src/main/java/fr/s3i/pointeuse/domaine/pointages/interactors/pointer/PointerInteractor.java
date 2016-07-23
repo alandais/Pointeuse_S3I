@@ -60,7 +60,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         if (pointage != null && pointage.getFin() == null) {
             pointage.setFin(new Date());
         } else {
-            pointage = new Pointage(new Date());
+            pointage = new Pointage();
+            pointage.setDebut(new Date());
         }
 
         PointageInfo pointageInfo = persister(pointage);
@@ -77,7 +78,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     @Override
     public void inserer(Date debut, Date fin, String commentaire) {
-        Pointage pointage = new Pointage(debut);
+        Pointage pointage = new Pointage();
+        pointage.setDebut(debut);
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 

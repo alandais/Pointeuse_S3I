@@ -28,13 +28,9 @@ public class Pointage extends Entity<Long> {
 
     private Date debut;
 
-    private Date fin = null;
+    private Date fin;
 
     private String commentaire;
-
-    public Pointage(Date debut) {
-        this.setDebut(debut);
-    }
 
     public Date getDebut() {
         return debut;
