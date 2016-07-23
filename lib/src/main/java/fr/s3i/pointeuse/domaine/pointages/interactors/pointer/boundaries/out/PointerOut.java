@@ -19,11 +19,14 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out;
 
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
+
 /**
  * Created by Adrien on 19/07/2016.
  */
-public interface PointerOut extends fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary {
+public interface PointerOut extends OutBoundary {
 
-    void onPointageInsere(fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo pointage);
+    void onPointageInsere(PointageInfo pointage);
 
 }

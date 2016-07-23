@@ -23,11 +23,12 @@ import java.util.Date;
 import java.util.List;
 
 import fr.s3i.pointeuse.domaine.communs.gateways.Repository;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 
-public interface PointageRepository extends Repository<Long, fr.s3i.pointeuse.domaine.pointages.entities.Pointage> {
+public interface PointageRepository extends Repository<Long, Pointage> {
 
-    List<fr.s3i.pointeuse.domaine.pointages.entities.Pointage> recuperer(Date debut, Date fin);
+    List<Pointage> recuperer(Date debut, Date fin);
 
-    fr.s3i.pointeuse.domaine.pointages.entities.Pointage recupererDernier();
+    Pointage recupererDernier();
 
 }

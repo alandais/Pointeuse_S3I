@@ -23,19 +23,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.translator.OutTranslator;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.services.PointageService;
 
 /**
  * Created by Adrien on 19/07/2016.
  */
 
-public class PointageInfoTranslator implements fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.translator.OutTranslator<Pointage, PointageInfo> {
+public class PointageInfoTranslator implements OutTranslator<Pointage, PointageInfo> {
 
-    private final fr.s3i.pointeuse.domaine.pointages.services.PointageService pointageService;
+    private final PointageService pointageService;
 
-    public PointageInfoTranslator(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
-        this.pointageService = contexte.getService(fr.s3i.pointeuse.domaine.pointages.services.PointageService.class);
+    public PointageInfoTranslator(Contexte contexte) {
+        this.pointageService = contexte.getService(PointageService.class);
     }
 
     @Override

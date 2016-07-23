@@ -21,14 +21,16 @@ package fr.s3i.pointeuse.domaine.communs.composition;
 
 import java.util.Collection;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+
 /**
  * Created by Adrien on 20/07/2016.
  */
-public abstract class Module extends fr.s3i.pointeuse.domaine.communs.Contexte {
+public abstract class Module extends Contexte {
 
-    private final fr.s3i.pointeuse.domaine.communs.Contexte contexte;
+    private final Contexte contexte;
 
-    public Module(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
+    public Module(Contexte contexte) {
         this.contexte = contexte;
     }
 

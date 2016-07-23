@@ -19,7 +19,9 @@
 
 package fr.s3i.pointeuse.domaine.pointages.gateways;
 
-public interface PointageEnvoiFichier extends fr.s3i.pointeuse.domaine.communs.gateways.System {
+import fr.s3i.pointeuse.domaine.communs.gateways.System;
+
+public interface PointageEnvoiFichier extends System {
 
     void envoyer(String destinataire, String sujet, String corps, String nomFichier, byte[] pieceJointe);
 

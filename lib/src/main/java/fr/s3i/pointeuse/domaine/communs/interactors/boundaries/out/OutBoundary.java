@@ -19,7 +19,9 @@
 
 package fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out;
 
-public interface OutBoundary extends fr.s3i.pointeuse.domaine.communs.interactors.boundaries.Boundary {
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.Boundary;
+
+public interface OutBoundary extends Boundary {
 
     void onError(String message);
 

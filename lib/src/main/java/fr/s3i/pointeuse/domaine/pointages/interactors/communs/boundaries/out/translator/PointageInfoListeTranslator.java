@@ -23,26 +23,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.translator.OutTranslator;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.services.PointageService;
 
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class PointageInfoListeTranslator implements fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.translator.OutTranslator<List<Pointage>, PointageInfoListe> {
+public class PointageInfoListeTranslator implements OutTranslator<List<Pointage>, PointageInfoListe> {
 
     private final PointageInfoTranslator pointageInfoTranslator;
 
     private final PointagePreferences preferences;
 
-    private final fr.s3i.pointeuse.domaine.pointages.services.PointageService pointageService;
+    private final PointageService pointageService;
 
-    public PointageInfoListeTranslator(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
+    public PointageInfoListeTranslator(Contexte contexte) {
         this.pointageInfoTranslator = contexte.getService(PointageInfoTranslator.class);
         this.preferences = contexte.getService(PointagePreferences.class);
-        this.pointageService = contexte.getService(fr.s3i.pointeuse.domaine.pointages.services.PointageService.class);
+        this.pointageService = contexte.getService(PointageService.class);
     }
 
     @Override

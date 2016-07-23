@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 
@@ -35,7 +36,7 @@ public class PointageService {
 
     private final PointagePreferences preferences;
 
-    public PointageService(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
+    public PointageService(Contexte contexte) {
         this.preferences = contexte.getService(PointagePreferences.class);
     }
 

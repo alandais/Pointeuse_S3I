@@ -21,20 +21,27 @@ package fr.s3i.pointeuse.domaine.pointages;
 
 import java.util.Collection;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.composition.Composant;
+import fr.s3i.pointeuse.domaine.communs.composition.Module;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
+import fr.s3i.pointeuse.domaine.pointages.services.PointageService;
+
 /**
  * Created by Adrien on 20/07/2016.
  */
-public class ModulePointage extends fr.s3i.pointeuse.domaine.communs.composition.Module {
+public class ModulePointage extends Module {
 
-    public ModulePointage(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
+    public ModulePointage(Contexte contexte) {
         super(contexte);
-        enregistrerService(fr.s3i.pointeuse.domaine.pointages.services.PointageService.class, new fr.s3i.pointeuse.domaine.pointages.services.PointageService(contexte));
-        enregistrerService(fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator.class, new fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator(contexte));
-        enregistrerService(fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator.class, new fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator(contexte));
+        enregistrerService(PointageService.class, new PointageService(contexte));
+        enregistrerService(PointageInfoTranslator.class, new PointageInfoTranslator(contexte));
+        enregistrerService(PointageInfoListeTranslator.class, new PointageInfoListeTranslator(contexte));
     }
 
     @Override
-    public Collection<fr.s3i.pointeuse.domaine.communs.composition.Composant<?, ?>> getComposants() {
+    public Collection<Composant<?, ?>> getComposants() {
         return cache;
     }
 }

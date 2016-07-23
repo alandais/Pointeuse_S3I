@@ -21,40 +21,46 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer;
 
 import java.util.Date;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.R;
+import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.gateways.ToastSystem;
+import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class PointerInteractor extends fr.s3i.pointeuse.domaine.communs.interactors.Interactor<PointerOut> implements PointerIn {
+public class PointerInteractor extends Interactor<PointerOut> implements PointerIn {
 
-    private final fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository repository;
+    private final PointageRepository repository;
 
-    private final fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator translator;
+    private final PointageInfoTranslator translator;
 
     private final ToastSystem toastSystem;
 
-    private final fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem notificationSystem;
+    private final NotificationSystem notificationSystem;
 
-    public PointerInteractor(fr.s3i.pointeuse.domaine.communs.Contexte contexte) {
+    public PointerInteractor(Contexte contexte) {
         super(contexte.getService(PointerOut.class));
-        this.repository = contexte.getService(fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository.class);
-        this.translator = contexte.getService(fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator.class);
+        this.repository = contexte.getService(PointageRepository.class);
+        this.translator = contexte.getService(PointageInfoTranslator.class);
         this.toastSystem = contexte.getService(ToastSystem.class);
-        this.notificationSystem = contexte.getService(fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem.class);
+        this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
 
     @Override
     public void pointer() {
-        fr.s3i.pointeuse.domaine.pointages.entities.Pointage pointage = repository.recupererDernier();
+        Pointage pointage = repository.recupererDernier();
         if (pointage != null && pointage.getFin() == null) {
             pointage.setFin(new Date());
         } else {
-            pointage = new fr.s3i.pointeuse.domaine.pointages.entities.Pointage(new Date());
+            pointage = new Pointage(new Date());
         }
 
         PointageInfo pointageInfo = persister(pointage);
@@ -71,7 +77,7 @@ public class PointerInteractor extends fr.s3i.pointeuse.domaine.communs.interact
 
     @Override
     public void inserer(Date debut, Date fin, String commentaire) {
-        fr.s3i.pointeuse.domaine.pointages.entities.Pointage pointage = new fr.s3i.pointeuse.domaine.pointages.entities.Pointage(debut);
+        Pointage pointage = new Pointage(debut);
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
@@ -81,7 +87,7 @@ public class PointerInteractor extends fr.s3i.pointeuse.domaine.communs.interact
         }
     }
 
-    private PointageInfo persister(fr.s3i.pointeuse.domaine.pointages.entities.Pointage pointage) {
+    private PointageInfo persister(Pointage pointage) {
         PointageInfo pointageInfo = null;
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {

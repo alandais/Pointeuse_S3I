@@ -21,10 +21,12 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in;
 
 import java.util.Date;
 
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
+
 /**
  * Created by Adrien on 19/07/2016.
  */
-public interface PointerIn extends fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary {
+public interface PointerIn extends InBoundary {
 
     void pointer();
 
