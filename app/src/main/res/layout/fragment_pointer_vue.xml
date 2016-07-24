@@ -37,7 +37,8 @@
         android:layout_marginTop="10dip"
         android:layout_marginBottom="10dip"
         android:layout_gravity="top"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:textColor="@android:color/tab_indicator_text" />
 
     <Button
         android:background="@drawable/bouton123"

@@ -98,8 +98,9 @@ public abstract class Table {
         for (Map.Entry<String, Object> entry : filter.valueSet()  ) {
             builder.append(entry.getKey());
             if (entry.getValue() != null) {
-                builder.append('=');
+                builder.append("='");
                 builder.append(entry.getValue());
+                builder.append("'");
             }
             else {
                 builder.append(" IS NULL");

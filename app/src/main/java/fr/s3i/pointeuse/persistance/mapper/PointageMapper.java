@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.persistance.contrats.TablePointage;
@@ -35,7 +36,7 @@ import fr.s3i.pointeuse.persistance.contrats.TablePointage;
  */
 public class PointageMapper extends Mapper<Pointage> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     @Override
     public ContentValues mapper(Pointage pointage) {
@@ -45,7 +46,7 @@ public class PointageMapper extends Mapper<Pointage> {
         }
         retour.put(TablePointage.COL_DATE_DEBUT, formatDate(pointage.getDebut()));
         retour.put(TablePointage.COL_DATE_FIN, formatDate(pointage.getFin()));
-        retour.put(TablePointage.COL_COMMENTAIRE, pointage.getCommentaire());
+        retour.put(TablePointage.COL_COMMENTAIRE, formatCommentaire(pointage.getCommentaire()));
         return retour;
     }
 
@@ -54,7 +55,7 @@ public class PointageMapper extends Mapper<Pointage> {
         Long id = curseur.getLong(0);
         Date dateDebut = parseDate(curseur.getString(1));
         Date dateFin = parseDate(curseur.getString(2));
-        String commentaire = curseur.getString(3);
+        String commentaire = parseCommentaire(curseur.getString(3));
         return getPointage(id, dateDebut, dateFin, commentaire);
     }
 
@@ -77,7 +78,7 @@ public class PointageMapper extends Mapper<Pointage> {
 
     public ContentValues getFiltreDernier() {
         ContentValues retour = new ContentValues();
-        retour.putNull(TablePointage.COL_DATE_FIN);
+        retour.put(TablePointage.COL_DATE_FIN, "");
         return retour;
     }
 
@@ -93,9 +94,20 @@ public class PointageMapper extends Mapper<Pointage> {
 
     private String formatDate(Date date) {
         if (date == null) {
-            return null;
+            // pour être compatible avec l'ancienne version de l'application, il ne faut pas insérer
+            // de valeurs nulles dans la base.
+            return "";
         }
         return DATE_FORMAT.format(date);
+    }
+
+    public String formatCommentaire(String commentaire) {
+        if (commentaire == null) {
+            // pour être compatible avec l'ancienne version de l'application, il ne faut pas insérer
+            // de valeurs nulles dans la base.
+            return "";
+        }
+        return commentaire;
     }
 
     private Date parseDate(String format) {
@@ -107,6 +119,13 @@ public class PointageMapper extends Mapper<Pointage> {
         } catch (ParseException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private String parseCommentaire(String format) {
+        if ("".equals(format)) {
+            return null;
+        }
+        return format;
     }
 
 }
