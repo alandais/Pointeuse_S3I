@@ -24,6 +24,7 @@ import java.util.List;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.R;
+import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.gateways.ToastSystem;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
@@ -56,12 +57,18 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
     }
 
     @Override
+    public void initialiser() {
+        CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_pointer_nom"));
+        out.onDemarrer(info);
+    }
+
+    @Override
     public void pointer() {
         Pointage pointage;
         List<Pointage> pointages = repository.recupererEnCours();
         if (pointages.size() > 1) {
             // Cas bizarre : il y a plusieurs pointages en cours, on ne plante pas et on corrige la base de données
-            out.onError("Plusieurs pointages sont en cours, conservation et mise à jour du plus récent uniquement");
+            out.onErreur("Plusieurs pointages sont en cours, conservation et mise à jour du plus récent uniquement");
             for (int i = 0; i < pointages.size() - 1; i++) {
                 repository.supprimer(pointages.get(i).getId());
             }
@@ -80,6 +87,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
         PointageInfo pointageInfo = persister(pointage);
         if (pointageInfo != null) {
+            out.onPointageRapide(pointageInfo);
             if (pointageInfo.isComplete()) {
                 toastSystem.notifier(R.get("toast_pointage_complet", pointageInfo.getHeureFin()));
                 notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageInfo.getHeureFin(), pointageInfo.getDuree()));
@@ -99,6 +107,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
         PointageInfo pointageInfo = persister(pointage);
         if (pointageInfo != null) {
+            out.onPointageInsere(pointageInfo);
             toastSystem.notifier(R.get("toast_pointage_insere"));
         }
     }
@@ -109,9 +118,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         if (erreur == null) {
             repository.persister(pointage);
             pointageInfo = translator.translate(pointage);
-            out.onPointageInsere(pointageInfo);
         } else {
-            out.onError(erreur);
+            out.onErreur(erreur);
             toastSystem.notifier(erreur);
         }
         return pointageInfo;

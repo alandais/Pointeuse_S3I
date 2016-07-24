@@ -20,47 +20,37 @@
 package fr.s3i.pointeuse.presentation.pointer;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.presentation.commun.Vue;
 
-public class PointerVue extends Fragment implements View.OnClickListener {
-
-    private Contexte contexte;
-
-    private PointerPresenter presenter;
-
-    private PointerControleur controleur;
+public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new PointerPresenter(this);
-        contexte = ((PointageApplication)getActivity().getApplication()).getContexte();
         contexte.enregistrerService(PointerOut.class, presenter);
-        controleur = new PointerControleur(contexte, this);
+        controleur = new PointerControleur(contexte);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         contexte.detruireService(PointerOut.class);
-        presenter = null;
-        controleur = null;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_pointer_vue, container, false);
 
@@ -73,32 +63,42 @@ public class PointerVue extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public void onPointerPressed(View v) {
+    public void onPointerPressed() {
         controleur.pointer();
     }
 
-    public void onInsererPressed(View v) {
+    public void onInsererPressed() {
         // TODO inputs utilisateur.
         controleur.inserer(null, null, null);
     }
 
-    public void onUpdateEnCours(String texte) {
-        if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
-            textEnCours.setText(texte);
-        }
+    @Override
+    public void onError(String message) {
+        // TODO améliorer la présentation des erreurs
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPointer:
-                onPointerPressed(view);
+                onPointerPressed();
                 break;
             case R.id.btnInserer:
-                onInsererPressed(view);
+                onInsererPressed();
                 break;
         }
+    }
+
+    public void updateInfoPointageEnCours(String texte) {
+        if (this.getView() != null) {
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
+            textEnCours.setText(texte);
+        }
+    }
+
+    public void updateInfoPointageInsere(String texte) {
+        // TODO
     }
 
 }

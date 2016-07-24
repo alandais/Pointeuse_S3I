@@ -17,32 +17,27 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
-
-import java.util.Date;
-
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
-import fr.s3i.pointeuse.presentation.commun.Controleur;
+package fr.s3i.pointeuse.domaine.communs.entities;
 
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 24/07/2016.
+ * Entité non persistable.
  */
-public class PointerControleur extends Controleur<PointerInteractor> implements PointerIn {
+public class CasUtilisationInfo extends Entity<Void> {
 
-    public PointerControleur(Contexte contexte) {
-        super(new PointerInteractor(contexte));
+    private final String nom;
+
+    public CasUtilisationInfo(String nom) {
+        this.nom = nom;
     }
 
     @Override
-    public void pointer() {
-        interactor.pointer();
+    public String getErrorMessage() {
+        return null;
     }
 
-    @Override
-    public void inserer(Date debut, Date fin, String commentaire) {
-        interactor.inserer(debut, fin, commentaire);
+    public String getNom() {
+        return nom;
     }
 
 }

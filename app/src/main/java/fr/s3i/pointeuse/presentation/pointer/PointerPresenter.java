@@ -19,31 +19,27 @@
 
 package fr.s3i.pointeuse.presentation.pointer;
 
-import android.util.Log;
-
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.presentation.commun.Presenter;
 
 /**
  * Created by Adrien on 23/07/2016.
  */
-public class PointerPresenter implements PointerOut {
-
-    private final PointerVue vue;
+public class PointerPresenter extends Presenter<PointerVue> implements PointerOut {
 
     public PointerPresenter(PointerVue vue) {
-        this.vue = vue;
+        super(vue);
+    }
+
+    @Override
+    public void onPointageRapide(PointageInfo pointage) {
+        vue.updateInfoPointageEnCours(pointage.toInfoString());
     }
 
     @Override
     public void onPointageInsere(PointageInfo pointage) {
-        vue.onUpdateEnCours(pointage.toInfoString());
-    }
-
-    @Override
-    public void onError(String message) {
-        // TODO envoyer l'info à l'affichage
-        Log.e(PointerPresenter.class.getSimpleName(), message);
+        vue.updateInfoPointageInsere(pointage.toInfoString());
     }
 
 }

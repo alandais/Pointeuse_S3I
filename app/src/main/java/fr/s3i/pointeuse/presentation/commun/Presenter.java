@@ -17,32 +17,33 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
+package fr.s3i.pointeuse.presentation.commun;
 
-import java.util.Date;
+import android.support.annotation.CallSuper;
 
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
-import fr.s3i.pointeuse.presentation.commun.Controleur;
+import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 24/07/2016.
  */
-public class PointerControleur extends Controleur<PointerInteractor> implements PointerIn {
+public abstract class Presenter<V extends Vue> implements OutBoundary {
 
-    public PointerControleur(Contexte contexte) {
-        super(new PointerInteractor(contexte));
+    protected final V vue;
+
+    protected Presenter(V vue) {
+        this.vue = vue;
     }
 
+    @CallSuper
     @Override
-    public void pointer() {
-        interactor.pointer();
+    public void onDemarrer(CasUtilisationInfo info) {
+        vue.onInitialiserTitre(info.getNom());
     }
 
+    @CallSuper
     @Override
-    public void inserer(Date debut, Date fin, String commentaire) {
-        interactor.inserer(debut, fin, commentaire);
+    public void onErreur(String message) {
+        vue.onError(message);
     }
-
 }

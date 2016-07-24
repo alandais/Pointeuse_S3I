@@ -19,10 +19,13 @@
 
 package fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out;
 
+import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.Boundary;
 
 public interface OutBoundary extends Boundary {
 
-    void onError(String message);
+    void onDemarrer(CasUtilisationInfo info);
+
+    void onErreur(String message);
 
 }

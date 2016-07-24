@@ -17,32 +17,27 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
+package fr.s3i.pointeuse.presentation.commun;
 
-import java.util.Date;
+import android.support.annotation.CallSuper;
 
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
-import fr.s3i.pointeuse.presentation.commun.Controleur;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
- * Created by Adrien on 23/07/2016.
+ * Created by Adrien on 24/07/2016.
  */
-public class PointerControleur extends Controleur<PointerInteractor> implements PointerIn {
+public abstract class Controleur<I extends InBoundary> implements InBoundary {
 
-    public PointerControleur(Contexte contexte) {
-        super(new PointerInteractor(contexte));
+    protected final I interactor;
+
+    protected Controleur(I interactor) {
+        this.interactor = interactor;
     }
 
+    @CallSuper
     @Override
-    public void pointer() {
-        interactor.pointer();
-    }
-
-    @Override
-    public void inserer(Date debut, Date fin, String commentaire) {
-        interactor.inserer(debut, fin, commentaire);
+    public void initialiser() {
+        interactor.initialiser();
     }
 
 }

@@ -27,6 +27,8 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.mod
  */
 public interface PointerOut extends OutBoundary {
 
+    void onPointageRapide(PointageInfo pointage);
+
     void onPointageInsere(PointageInfo pointage);
 
 }
