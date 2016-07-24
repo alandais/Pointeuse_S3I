@@ -22,10 +22,8 @@ package fr.s3i.pointeuse.presentation.commun;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
@@ -58,11 +56,10 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         controleur = null;
     }
 
-    @CallSuper
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         controleur.initialiser();
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public abstract void onError(String message);
