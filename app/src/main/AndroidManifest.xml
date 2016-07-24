@@ -22,10 +22,10 @@
     <application
         android:name=".PointageApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeNoir">
         <activity android:name=".presentation.Pointeuse">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

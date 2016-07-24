@@ -17,11 +17,15 @@
   ~
   -->
 
-<LinearLayout android:id="@+id/RLayout"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/cardview_dark_background"
+    tools:context="fr.s3i.pointeuse.presentation.pointer.PointerVue" >
 
     <TextView
         android:id="@+id/txtEnCours"
@@ -45,7 +49,8 @@
         android:layout_marginLeft="50dip"
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:textColor="@color/cardview_light_background" />
 
     <Button
         android:background="@drawable/bouton123"
@@ -57,7 +62,8 @@
         android:layout_marginLeft="50dip"
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:textColor="@color/cardview_light_background" />
 
     <FrameLayout
         android:layout_width="match_parent"

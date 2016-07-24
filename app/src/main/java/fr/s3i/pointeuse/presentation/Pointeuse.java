@@ -26,6 +26,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
@@ -49,6 +50,8 @@ public class Pointeuse extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        Toast.makeText(this, R.string.copyright, Toast.LENGTH_LONG).show();
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {
