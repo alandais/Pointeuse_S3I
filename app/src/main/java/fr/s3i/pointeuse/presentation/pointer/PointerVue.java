@@ -28,17 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.communs.composition.Module;
-import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
-    public static PointerVue getInstance(Module module) {
+    public static PointerVue getInstance(String titre) {
         PointerVue vue = new PointerVue();
-        CasUtilisationInfo info =  module.getInteracteurInfo(PointerControleur.getCasUtilisationClass());
-        vue.setTitre(info.getNom());
+        vue.setTitre(titre);
         return vue;
     }
 

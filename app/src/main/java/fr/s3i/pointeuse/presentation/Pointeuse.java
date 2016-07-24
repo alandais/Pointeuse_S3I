@@ -31,7 +31,6 @@ import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 import fr.s3i.pointeuse.presentation.commun.VueTest;
-import fr.s3i.pointeuse.presentation.pointer.PointerVue;
 
 public class Pointeuse extends AppCompatActivity {
 
@@ -43,7 +42,7 @@ public class Pointeuse extends AppCompatActivity {
         PointageApplication application = ((PointageApplication)getApplication());
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), new Vue[] {
-                PointerVue.getInstance(application.getModulePointage()),
+                application.creerVuePointer(),
                 VueTest.getInstance("Calendrier") // pas encore développée
         });
         ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
