@@ -51,7 +51,9 @@ public class Pointeuse extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        Toast.makeText(this, R.string.copyright, Toast.LENGTH_LONG).show();
+        if (savedInstanceState == null) {
+            Toast.makeText(this, R.string.copyright, Toast.LENGTH_LONG).show();
+        }
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {
