@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.presentation.pointer;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ import fr.s3i.pointeuse.presentation.commun.Vue;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
+    private static final String STATE_POINTAGE_EN_COURS_TEXTE = "POINTAGE_EN_COURS_TEXTE";
+
     public static PointerVue getInstance(String titre) {
         PointerVue vue = new PointerVue();
         vue.setTitre(titre);
@@ -45,6 +48,23 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         presenter = new PointerPresenter(this);
         contexte.enregistrerService(PointerOut.class, presenter);
         controleur = new PointerControleur(contexte);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // récupération de l'état de la vue en cas de changement de configuration (rotation de l'écran par exemple)
+        if (savedInstanceState != null) {
+            updateInfoPointageEnCours(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_TEXTE));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
+        outState.putString(STATE_POINTAGE_EN_COURS_TEXTE, textEnCours.getText().toString());
     }
 
     @Override
