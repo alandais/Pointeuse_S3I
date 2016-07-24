@@ -20,8 +20,12 @@
 package fr.s3i.pointeuse.domaine.communs.composition;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
  * Created by Adrien on 20/07/2016.
@@ -30,12 +34,27 @@ public abstract class Module extends Contexte {
 
     private final Contexte contexte;
 
+    private final Map<Class<? extends InBoundary>, CasUtilisationInfo> interacteurs = new HashMap<>();
+
     public Module(Contexte contexte) {
         this.contexte = contexte;
     }
 
     public Collection<Composant<?, ?>> getComposants() {
         return cache;
+    }
+
+    public CasUtilisationInfo getInteracteurInfo(Class<? extends InBoundary> type) {
+        for (Map.Entry<Class<? extends InBoundary>, CasUtilisationInfo> entry : interacteurs.entrySet()) {
+            if (entry.getKey().isAssignableFrom(type)) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+    protected void enregistrerInteracteur(Class<? extends InBoundary> type, CasUtilisationInfo info) {
+        interacteurs.put(type, info);
     }
 
     @Override

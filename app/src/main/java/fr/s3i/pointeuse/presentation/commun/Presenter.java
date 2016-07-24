@@ -35,10 +35,9 @@ public abstract class Presenter<V extends Vue> implements OutBoundary {
         this.vue = vue;
     }
 
-    @CallSuper
     @Override
     public void onDemarrer(CasUtilisationInfo info) {
-        vue.onInitialiserTitre(info.getNom());
+        // rien
     }
 
     @CallSuper

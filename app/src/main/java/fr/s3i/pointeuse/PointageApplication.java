@@ -56,14 +56,14 @@ public class PointageApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        contexte.enregistrerService(ToastSystem.class, new ToastService(this.getApplicationContext()));
+        contexte.enregistrerService(NotificationSystem.class, new NotificationService(this.getApplicationContext()));
         chargerModulePointage();
     }
 
     private void chargerModulePointage() {
         contexte.enregistrerService(PointagePreferences.class, new Preferences(this.getApplicationContext()));
         contexte.enregistrerService(PointageRepository.class, new PointageDao(this.getApplicationContext()));
-        contexte.enregistrerService(ToastSystem.class, new ToastService(this.getApplicationContext()));
-        contexte.enregistrerService(NotificationSystem.class, new NotificationService(this.getApplicationContext()));
         modulePointage = new ModulePointage(contexte);
     }
 

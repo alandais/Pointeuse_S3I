@@ -37,7 +37,7 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> {
 
     protected static class ControleurTest extends Controleur<InBoundary> {
-        protected ControleurTest(InBoundary interactor) {
+        protected ControleurTest() {
             super(new InBoundary() {
                 @Override
                 public void initialiser() {
@@ -55,8 +55,15 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
 
     public static VueTest getInstance(String titre) {
         VueTest vue = new VueTest();
-        vue.onInitialiserTitre(titre);
+        vue.setTitre(titre);
         return vue;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter = new PresenterTest(this);
+        controleur = new ControleurTest();
     }
 
     @Nullable

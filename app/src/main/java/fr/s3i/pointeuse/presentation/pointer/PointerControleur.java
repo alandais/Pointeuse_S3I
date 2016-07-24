@@ -22,6 +22,7 @@ package fr.s3i.pointeuse.presentation.pointer;
 import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.presentation.commun.Controleur;
@@ -30,6 +31,10 @@ import fr.s3i.pointeuse.presentation.commun.Controleur;
  * Created by Adrien on 23/07/2016.
  */
 public class PointerControleur extends Controleur<PointerInteractor> implements PointerIn {
+
+    public static Class<? extends InBoundary> getCasUtilisationClass() {
+        return PointerInteractor.class;
+    }
 
     public PointerControleur(Contexte contexte) {
         super(new PointerInteractor(contexte));

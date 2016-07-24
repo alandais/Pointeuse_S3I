@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.presentation.commun;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v4.app.Fragment;
@@ -44,8 +45,8 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
 
     @CallSuper
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         contexte = ((PointageApplication)getActivity().getApplication()).getContexte();
     }
 
@@ -74,8 +75,7 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         // rien par défaut, pas obligatoire
     }
 
-    @CallSuper
-    public void onInitialiserTitre(String titre) {
+    protected final void setTitre(String titre) {
         this.titre = titre;
     }
 
