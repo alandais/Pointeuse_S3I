@@ -26,7 +26,7 @@ import fr.s3i.pointeuse.domaine.communs.R;
  */
 public class PointageInfo {
 
-    private final long id;
+    private final Long id;
 
     private final String debut;
 
@@ -38,7 +38,11 @@ public class PointageInfo {
 
     private final String duree;
 
-    public PointageInfo(long id, String debut, String fin, String heureDebut, String heureFin, String duree) {
+    public PointageInfo() {
+        this(null, null, null, null, null, null);
+    }
+
+    public PointageInfo(Long id, String debut, String fin, String heureDebut, String heureFin, String duree) {
         this.id = id;
         this.debut = debut;
         this.fin = fin;
@@ -67,8 +71,20 @@ public class PointageInfo {
         return heureFin;
     }
 
+    public boolean isDebutRenseigne() {
+        return getDebut() != null && !"".equals(getDebut());
+    }
+
+    public boolean isFinRenseigne() {
+        return getFin() != null && !"".equals(getFin());
+    }
+
+    public boolean isNull() {
+        return !isDebutRenseigne() && !isFinRenseigne();
+    }
+
     public boolean isComplete() {
-        return fin != null & !"".equals(fin);
+        return isDebutRenseigne() && isFinRenseigne();
     }
 
     public String getDuree() {
@@ -76,7 +92,10 @@ public class PointageInfo {
     }
 
     public String toInfoString() {
-        if (isComplete()) {
+        if (isNull()) {
+            return R.get("info_pointage_null", getDuree());
+        }
+        else if (isComplete()) {
             return R.get("info_pointage_termine", getDuree());
         }
         else {

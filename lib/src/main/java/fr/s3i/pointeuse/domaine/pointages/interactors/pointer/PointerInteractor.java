@@ -31,12 +31,10 @@ import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.services.Periode;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -47,8 +45,6 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageInfoTranslator translator;
 
-    private final PointageInfoListeTranslator listeTranslator;
-
     private final ToastSystem toastSystem;
 
     private final NotificationSystem notificationSystem;
@@ -57,7 +53,6 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         super(contexte.getService(PointerOut.class));
         this.repository = contexte.getService(PointageRepository.class);
         this.translator = contexte.getService(PointageInfoTranslator.class);
-        this.listeTranslator = contexte.getService(PointageInfoListeTranslator.class);
         this.toastSystem = contexte.getService(ToastSystem.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
@@ -68,18 +63,14 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         out.onDemarrer(info);
 
         Pointage pointage = lireDernierPointage();
+        PointageInfo pointageInfo;
         if (pointage != null) {
-            PointageInfo pointageInfo = translator.translate(pointage);
-            out.onPointageRapide(pointageInfo);
+            pointageInfo = translator.translate(pointage);
         }
         else {
-            // afficher le résumé de la journée en cours
-            // Date today = new Date();
-            // List<Pointage> pointages = repository.recupererEntre(Periode.JOUR.getDebutPeriode(today), Periode.JOUR.getFinPeriode(today));
-            // PointageInfoListe pointageInfo = listeTranslator.translate(pointages);
-            // toastSystem.notifier("Réalisé aujourd'hui : " + pointageInfo.getDureeTotale());
-            // TODO : à faire
+            pointageInfo = new PointageInfo();
         }
+        out.onPointageRapide(pointageInfo);
     }
 
     @Override

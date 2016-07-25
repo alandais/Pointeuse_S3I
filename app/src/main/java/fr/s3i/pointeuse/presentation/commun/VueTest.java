@@ -72,15 +72,25 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
         super.onCreateView(inflater, container, savedInstanceState);
         TextView tv = new TextView(getActivity());
         tv.setGravity(Gravity.CENTER);
-        tv.setText(getTitre());
         return tv;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TextView tv = getTextView();
+        if (tv != null) {
+            tv.setText(getTitre());
+        }
     }
 
     @Override
     public void onError(String message) {
         TextView tv = getTextView();
-        tv.setText(message);
-        tv.setTextColor(Color.RED);
+        if (tv != null) {
+            tv.setText(message);
+            tv.setTextColor(Color.RED);
+        }
     }
 
     private TextView getTextView() {
