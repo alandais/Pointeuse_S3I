@@ -31,8 +31,8 @@ import java.util.List;
 
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
-import fr.s3i.pointeuse.persistance.database.DatabaseHelper;
 import fr.s3i.pointeuse.persistance.contrats.TablePointage;
+import fr.s3i.pointeuse.persistance.database.DatabaseHelper;
 import fr.s3i.pointeuse.persistance.mapper.PointageMapper;
 
 /**
@@ -59,8 +59,7 @@ public class PointageDao implements Closeable, PointageRepository {
             // insert
             long id = table.insert(db, values);
             entity.setId(id);
-        }
-        else {
+        } else {
             // update
             ContentValues filtre = mapper.getFiltre(entity);
             table.update(db, values, filtre);

@@ -53,7 +53,7 @@ public abstract class Table {
             requeteCreate.append(getTypeColonnes()[i]);
             requeteCreate.append(',');
         }
-        requeteCreate.setLength(requeteCreate.length()-1);
+        requeteCreate.setLength(requeteCreate.length() - 1);
         requeteCreate.append(')');
         db.execSQL(requeteCreate.toString());
     }
@@ -66,7 +66,7 @@ public abstract class Table {
 
     public long insert(SQLiteDatabase db, ContentValues values) {
         long id = db.insert(getNom(), null, values);
-        if(id == -1) {
+        if (id == -1) {
             // TODO meilleure gestion des exceptions, il faut que ça puisse remonter dans l'interactor (PersitanceException ?)
             throw new IllegalStateException();
         }
@@ -95,14 +95,13 @@ public abstract class Table {
     @NonNull
     private String getWhere(ContentValues filter) {
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, Object> entry : filter.valueSet()  ) {
+        for (Map.Entry<String, Object> entry : filter.valueSet()) {
             builder.append(entry.getKey());
             if (entry.getValue() != null) {
                 builder.append("='");
                 builder.append(entry.getValue());
                 builder.append("'");
-            }
-            else {
+            } else {
                 builder.append(" IS NULL");
             }
         }

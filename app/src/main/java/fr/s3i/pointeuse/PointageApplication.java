@@ -54,7 +54,7 @@ public class PointageApplication extends Application {
     }
 
     public Vue creerVuePointer() {
-        CasUtilisationInfo info =  modulePointage.getInteracteurInfo(PointerControleur.getCasUtilisationClass());
+        CasUtilisationInfo info = modulePointage.getInteracteurInfo(PointerControleur.getCasUtilisationClass());
         return PointerVue.getInstance(info.getNom());
     }
 

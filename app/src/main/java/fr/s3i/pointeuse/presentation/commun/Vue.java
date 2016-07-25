@@ -45,7 +45,7 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        contexte = ((PointageApplication)getActivity().getApplication()).getContexte();
+        contexte = ((PointageApplication) getActivity().getApplication()).getContexte();
     }
 
     @CallSuper

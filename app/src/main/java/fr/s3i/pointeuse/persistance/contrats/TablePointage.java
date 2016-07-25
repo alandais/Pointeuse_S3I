@@ -37,8 +37,8 @@ public class TablePointage extends Table {
     public static final String COL_COMMENTAIRE = "COMMENTAIRE";
 
     // structure table
-    public static final String[] COLONNES = { COL_ID,  COL_DATE_DEBUT, COL_DATE_FIN, COL_COMMENTAIRE };
-    public static final String[] TYPE_COL = { TYPE_ID, TYPE_TEXT,      TYPE_TEXT,    TYPE_TEXT };
+    public static final String[] COLONNES = {COL_ID, COL_DATE_DEBUT, COL_DATE_FIN, COL_COMMENTAIRE};
+    public static final String[] TYPE_COL = {TYPE_ID, TYPE_TEXT, TYPE_TEXT, TYPE_TEXT};
 
     @Override
     public String getNom() {
@@ -47,7 +47,7 @@ public class TablePointage extends Table {
 
     @Override
     public String[] getColonnesCle() {
-        return new String[] { COL_ID } ;
+        return new String[]{COL_ID};
     }
 
     @Override

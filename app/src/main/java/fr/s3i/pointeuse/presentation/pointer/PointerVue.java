@@ -63,8 +63,10 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
-        outState.putString(STATE_POINTAGE_EN_COURS_TEXTE, textEnCours.getText().toString());
+        if (this.getView() != null) {
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
+            outState.putString(STATE_POINTAGE_EN_COURS_TEXTE, textEnCours.getText().toString());
+        }
     }
 
     @Override
@@ -78,7 +80,7 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_pointer_vue, container, false);
+        View view = inflater.inflate(R.layout.fragment_pointer_vue, container, false);
 
         Button b = (Button) view.findViewById(R.id.btnPointer);
         b.setOnClickListener(this);

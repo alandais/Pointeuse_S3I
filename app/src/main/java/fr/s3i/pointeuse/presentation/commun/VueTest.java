@@ -94,7 +94,7 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
     }
 
     private TextView getTextView() {
-        return (TextView)getView();
+        return (TextView) getView();
     }
 
 }

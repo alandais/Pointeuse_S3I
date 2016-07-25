@@ -31,7 +31,6 @@ import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
@@ -66,8 +65,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageInfo pointageInfo;
         if (pointage != null) {
             pointageInfo = translator.translate(pointage);
-        }
-        else {
+        } else {
             pointageInfo = new PointageInfo();
         }
         out.onPointageRapide(pointageInfo);
@@ -84,13 +82,11 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
                 repository.supprimer(pointages.get(i).getId());
             }
             pointage = pointages.get(pointages.size() - 1);
-        }
-        else if (pointages.size() == 1) {
+        } else if (pointages.size() == 1) {
             // Cas normal pointage en cours
             pointage = pointages.get(0);
             pointage.setFin(new Date());
-        }
-        else {
+        } else {
             // Cas normal nouveau pointage
             pointage = new Pointage();
             pointage.setDebut(new Date());

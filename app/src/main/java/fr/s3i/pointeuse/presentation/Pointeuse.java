@@ -40,15 +40,15 @@ public class Pointeuse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pointeuse);
 
-        PointageApplication application = ((PointageApplication)getApplication());
+        PointageApplication application = ((PointageApplication) getApplication());
 
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), new Vue[] {
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), new Vue[]{
                 application.creerVuePointer(),
                 VueTest.getInstance("Calendrier") // pas encore développée
         });
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState == null) {

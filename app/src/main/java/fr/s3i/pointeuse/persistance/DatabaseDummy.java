@@ -45,8 +45,8 @@ public class DatabaseDummy implements PointageRepository {
     @Override
     public List<Pointage> recupererEnCours() {
         List<Pointage> retour = new ArrayList<>();
-        if (nextId > 0 && repository.get(nextId-1).getFin() == null) {
-            retour.add(repository.get(nextId-1));
+        if (nextId > 0 && repository.get(nextId - 1).getFin() == null) {
+            retour.add(repository.get(nextId - 1));
         }
         return retour;
     }

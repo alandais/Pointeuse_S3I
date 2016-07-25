@@ -26,8 +26,7 @@ import java.util.Locale;
 /**
  * Created by Adrien on 24/07/2016.
  */
-public enum Periode
-{
+public enum Periode {
     // @formatter:off
     ANNEE(Calendar.DAY_OF_YEAR, Calendar.YEAR),
     MOIS(Calendar.DAY_OF_MONTH, Calendar.MONTH),
@@ -38,46 +37,37 @@ public enum Periode
     private final int toReset;
     private final int toIncrease;
 
-    Periode(int toReset, int toIncrease)
-    {
+    Periode(int toReset, int toIncrease) {
         this.toReset = toReset;
         this.toIncrease = toIncrease;
     }
 
-    public Date getDebutPeriode(Date reference)
-    {
+    public Date getDebutPeriode(Date reference) {
         Calendar calendar = getCalendar(reference);
         reset(calendar);
         return calendar.getTime();
     }
 
-    public Date getFinPeriode(Date reference)
-    {
+    public Date getFinPeriode(Date reference) {
         Calendar calendar = getCalendar(reference);
         reset(calendar);
         increase(calendar);
         return calendar.getTime();
     }
 
-    private void reset(Calendar calendar)
-    {
-        if (toReset == Calendar.DAY_OF_WEEK)
-        {
+    private void reset(Calendar calendar) {
+        if (toReset == Calendar.DAY_OF_WEEK) {
             calendar.set(toReset, calendar.getFirstDayOfWeek());
-        }
-        else
-        {
+        } else {
             calendar.set(toReset, calendar.getActualMinimum(toReset));
         }
     }
 
-    private void increase(Calendar calendar)
-    {
+    private void increase(Calendar calendar) {
         calendar.add(toIncrease, 1);
     }
 
-    private Calendar getCalendar(Date date)
-    {
+    private Calendar getCalendar(Date date) {
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(date);
         calendar.set(Calendar.HOUR, 0);
