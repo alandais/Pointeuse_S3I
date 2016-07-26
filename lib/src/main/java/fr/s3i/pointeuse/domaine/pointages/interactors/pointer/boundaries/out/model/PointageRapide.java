@@ -17,17 +17,21 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.translator;
+package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model;
 
-import java.util.Collection;
-import java.util.List;
+/**
+ * Created by Adrien on 26/07/2016.
+ */
+public class PointageRapide {
 
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.Translator;
+    private String description;
 
-public interface OutTranslator<T, U> extends Translator<T, U> {
+    PointageRapide(String description) {
+        this.description = description;
+    }
 
-    U translate(T entity);
-
-    List<U> translate(Collection<T> entities);
+    public String getDescription() {
+        return description;
+    }
 
 }

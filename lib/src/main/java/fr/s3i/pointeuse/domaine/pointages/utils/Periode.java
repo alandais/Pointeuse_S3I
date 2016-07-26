@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.services;
+package fr.s3i.pointeuse.domaine.pointages.utils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +27,7 @@ import java.util.Locale;
  * Created by Adrien on 24/07/2016.
  */
 public enum Periode {
+
     // @formatter:off
     ANNEE(Calendar.DAY_OF_YEAR, Calendar.YEAR),
     MOIS(Calendar.DAY_OF_MONTH, Calendar.MONTH),
@@ -76,4 +77,5 @@ public enum Periode {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar;
     }
+
 }

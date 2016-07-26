@@ -19,24 +19,24 @@
 
 package fr.s3i.pointeuse.domaine.pointages.services;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.services.Service;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 
 /**
- * Created by Adrien on 19/07/2016.
+ * Created by Adrien on 26/07/2016.
  */
-public class PointageService {
+public class Calculateur implements Service {
 
     private final PointagePreferences preferences;
 
-    public PointageService(Contexte contexte) {
+    public Calculateur(Contexte contexte) {
         this.preferences = contexte.getService(PointagePreferences.class);
     }
 
@@ -88,41 +88,6 @@ public class PointageService {
                 break;
         }
         return dureeTotale;
-    }
-
-    public String formatDuree(long duree) {
-        String result;
-        switch (preferences.getDelaiFormat()) {
-            case DIXIEME_HEURE:
-                result = String.format("%02.1f", duree / 3600.00f);
-                break;
-            case HEURE_MINUTE:
-                result = String.format("%02dh%02d", duree / 3600, (duree % 3600) / 60);
-                break;
-            case JOUR_HEURE_MINUTE:
-                result = String.format("%dj. %02dh%02d", duree / 86400, (duree % 86400) / 3600, (duree % 3600) / 60);
-                break;
-            default:
-                result = Long.toString(duree);
-                break;
-        }
-        return result;
-    }
-
-    public String formatDate(Date date) {
-        if (date == null) {
-            return "";
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat(preferences.getDateFormat());
-        return sdf.format(date);
-    }
-
-    public String formatHeure(Date date) {
-        if (date == null) {
-            return "";
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat(preferences.getHeureFormat());
-        return sdf.format(date);
     }
 
 }

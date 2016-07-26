@@ -26,10 +26,12 @@ import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.composition.Composant;
 import fr.s3i.pointeuse.domaine.communs.composition.Module;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoListeTranslator;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapideFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
-import fr.s3i.pointeuse.domaine.pointages.services.PointageService;
+import fr.s3i.pointeuse.domaine.pointages.services.Calculateur;
+import fr.s3i.pointeuse.domaine.pointages.services.Formateur;
 
 /**
  * Created by Adrien on 20/07/2016.
@@ -38,9 +40,11 @@ public class ModulePointage extends Module {
 
     public ModulePointage(Contexte contexte) {
         super(contexte);
-        enregistrerService(PointageService.class, new PointageService(contexte));
-        enregistrerService(PointageInfoTranslator.class, new PointageInfoTranslator(contexte));
-        enregistrerService(PointageInfoListeTranslator.class, new PointageInfoListeTranslator(contexte));
+        enregistrerService(Calculateur.class, new Calculateur(contexte));
+        enregistrerService(Formateur.class, new Formateur(contexte));
+        enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));
+        enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
+        enregistrerService(PointageRapideFactory.class, new PointageRapideFactory());
         enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(R.get("interactor_pointer_nom")));
     }
 

@@ -17,32 +17,30 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model;
+package fr.s3i.pointeuse.domaine.pointages.services.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.services.Service;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.services.Calculateur;
+import fr.s3i.pointeuse.domaine.pointages.services.Formateur;
 
 /**
- * Created by Adrien on 19/07/2016.
+ * Created by Adrien on 26/07/2016.
  */
-public class PointageInfoListe {
+public class PointageWrapperFactory implements Service {
 
-    private List<PointageInfo> pointages = new ArrayList<>();
+    private final Calculateur calculateur;
 
-    private String dureeTotale;
+    private final Formateur formateur;
 
-    public PointageInfoListe(Collection<PointageInfo> pointages, String dureeTotale) {
-        this.pointages.addAll(pointages);
-        this.dureeTotale = dureeTotale;
+    public PointageWrapperFactory(Contexte contexte) {
+        calculateur = contexte.getService(Calculateur.class);
+        formateur = contexte.getService(Formateur.class);
     }
 
-    public List<PointageInfo> getPointages() {
-        return pointages;
-    }
-
-    public String getDureeTotale() {
-        return dureeTotale;
+    public PointageWrapper getPointageWrapper(Pointage pointage) {
+        return new PointageWrapper(calculateur, formateur, pointage);
     }
 
 }

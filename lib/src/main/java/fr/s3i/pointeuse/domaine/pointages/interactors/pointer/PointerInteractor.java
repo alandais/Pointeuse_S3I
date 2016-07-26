@@ -31,9 +31,13 @@ import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.translator.PointageInfoTranslator;
+import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapideFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -42,16 +46,22 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageRepository repository;
 
-    private final PointageInfoTranslator translator;
-
     private final ToastSystem toastSystem;
 
     private final NotificationSystem notificationSystem;
 
+    private final PointageWrapperFactory pointageWrapperFactory;
+
+    private final PointageRapideFactory pointageRapideFactory;
+
+    private final PointageInfoFactory pointageInfoFactory;
+
     public PointerInteractor(Contexte contexte) {
         super(contexte.getService(PointerOut.class));
         this.repository = contexte.getService(PointageRepository.class);
-        this.translator = contexte.getService(PointageInfoTranslator.class);
+        this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
+        this.pointageRapideFactory = contexte.getService(PointageRapideFactory.class);
+        this.pointageInfoFactory = contexte.getService(PointageInfoFactory.class);
         this.toastSystem = contexte.getService(ToastSystem.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
@@ -62,45 +72,32 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         out.onDemarrer(info);
 
         Pointage pointage = lireDernierPointage();
-        PointageInfo pointageInfo;
-        if (pointage != null) {
-            pointageInfo = translator.translate(pointage);
-        } else {
-            pointageInfo = new PointageInfo();
-        }
-        out.onPointageRapide(pointageInfo);
+        PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointage);
+        out.onPointageRapide(pointageRapide);
     }
 
     @Override
     public void pointer() {
-        Pointage pointage;
-        List<Pointage> pointages = repository.recupererEnCours();
-        if (pointages.size() > 1) {
-            // Cas bizarre : il y a plusieurs pointages en cours, on ne plante pas et on corrige la base de données
-            out.onErreur("Plusieurs pointages sont en cours, conservation et mise à jour du plus récent uniquement");
-            for (int i = 0; i < pointages.size() - 1; i++) {
-                repository.supprimer(pointages.get(i).getId());
-            }
-            pointage = pointages.get(pointages.size() - 1);
-        } else if (pointages.size() == 1) {
-            // Cas normal pointage en cours
-            pointage = pointages.get(0);
+        Pointage pointage = lireDernierPointage();
+        if (pointage != null) {
+            // pointage en cours
             pointage.setFin(new Date());
         } else {
-            // Cas normal nouveau pointage
+            // nouveau pointage
             pointage = new Pointage();
             pointage.setDebut(new Date());
         }
 
-        PointageInfo pointageInfo = persister(pointage);
-        if (pointageInfo != null) {
-            out.onPointageRapide(pointageInfo);
-            if (pointageInfo.isComplete()) {
-                toastSystem.notifier(R.get("toast_pointage_complet", pointageInfo.getHeureFin()));
-                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageInfo.getHeureFin(), pointageInfo.getDuree()));
+        PointageWrapper pointageWrapper = persister(pointage);
+        if (pointageWrapper != null) {
+            PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointageWrapper);
+            out.onPointageRapide(pointageRapide);
+            if (pointageWrapper.isTermine()) {
+                toastSystem.notifier(R.get("toast_pointage_complet", pointageWrapper.getHeureFin()));
+                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageWrapper.getHeureFin(), pointageWrapper.getDuree()));
             } else {
-                toastSystem.notifier(R.get("toast_pointage_partiel", pointageInfo.getHeureDebut()));
-                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_debut_travail", pointageInfo.getHeureDebut()));
+                toastSystem.notifier(R.get("toast_pointage_partiel", pointageWrapper.getHeureDebut()));
+                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_debut_travail", pointageWrapper.getHeureDebut()));
             }
         }
     }
@@ -112,8 +109,9 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        PointageInfo pointageInfo = persister(pointage);
-        if (pointageInfo != null) {
+        PointageWrapper pointageWrapper = persister(pointage);
+        if (pointageWrapper != null) {
+            PointageInfo pointageInfo = pointageInfoFactory.getPointageInfo(pointageWrapper);
             out.onPointageInsere(pointageInfo);
             toastSystem.notifier(R.get("toast_pointage_insere"));
         }
@@ -135,17 +133,17 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         return pointage;
     }
 
-    private PointageInfo persister(Pointage pointage) {
-        PointageInfo pointageInfo = null;
+    private PointageWrapper persister(Pointage pointage) {
+        PointageWrapper pointageWrapper = null;
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
             repository.persister(pointage);
-            pointageInfo = translator.translate(pointage);
+            pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
         } else {
             out.onErreur(erreur);
             toastSystem.notifier(erreur);
         }
-        return pointageInfo;
+        return pointageWrapper;
     }
 
 }

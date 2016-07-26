@@ -1,5 +1,5 @@
 /*
- * Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+ * Oburo.O  un programme dinée à saisir son temps de travail sur un support Android.
  *
  *     This file is part of Oburo.O
  *     Oburo.O is free software: you can redistribute it and/or modify
@@ -19,8 +19,6 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model;
 
-import fr.s3i.pointeuse.domaine.communs.R;
-
 /**
  * Created by Adrien on 19/07/2016.
  */
@@ -38,20 +36,35 @@ public class PointageInfo {
 
     private final String duree;
 
-    public PointageInfo() {
-        this(null, null, null, null, null, null);
-    }
+    private final boolean isDemarre;
 
-    public PointageInfo(Long id, String debut, String fin, String heureDebut, String heureFin, String duree) {
+    private final boolean isArrete;
+
+    private final boolean isVide;
+
+    private final boolean isEnCours;
+
+    private final boolean isTermine;
+
+    private final boolean isValide;
+
+    PointageInfo(Long id, String debut, String fin, String heureDebut, String heureFin, String duree,
+                        boolean isDemarre, boolean isArrete, boolean isVide, boolean isEnCours, boolean isTermine, boolean isValide) {
         this.id = id;
         this.debut = debut;
         this.fin = fin;
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.duree = duree;
+        this.isDemarre = isDemarre;
+        this.isArrete = isArrete;
+        this.isVide = isVide;
+        this.isEnCours = isEnCours;
+        this.isTermine = isTermine;
+        this.isValide = isValide;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -71,39 +84,90 @@ public class PointageInfo {
         return heureFin;
     }
 
-    public boolean isDebutRenseigne() {
-        return getDebut() != null && !"".equals(getDebut());
-    }
-
-    public boolean isFinRenseigne() {
-        return getFin() != null && !"".equals(getFin());
-    }
-
-    public boolean isNull() {
-        return !isDebutRenseigne() && !isFinRenseigne();
-    }
-
-    public boolean isComplete() {
-        return isDebutRenseigne() && isFinRenseigne();
-    }
-
     public String getDuree() {
         return duree;
     }
 
-    public String toInfoString() {
-        if (isNull()) {
-            return R.get("info_pointage_null");
-        } else if (isComplete()) {
-            return R.get("info_pointage_termine", getDuree());
-        } else {
-            return R.get("info_pointage_en_cours", getHeureDebut());
-        }
+    public boolean isDemarre() {
+        return isDemarre;
+    }
+
+    public boolean isArrete() {
+        return isArrete;
+    }
+
+    public boolean isVide() {
+        return isVide;
+    }
+
+    public boolean isEnCours() {
+        return isEnCours;
+    }
+
+    public boolean isTermine() {
+        return isTermine;
+    }
+
+    public boolean isValide() {
+        return isValide;
     }
 
     @Override
     public String toString() {
-        return String.format("debut : %s ; fin : %s", debut, fin);
+        return "PointageInfo{" +
+                "id=" + id +
+                ", debut='" + debut + '\'' +
+                ", fin='" + fin + '\'' +
+                ", heureDebut='" + heureDebut + '\'' +
+                ", heureFin='" + heureFin + '\'' +
+                ", duree='" + duree + '\'' +
+                ", isDemarre=" + isDemarre +
+                ", isArrete=" + isArrete +
+                ", isVide=" + isVide +
+                ", isEnCours=" + isEnCours +
+                ", isTermine=" + isTermine +
+                ", isValide=" + isValide +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PointageInfo that = (PointageInfo) o;
+
+        if (isDemarre != that.isDemarre) return false;
+        if (isArrete != that.isArrete) return false;
+        if (isVide != that.isVide) return false;
+        if (isEnCours != that.isEnCours) return false;
+        if (isTermine != that.isTermine) return false;
+        if (isValide != that.isValide) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (debut != null ? !debut.equals(that.debut) : that.debut != null) return false;
+        if (fin != null ? !fin.equals(that.fin) : that.fin != null) return false;
+        if (heureDebut != null ? !heureDebut.equals(that.heureDebut) : that.heureDebut != null)
+            return false;
+        if (heureFin != null ? !heureFin.equals(that.heureFin) : that.heureFin != null)
+            return false;
+        return duree != null ? duree.equals(that.duree) : that.duree == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (debut != null ? debut.hashCode() : 0);
+        result = 31 * result + (fin != null ? fin.hashCode() : 0);
+        result = 31 * result + (heureDebut != null ? heureDebut.hashCode() : 0);
+        result = 31 * result + (heureFin != null ? heureFin.hashCode() : 0);
+        result = 31 * result + (duree != null ? duree.hashCode() : 0);
+        result = 31 * result + (isDemarre ? 1 : 0);
+        result = 31 * result + (isArrete ? 1 : 0);
+        result = 31 * result + (isVide ? 1 : 0);
+        result = 31 * result + (isEnCours ? 1 : 0);
+        result = 31 * result + (isTermine ? 1 : 0);
+        result = 31 * result + (isValide ? 1 : 0);
+        return result;
+    }
 }

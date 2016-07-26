@@ -21,6 +21,7 @@ package fr.s3i.pointeuse.presentation.pointer;
 
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
 
 /**
@@ -33,13 +34,14 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     }
 
     @Override
-    public void onPointageRapide(PointageInfo pointage) {
-        vue.updateInfoPointageEnCours(pointage.toInfoString());
+    public void onPointageRapide(PointageRapide pointage) {
+        vue.updateInfoPointageEnCours(pointage.getDescription());
     }
 
     @Override
     public void onPointageInsere(PointageInfo pointage) {
-        vue.updateInfoPointageInsere(pointage.toInfoString());
+        // TODO
+        vue.updateInfoPointageInsere(pointage.toString());
     }
 
 }
