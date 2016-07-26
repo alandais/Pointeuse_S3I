@@ -44,7 +44,7 @@ public class ModulePointage extends Module {
         enregistrerService(Formateur.class, new Formateur(contexte));
         enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));
         enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
-        enregistrerService(PointageRapideFactory.class, new PointageRapideFactory());
+        enregistrerService(PointageRapideFactory.class, new PointageRapideFactory(contexte));
         enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(R.get("interactor_pointer_nom")));
     }
 
@@ -52,4 +52,5 @@ public class ModulePointage extends Module {
     public Collection<Composant<?, ?>> getComposants() {
         return cache;
     }
+
 }
