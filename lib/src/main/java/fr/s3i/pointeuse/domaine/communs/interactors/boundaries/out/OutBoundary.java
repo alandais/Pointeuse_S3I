@@ -28,4 +28,8 @@ public interface OutBoundary extends Boundary {
 
     void onErreur(String message);
 
+    void executerFutur(Runnable runnable, long milliseconds);
+
+    void toast(String message);
+
 }

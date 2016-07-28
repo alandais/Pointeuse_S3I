@@ -21,12 +21,20 @@ package fr.s3i.pointeuse.presentation.commun;
 
 import android.support.annotation.CallSuper;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
  * Created by Adrien on 24/07/2016.
  */
-public abstract class Controleur<I extends InBoundary> implements InBoundary {
+public abstract class Controleur<I extends InBoundary> implements InBoundary, Closeable {
+
+    protected ScheduledExecutorService tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
 
     protected final I interactor;
 
@@ -40,4 +48,12 @@ public abstract class Controleur<I extends InBoundary> implements InBoundary {
         interactor.initialiser();
     }
 
+    public void executerFutur(Runnable action, long millisecondes) {
+        tacheDeFond.schedule(action, millisecondes, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public void close() throws IOException {
+        tacheDeFond.shutdownNow();
+    }
 }

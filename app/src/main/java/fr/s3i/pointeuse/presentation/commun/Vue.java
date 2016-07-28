@@ -24,6 +24,9 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
@@ -52,6 +55,12 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            controleur.close();
+        }
+        catch (IOException ex) {
+            // rien
+        }
         presenter = null;
         controleur = null;
     }
@@ -63,6 +72,14 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
     }
 
     public abstract void onError(String message);
+
+    public void toast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void executerFutur(Runnable action, long millisecondes) {
+        controleur.executerFutur(action, millisecondes);
+    }
 
     public void onShowProgress() {
         // rien par défaut, pas obligatoire

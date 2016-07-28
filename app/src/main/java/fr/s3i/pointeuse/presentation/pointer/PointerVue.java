@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
@@ -103,7 +102,7 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     @Override
     public void onError(String message) {
         // TODO améliorer la présentation des erreurs
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
+        toast(message);
     }
 
     @Override

@@ -34,14 +34,23 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     }
 
     @Override
-    public void onPointageRapide(PointageRapide pointage) {
-        vue.updateInfoPointageEnCours(pointage.getDescription());
+    public void onPointageRapide(final PointageRapide pointage) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.updateInfoPointageEnCours(pointage.getDescription());
+            }
+        });
     }
 
     @Override
-    public void onPointageInsere(PointageInfo pointage) {
-        // TODO
-        vue.updateInfoPointageInsere(pointage.toString());
+    public void onPointageInsere(final PointageInfo pointage) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.updateInfoPointageInsere(pointage.toString());
+            }
+        });
     }
 
 }

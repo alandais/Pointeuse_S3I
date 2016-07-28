@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.presentation.commun;
 
+import android.os.Handler;
 import android.support.annotation.CallSuper;
 
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
@@ -31,6 +32,8 @@ public abstract class Presenter<V extends Vue> implements OutBoundary {
 
     protected final V vue;
 
+    protected final Handler handler = new Handler();
+
     protected Presenter(V vue) {
         this.vue = vue;
     }
@@ -42,7 +45,28 @@ public abstract class Presenter<V extends Vue> implements OutBoundary {
 
     @CallSuper
     @Override
-    public void onErreur(String message) {
-        vue.onError(message);
+    public void onErreur(final String message) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.onError(message);
+            }
+        });
     }
+
+    @Override
+    public void toast(final String message) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.toast(message);
+            }
+        });
+    }
+
+    @Override
+    public void executerFutur(Runnable runnable, long milliseconds) {
+        vue.executerFutur(runnable, milliseconds);
+    }
+
 }

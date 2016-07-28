@@ -42,12 +42,22 @@ public class PointerControleur extends Controleur<PointerInteractor> implements 
 
     @Override
     public void pointer() {
-        interactor.pointer();
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                interactor.pointer();
+            }
+        });
     }
 
     @Override
-    public void inserer(Date debut, Date fin, String commentaire) {
-        interactor.inserer(debut, fin, commentaire);
+    public void inserer(final Date debut, final Date fin, final String commentaire) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                interactor.inserer(debut, fin, commentaire);
+            }
+        });
     }
 
 }
