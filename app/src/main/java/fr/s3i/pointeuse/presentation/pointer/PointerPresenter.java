@@ -21,6 +21,7 @@ package fr.s3i.pointeuse.presentation.pointer;
 
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCours;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
 
@@ -38,7 +39,7 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
         handler.post(new Runnable() {
             @Override
             public void run() {
-                vue.updateInfoPointageEnCours(pointage.getDescription());
+                vue.updateInfoPointageRapide(pointage.getDescription());
             }
         });
     }
@@ -49,6 +50,16 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
             @Override
             public void run() {
                 vue.updateInfoPointageInsere(pointage.toString());
+            }
+        });
+    }
+
+    @Override
+    public void onPointageEnCours(final PointageEnCours pointage) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.updateInfoPointageEnCours(pointage.toString());
             }
         });
     }

@@ -33,6 +33,7 @@ import fr.s3i.pointeuse.presentation.commun.Vue;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
+    private static final String STATE_POINTAGE_RAPIDE_TEXTE = "POINTAGE_RAPIDE_TEXTE";
     private static final String STATE_POINTAGE_EN_COURS_TEXTE = "POINTAGE_EN_COURS_TEXTE";
 
     public static PointerVue getInstance(String titre) {
@@ -63,7 +64,9 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         super.onSaveInstanceState(outState);
 
         if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
+            TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageRapide);
+            outState.putString(STATE_POINTAGE_RAPIDE_TEXTE, textRapide.getText().toString());
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCours);
             outState.putString(STATE_POINTAGE_EN_COURS_TEXTE, textEnCours.getText().toString());
         }
     }
@@ -117,15 +120,22 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         }
     }
 
-    public void updateInfoPointageEnCours(String texte) {
+    public void updateInfoPointageRapide(String texte) {
         if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtEnCours);
-            textEnCours.setText(texte);
+            TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageRapide);
+            textRapide.setText(texte);
         }
     }
 
     public void updateInfoPointageInsere(String texte) {
         // TODO
+    }
+
+    public void updateInfoPointageEnCours(String texte) {
+        if (this.getView() != null) {
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCours);
+            textEnCours.setText(texte);
+        }
     }
 
 }

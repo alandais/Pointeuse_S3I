@@ -82,7 +82,11 @@ public abstract class Table {
     }
 
     public Cursor select(SQLiteDatabase db, ContentValues filter, String orderBy) {
-        return db.query(getNom(), getColonnes(), getWhere(filter), null, null, null, orderBy);
+        return select(db, getWhere(filter), orderBy);
+    }
+
+    public Cursor select(SQLiteDatabase db, String where, String orderBy) {
+        return db.query(getNom(), getColonnes(), where, null, null, null, orderBy);
     }
 
     public int count(SQLiteDatabase db, ContentValues filter) {

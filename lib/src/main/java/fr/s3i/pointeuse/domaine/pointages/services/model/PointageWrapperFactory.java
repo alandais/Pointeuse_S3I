@@ -19,6 +19,8 @@
 
 package fr.s3i.pointeuse.domaine.pointages.services.model;
 
+import java.util.Collection;
+
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.services.Service;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
@@ -41,6 +43,10 @@ public class PointageWrapperFactory implements Service {
 
     public PointageWrapper getPointageWrapper(Pointage pointage) {
         return new PointageWrapper(calculateur, formateur, pointage);
+    }
+
+    public PointageWrapperListe getPointageWrapper(Collection<Pointage> pointages) {
+        return new PointageWrapperListe(this, calculateur, formateur, pointages);
     }
 
 }

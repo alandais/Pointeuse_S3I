@@ -48,8 +48,8 @@ public abstract class Controleur<I extends InBoundary> implements InBoundary, Cl
         interactor.initialiser();
     }
 
-    public void executerFutur(Runnable action, long millisecondes) {
-        tacheDeFond.schedule(action, millisecondes, TimeUnit.MILLISECONDS);
+    public void executerFutur(Runnable action, long delai, TimeUnit unit) {
+        tacheDeFond.schedule(action, delai, unit);
     }
 
     @Override

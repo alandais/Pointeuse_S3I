@@ -28,7 +28,7 @@
     tools:context="fr.s3i.pointeuse.presentation.pointer.PointerVue" >
 
     <TextView
-        android:id="@+id/txtEnCours"
+        android:id="@+id/txtPointageRapide"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -65,6 +65,18 @@
         android:layout_gravity="top"
         android:layout_weight="0"
         android:textColor="@color/cardview_light_background" />
+
+    <TextView
+        android:id="@+id/txtPointageEnCours"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginStart="10dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="10dip"
+        android:layout_gravity="start"
+        android:textColor="@android:color/tab_indicator_text" />
 
     <FrameLayout
         android:layout_width="match_parent"

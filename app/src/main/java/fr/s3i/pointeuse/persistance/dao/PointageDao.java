@@ -84,8 +84,8 @@ public class PointageDao implements Closeable, PointageRepository {
 
     @Override
     public List<Pointage> recupererEntre(Date debut, Date fin) {
-        ContentValues filtreDebut = mapper.getFiltre(debut);
-        ContentValues filtreFin = mapper.getFiltre(fin);
+        String filtreDebut = mapper.formatDate(debut);
+        String filtreFin = mapper.formatDate(fin);
         Cursor resultat = table.selectBetween(db, filtreDebut, filtreFin);
         resultat.moveToFirst();
         return mapper.mapperListe(resultat);

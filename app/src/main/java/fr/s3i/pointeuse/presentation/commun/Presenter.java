@@ -22,6 +22,8 @@ package fr.s3i.pointeuse.presentation.commun;
 import android.os.Handler;
 import android.support.annotation.CallSuper;
 
+import java.util.concurrent.TimeUnit;
+
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
@@ -65,8 +67,8 @@ public abstract class Presenter<V extends Vue> implements OutBoundary {
     }
 
     @Override
-    public void executerFutur(Runnable runnable, long milliseconds) {
-        vue.executerFutur(runnable, milliseconds);
+    public void executerFutur(Runnable action, long delai, TimeUnit unit) {
+        vue.executerFutur(action, delai, unit);
     }
 
 }

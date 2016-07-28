@@ -27,6 +27,7 @@ import fr.s3i.pointeuse.domaine.communs.composition.Composant;
 import fr.s3i.pointeuse.domaine.communs.composition.Module;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCoursFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapideFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
@@ -45,6 +46,7 @@ public class ModulePointage extends Module {
         enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));
         enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
         enregistrerService(PointageRapideFactory.class, new PointageRapideFactory(contexte));
+        enregistrerService(PointageEnCoursFactory.class, new PointageEnCoursFactory(contexte));
         enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(R.get("interactor_pointer_nom")));
     }
 

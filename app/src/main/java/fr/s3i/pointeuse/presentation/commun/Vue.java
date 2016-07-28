@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
@@ -77,8 +78,8 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    public void executerFutur(Runnable action, long millisecondes) {
-        controleur.executerFutur(action, millisecondes);
+    public void executerFutur(Runnable action, long delai, TimeUnit unit) {
+        controleur.executerFutur(action, delai, unit);
     }
 
     public void onShowProgress() {

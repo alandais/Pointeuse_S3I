@@ -92,7 +92,7 @@ public class PointageMapper extends Mapper<Pointage> {
         return pointage;
     }
 
-    private String formatDate(Date date) {
+    public String formatDate(Date date) {
         if (date == null) {
             // pour être compatible avec l'ancienne version de l'application, il ne faut pas insérer
             // de valeurs nulles dans la base.

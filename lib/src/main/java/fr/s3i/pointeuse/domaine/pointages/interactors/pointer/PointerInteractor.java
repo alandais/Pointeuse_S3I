@@ -21,6 +21,7 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.R;
@@ -33,10 +34,13 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.mod
 import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCours;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCoursFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapideFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
+import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -51,6 +55,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageRapideFactory pointageRapideFactory;
 
+    private final PointageEnCoursFactory pointageEnCoursFactory;
+
     private final PointageInfoFactory pointageInfoFactory;
 
     public PointerInteractor(Contexte contexte) {
@@ -58,6 +64,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         this.repository = contexte.getService(PointageRepository.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
         this.pointageRapideFactory = contexte.getService(PointageRapideFactory.class);
+        this.pointageEnCoursFactory = contexte.getService(PointageEnCoursFactory.class);
         this.pointageInfoFactory = contexte.getService(PointageInfoFactory.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
@@ -70,6 +77,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         Pointage pointage = lireDernierPointage();
         PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointage);
         out.onPointageRapide(pointageRapide);
+
+        rafraichirEnCours();
     }
 
     @Override
@@ -139,6 +148,23 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             out.onErreur(erreur);
         }
         return pointageWrapper;
+    }
+
+    private void rafraichirEnCours() {
+        Date maintenant = new Date();
+        List<Pointage> pointagesJour = repository.recupererEntre(Periode.JOUR.getDebutPeriode(maintenant), Periode.JOUR.getFinPeriode(maintenant));
+        List<Pointage> pointagesSema = repository.recupererEntre(Periode.SEMAINE.getDebutPeriode(maintenant), Periode.SEMAINE.getFinPeriode(maintenant));
+        List<Pointage> pointagesMois = repository.recupererEntre(Periode.MOIS.getDebutPeriode(maintenant), Periode.MOIS.getFinPeriode(maintenant));
+
+        PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema, pointagesMois);
+        out.onPointageEnCours(enCours);
+        // on relance le rafraichissement dans 1 minute
+        out.executerFutur(new Runnable() {
+            @Override
+            public void run() {
+                rafraichirEnCours();
+            }
+        }, 1, TimeUnit.MINUTES);
     }
 
 }

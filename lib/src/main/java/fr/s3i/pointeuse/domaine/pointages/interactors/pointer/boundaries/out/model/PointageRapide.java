@@ -24,7 +24,7 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.mo
  */
 public class PointageRapide {
 
-    private String description;
+    private final String description;
 
     PointageRapide(String description) {
         this.description = description;
