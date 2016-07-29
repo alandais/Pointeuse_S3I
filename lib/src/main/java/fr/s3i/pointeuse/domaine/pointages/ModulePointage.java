@@ -41,6 +41,7 @@ public class ModulePointage extends Module {
 
     public ModulePointage(Contexte contexte) {
         super(contexte);
+        enregistrerService(ModulePointage.class, this);
         enregistrerService(Calculateur.class, new Calculateur(contexte));
         enregistrerService(Formateur.class, new Formateur(contexte));
         enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));

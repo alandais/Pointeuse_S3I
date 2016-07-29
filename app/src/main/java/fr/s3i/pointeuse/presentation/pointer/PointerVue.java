@@ -27,9 +27,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.presentation.commun.Vue;
+import fr.s3i.pointeuse.presentation.dialogue.SelectionDateDialog;
+import fr.s3i.pointeuse.presentation.dialogue.SelectionHeureDialog;
+import fr.s3i.pointeuse.presentation.dialogue.SelectionListener;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
@@ -121,8 +128,25 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     }
 
     public void onInsererPressed() {
-        // TODO inputs utilisateur.
-        controleur.inserer(null, null, null);
+        getDate(new DateListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                onInsererPressed_Suite(date);
+            }
+        });
+    }
+
+    public void onInsererPressed_Suite(final Date debut) {
+        getDate(new DateListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                onInsererPressed_Fin(debut, date);
+            }
+        });
+    }
+
+    public void onInsererPressed_Fin(Date debut, Date fin) {
+        controleur.inserer(debut, fin, "");
     }
 
     public void updateInfoPointageRapide(String texte) {
@@ -148,6 +172,36 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
             TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursSemaine);
             textEnCours.setText(texte);
         }
+    }
+
+    private interface DateListener {
+        void onDateSelected(Date date);
+    }
+
+    private void getDate(final DateListener listener) {
+        SelectionDateDialog dialog = new SelectionDateDialog();
+        dialog.show(getActivity(), new SelectionListener<Integer>() {
+            @Override
+            public void onSelected(Integer... values) {
+                getHeure(values[0], values[1], values[2], listener);
+            }
+        });
+    }
+
+    private void getHeure(final int year, final int month, final int day, final DateListener listener) {
+        SelectionHeureDialog dialog = new SelectionHeureDialog();
+        dialog.show(getActivity(), new SelectionListener<Integer>() {
+            @Override
+            public void onSelected(Integer... values) {
+                Calendar c = Calendar.getInstance(Locale.getDefault());
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, month);
+                c.set(Calendar.DAY_OF_MONTH, day);
+                c.set(Calendar.HOUR_OF_DAY, values[0]);
+                c.set(Calendar.MINUTE, values[1]);
+                listener.onDateSelected(c.getTime());
+            }
+        });
     }
 
 }
