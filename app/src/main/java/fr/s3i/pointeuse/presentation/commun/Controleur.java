@@ -34,7 +34,7 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
  */
 public abstract class Controleur<I extends InBoundary> implements InBoundary, Closeable {
 
-    protected ScheduledExecutorService tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+    protected ScheduledExecutorService tacheDeFond;
 
     protected final I interactor;
 
@@ -45,6 +45,7 @@ public abstract class Controleur<I extends InBoundary> implements InBoundary, Cl
     @CallSuper
     @Override
     public void initialiser() {
+        tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
         interactor.initialiser();
     }
 
@@ -56,4 +57,5 @@ public abstract class Controleur<I extends InBoundary> implements InBoundary, Cl
     public void close() throws IOException {
         tacheDeFond.shutdownNow();
     }
+
 }

@@ -52,6 +52,22 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_pointer_vue, container, false);
+
+        Button b = (Button) view.findViewById(R.id.btnPointer);
+        b.setOnClickListener(this);
+
+        b = (Button) view.findViewById(R.id.btnInserer);
+        b.setOnClickListener(this);
+
+        return view;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // récupération de l'état de la vue en cas de changement de configuration (rotation de l'écran par exemple)
@@ -83,37 +99,6 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pointer_vue, container, false);
-
-        Button b = (Button) view.findViewById(R.id.btnPointer);
-        b.setOnClickListener(this);
-
-        b = (Button) view.findViewById(R.id.btnInserer);
-        b.setOnClickListener(this);
-
-        return view;
-    }
-
-    public void onPointerPressed() {
-        controleur.pointer();
-    }
-
-    public void onInsererPressed() {
-        // TODO inputs utilisateur.
-        controleur.inserer(null, null, null);
-    }
-
-    @Override
-    public void onError(String message) {
-        // TODO améliorer la présentation des erreurs
-        toast(message);
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPointer:
@@ -123,6 +108,21 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
                 onInsererPressed();
                 break;
         }
+    }
+
+    @Override
+    public void onError(String message) {
+        // TODO améliorer la présentation des erreurs
+        toast(message);
+    }
+
+    public void onPointerPressed() {
+        controleur.pointer();
+    }
+
+    public void onInsererPressed() {
+        // TODO inputs utilisateur.
+        controleur.inserer(null, null, null);
     }
 
     public void updateInfoPointageRapide(String texte) {

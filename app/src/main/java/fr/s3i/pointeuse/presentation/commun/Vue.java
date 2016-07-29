@@ -20,10 +20,9 @@
 package fr.s3i.pointeuse.presentation.commun;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -52,24 +51,29 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         contexte = ((PointageApplication) getActivity().getApplication()).getContexte();
     }
 
-    @CallSuper
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
+        controleur.initialiser();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         try {
             controleur.close();
         }
         catch (IOException ex) {
-            // rien
+            Log.e(Vue.class.getSimpleName(), "Erreur lors de la fermeture du contrôleur", ex);
         }
-        presenter = null;
-        controleur = null;
     }
 
+    @CallSuper
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        controleur.initialiser();
+    public void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        controleur = null;
     }
 
     public abstract void onError(String message);

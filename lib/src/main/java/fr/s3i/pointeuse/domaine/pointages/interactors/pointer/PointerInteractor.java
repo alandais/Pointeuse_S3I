@@ -158,13 +158,13 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
         PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema, pointagesMois);
         out.onPointageEnCours(enCours);
-        // on relance le rafraichissement dans 1 minute
+        // on relance le rafraichissement toutes les 30 secondes
         out.executerFutur(new Runnable() {
             @Override
             public void run() {
                 rafraichirEnCours();
             }
-        }, 1, TimeUnit.MINUTES);
+        }, 30, TimeUnit.SECONDS);
     }
 
 }
