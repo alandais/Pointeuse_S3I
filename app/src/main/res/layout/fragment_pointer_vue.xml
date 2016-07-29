@@ -29,14 +29,11 @@
 
     <TextView
         android:id="@+id/txtPointageRapide"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginLeft="10dip"
-        android:layout_marginStart="10dip"
-        android:layout_marginTop="10dip"
-        android:layout_marginBottom="10dip"
-        android:layout_gravity="top"
+        android:padding="15dp"
+        android:layout_gravity="start"
         android:layout_weight="0"
         android:textColor="@android:color/tab_indicator_text" />
 
@@ -66,17 +63,66 @@
         android:layout_weight="0"
         android:textColor="@color/cardview_light_background" />
 
-    <TextView
-        android:id="@+id/txtPointageEnCours"
-        android:layout_width="fill_parent"
+    <TableLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginLeft="10dip"
-        android:layout_marginStart="10dip"
-        android:layout_marginTop="10dip"
-        android:layout_marginBottom="10dip"
-        android:layout_gravity="start"
-        android:textColor="@android:color/tab_indicator_text" />
+        android:padding="20dp"
+        android:layout_gravity="center" >
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/realise"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:textColor="@android:color/tab_indicator_text"
+                android:layout_gravity="center"
+                android:layout_span="2"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/lblPointageEnCoursJour"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:textColor="@android:color/tab_indicator_text"
+                android:text="@string/pointageEnCousDureeJourLibelle" />
+
+            <TextView
+                android:id="@+id/txtPointageEnCoursJour"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:textColor="@android:color/tab_indicator_text" />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/lblPointageEnCoursSemaine"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:textColor="@android:color/tab_indicator_text"
+                android:text="@string/pointageEnCousDureeSemaineLibelle" />
+
+            <TextView
+                android:id="@+id/txtPointageEnCoursSemaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:textColor="@android:color/tab_indicator_text"  />
+
+        </TableRow>
+
+    </TableLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

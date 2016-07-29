@@ -39,13 +39,9 @@ public class PointageEnCoursFactory implements Service {
     }
 
     public PointageEnCours getPointageEnCours(Collection<Pointage> jour, Collection<Pointage> semaine, Collection<Pointage> mois) {
-        String libelleJour = R.get("libelle_pointage_encours_duree_jour");
-        String libelleSemaine = R.get("libelle_pointage_encours_duree_semaine");
-        String libelleMois = R.get("libelle_pointage_encours_duree_mois");
         String dureeJour = pointageWrapperFactory.getPointageWrapper(jour).getDureeTotale();
         String dureeSemaine = pointageWrapperFactory.getPointageWrapper(semaine).getDureeTotale();
-        String dureeMois = pointageWrapperFactory.getPointageWrapper(mois).getDureeTotale();
-        return new PointageEnCours(libelleJour, libelleSemaine, libelleMois, dureeJour, dureeSemaine, dureeMois);
+        return new PointageEnCours(dureeJour, dureeSemaine);
     }
 
 }

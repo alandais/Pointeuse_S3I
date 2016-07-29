@@ -34,7 +34,8 @@ import fr.s3i.pointeuse.presentation.commun.Vue;
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
     private static final String STATE_POINTAGE_RAPIDE_TEXTE = "POINTAGE_RAPIDE_TEXTE";
-    private static final String STATE_POINTAGE_EN_COURS_TEXTE = "POINTAGE_EN_COURS_TEXTE";
+    private static final String STATE_POINTAGE_EN_COURS_JOUR_TEXTE = "POINTAGE_EN_COURS_JOUR_TEXTE";
+    private static final String STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE = "POINTAGE_EN_COURS_SEMAINE_TEXTE";
 
     public static PointerVue getInstance(String titre) {
         PointerVue vue = new PointerVue();
@@ -55,7 +56,9 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         super.onActivityCreated(savedInstanceState);
         // récupération de l'état de la vue en cas de changement de configuration (rotation de l'écran par exemple)
         if (savedInstanceState != null) {
-            updateInfoPointageEnCours(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_TEXTE));
+            updateInfoPointageRapide(savedInstanceState.getString(STATE_POINTAGE_RAPIDE_TEXTE));
+            updateInfoPointageEnCoursJour(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_JOUR_TEXTE));
+            updateInfoPointageEnCoursSemaine(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE));
         }
     }
 
@@ -66,8 +69,10 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         if (this.getView() != null) {
             TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageRapide);
             outState.putString(STATE_POINTAGE_RAPIDE_TEXTE, textRapide.getText().toString());
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCours);
-            outState.putString(STATE_POINTAGE_EN_COURS_TEXTE, textEnCours.getText().toString());
+            TextView textEnCoursJour = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursJour);
+            outState.putString(STATE_POINTAGE_EN_COURS_JOUR_TEXTE, textEnCoursJour.getText().toString());
+            TextView textEnCoursSemaine = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursSemaine);
+            outState.putString(STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE, textEnCoursSemaine.getText().toString());
         }
     }
 
@@ -131,9 +136,16 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         // TODO
     }
 
-    public void updateInfoPointageEnCours(String texte) {
+    public void updateInfoPointageEnCoursJour(String texte) {
         if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCours);
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursJour);
+            textEnCours.setText(texte);
+        }
+    }
+
+    public void updateInfoPointageEnCoursSemaine(String texte) {
+        if (this.getView() != null) {
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursSemaine);
             textEnCours.setText(texte);
         }
     }

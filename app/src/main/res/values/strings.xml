@@ -28,4 +28,7 @@
         This is free software, and you are welcome to redistribute it
         under certain conditions; voir le menu License pour les details.
     </string>
+    <string name="pointageEnCousDureeJourLibelle">Aujourd\'hui</string>
+    <string name="pointageEnCousDureeSemaineLibelle">Cette semaine</string>
+    <string name="realise">Réalisé</string>
 </resources>

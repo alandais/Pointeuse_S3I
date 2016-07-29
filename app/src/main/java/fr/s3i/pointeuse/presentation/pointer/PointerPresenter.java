@@ -59,7 +59,8 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
         handler.post(new Runnable() {
             @Override
             public void run() {
-                vue.updateInfoPointageEnCours(pointage.toString());
+                vue.updateInfoPointageEnCoursJour(pointage.getDureeTotaleJour());
+                vue.updateInfoPointageEnCoursSemaine(pointage.getDureeTotaleSemaine());
             }
         });
     }

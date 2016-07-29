@@ -24,37 +24,13 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.mo
  */
 public class PointageEnCours {
 
-    private final String libelleJour;
-
-    private final String libelleSemaine;
-
-    private final String libelleMois;
-
     private final String dureeTotaleJour;
 
     private final String dureeTotaleSemaine;
 
-    private final String dureeTotaleMois;
-
-    public PointageEnCours(String libelleJour, String libelleSemaine, String libelleMois, String dureeTotaleJour, String dureeTotaleSemaine, String dureeTotaleMois) {
-        this.libelleJour = libelleJour;
-        this.libelleSemaine = libelleSemaine;
-        this.libelleMois = libelleMois;
+    public PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine) {
         this.dureeTotaleJour = dureeTotaleJour;
         this.dureeTotaleSemaine = dureeTotaleSemaine;
-        this.dureeTotaleMois = dureeTotaleMois;
-    }
-
-    public String getLibelleJour() {
-        return libelleJour;
-    }
-
-    public String getLibelleSemaine() {
-        return libelleSemaine;
-    }
-
-    public String getLibelleMois() {
-        return libelleMois;
     }
 
     public String getDureeTotaleJour() {
@@ -65,24 +41,4 @@ public class PointageEnCours {
         return dureeTotaleSemaine;
     }
 
-    public String getDureeTotaleMois() {
-        return dureeTotaleMois;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getLibelleJour());
-        builder.append(' ');
-        builder.append(getDureeTotaleJour());
-        builder.append('\n');
-        builder.append(getLibelleSemaine());
-        builder.append(' ');
-        builder.append(getDureeTotaleSemaine());
-        builder.append('\n');
-        builder.append(getLibelleMois());
-        builder.append(' ');
-        builder.append(getDureeTotaleMois());
-        return builder.toString();
-    }
 }
