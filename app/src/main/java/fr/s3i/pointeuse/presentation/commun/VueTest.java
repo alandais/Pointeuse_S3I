@@ -36,6 +36,8 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
  */
 public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> {
 
+    private static final String STATE_NOM = "NOM";
+
     protected static class ControleurTest extends Controleur<InBoundary> {
         protected ControleurTest() {
             super(new InBoundary() {
@@ -78,9 +80,24 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            setTitre(savedInstanceState.getString(STATE_NOM));
+        }
+
         TextView tv = getTextView();
         if (tv != null) {
             tv.setText(getTitre());
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        TextView tv = getTextView();
+        if (tv != null) {
+            outState.putString(STATE_NOM, tv.getText().toString());
         }
     }
 
