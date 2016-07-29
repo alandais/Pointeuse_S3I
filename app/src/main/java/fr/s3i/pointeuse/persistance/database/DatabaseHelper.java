@@ -31,8 +31,8 @@ import fr.s3i.pointeuse.persistance.contrats.TablePointage;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "POINTAGE"; // pointeuse.db aurait été un meilleur nom, mais on ne peut plus changer maintenant
-    private static final int DATABASE_VERSION = 4;
+    public static final String DATABASE_NAME = "POINTAGE"; // pointeuse.db aurait été un meilleur nom, mais on ne peut plus changer maintenant
+    public static final int DATABASE_VERSION = 4;
 
     private static final TablePointage tablePointage = new TablePointage();
     private static final TablePause tablePause = new TablePause();

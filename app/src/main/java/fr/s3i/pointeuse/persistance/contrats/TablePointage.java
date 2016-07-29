@@ -71,6 +71,10 @@ public class TablePointage extends Table {
         where.append(dateDebutPeriode);
         where.append("' AND '");
         where.append(dateFinPeriode);
+        where.append("' AND ");
+        where.append(COL_DATE_DEBUT);
+        where.append(" <> '");
+        where.append(dateFinPeriode);
         where.append('\'');
         return super.select(db, where.toString(), COL_DATE_DEBUT);
     }
