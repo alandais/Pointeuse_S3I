@@ -26,6 +26,9 @@ import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.composition.Composant;
 import fr.s3i.pointeuse.domaine.communs.composition.Module;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
+import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListeFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatifFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatutFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
@@ -46,7 +49,10 @@ public class ModulePointage extends Module {
         enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));
         enregistrerService(PointageStatutFactory.class, new PointageStatutFactory());
         enregistrerService(PointageRecapitulatifFactory.class, new PointageRecapitulatifFactory());
+        enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
+        enregistrerService(PointageInfoListeFactory.class, new PointageInfoListeFactory(contexte));
         enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(R.get("interactor_pointer_nom")));
+        enregistrerInteracteur(CalendrierIn.class, new CasUtilisationInfo(R.get("interactor_calendrier_nom")));
     }
 
     @Override
