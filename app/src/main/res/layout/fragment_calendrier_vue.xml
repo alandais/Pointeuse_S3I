@@ -20,13 +20,79 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RLayout"
+    android:id="@+id/layout_calendrier"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@color/cardview_dark_background"
-    tools:context="fr.s3i.pointeuse.presentation.pointer.PointerVue" >
+    tools:context="fr.s3i.pointeuse.presentation.calendrier.CalendrierVue" >
 
+    <DatePicker
+        android:id="@+id/calendrier"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:startYear="2000"
+        android:endYear="2100"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false" />
 
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/trijour"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp">
+
+        <RadioButton
+            android:id="@+id/trijour"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/jour"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/trisemaine"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/semaine"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/trimois"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:text="@string/mois"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/triannee"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:text="@string/annee"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/duree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#FF0000"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <ListView
+        android:id="@+id/calendrier_liste"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
 
 </LinearLayout>

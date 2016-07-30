@@ -33,8 +33,14 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Cal
     }
 
     @Override
-    public void onPointageInfoListeUpdate(PointageInfoListe pointageInfoListe) {
-
+    public void onPointageInfoListeUpdate(final PointageInfoListe pointageInfoListe) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.onDureeTotaleUpdate(pointageInfoListe.getDureeTotale());
+                vue.onPointageListeUpdate(pointageInfoListe.getListePointageInfo());
+            }
+        });
     }
 
 }

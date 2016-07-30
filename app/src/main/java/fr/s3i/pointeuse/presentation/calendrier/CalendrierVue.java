@@ -24,21 +24,77 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.presentation.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> {
+public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener {
 
     public static CalendrierVue getInstance(String titre) {
         CalendrierVue vue = new CalendrierVue();
         vue.setTitre(titre);
         return vue;
     }
+
+    private enum FiltrePeriode {
+        JOUR,
+        SEMAINE,
+        MOIS,
+        ANNEE
+    }
+
+    private class FiltreCalendrier {
+        private final FiltrePeriode filtrePeriode;
+        private final Date dateReference;
+
+        public FiltreCalendrier() {
+            switch(calendrierFiltre.getCheckedRadioButtonId()) {
+                default:
+                case R.id.trijour:
+                    this.filtrePeriode = FiltrePeriode.JOUR;
+                    break;
+                case R.id.trisemaine:
+                    this.filtrePeriode = FiltrePeriode.SEMAINE;
+                    break;
+                case R.id.trimois:
+                    this.filtrePeriode = FiltrePeriode.MOIS;
+                    break;
+                case R.id.triannee:
+                    this.filtrePeriode = FiltrePeriode.ANNEE;
+                    break;
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, calendrier.getYear());
+            calendar.set(Calendar.MONTH, calendrier.getMonth());
+            calendar.set(Calendar.DAY_OF_MONTH, calendrier.getDayOfMonth());
+            this.dateReference = calendar.getTime();
+        }
+
+        public FiltrePeriode getFiltrePeriode() {
+            return filtrePeriode;
+        }
+
+        public Date getDateReference() {
+            return dateReference;
+        }
+    }
+
+    private DatePicker calendrier;
+    private RadioGroup calendrierFiltre;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +110,12 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendrier_vue, container, false);
+
+        calendrier = (DatePicker) view.findViewById(R.id.calendrier);
+        calendrier.init(-1, -1, -1, this);
+
+        calendrierFiltre = (RadioGroup) view.findViewById(R.id.radiogroup);
+        calendrierFiltre.setOnCheckedChangeListener(this);
 
         return view;
     }
@@ -80,6 +142,47 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     public void onDestroy() {
         super.onDestroy();
         contexte.detruireService(CalendrierOut.class);
+    }
+
+    @Override
+    public void onDateChanged(DatePicker datePicker, int annee, int mois, int jour) {
+        onFiltreChanged(new FiltreCalendrier());
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int numero) {
+        onFiltreChanged(new FiltreCalendrier());
+    }
+
+    private void onFiltreChanged(FiltreCalendrier filtre) {
+        switch (filtre.getFiltrePeriode()) {
+            case JOUR:
+                controleur.listerJour(filtre.getDateReference());
+                break;
+            case SEMAINE:
+                controleur.listerSemaine(filtre.getDateReference());
+                break;
+            case MOIS:
+                controleur.listerMois(filtre.getDateReference());
+                break;
+            case ANNEE:
+                // TODO
+                break;
+        }
+    }
+
+    public void onDureeTotaleUpdate(String dureeTotale) {
+        if (this.getView() != null) {
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.duree);
+            textEnCours.setText(dureeTotale);
+        }
+    }
+
+    public void onPointageListeUpdate(List<PointageInfo> listePointage) {
+        if (this.getView() != null) {
+            ListView liste = (ListView) this.getView().findViewById(R.id.calendrier_liste);
+            liste.setAdapter(new PointageInfoListeAdaptateur(this.getContext(), listePointage));
+        }
     }
 
 }
