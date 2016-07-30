@@ -30,16 +30,15 @@ import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfoFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCours;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCoursFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapideFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatifFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatutFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
 import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 
 /**
@@ -53,19 +52,16 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageWrapperFactory pointageWrapperFactory;
 
-    private final PointageRapideFactory pointageRapideFactory;
+    private final PointageStatutFactory pointageStatutFactory;
 
-    private final PointageEnCoursFactory pointageEnCoursFactory;
-
-    private final PointageInfoFactory pointageInfoFactory;
+    private final PointageRecapitulatifFactory pointageRecapitulatifFactory;
 
     public PointerInteractor(Contexte contexte) {
         super(contexte.getService(PointerOut.class));
         this.repository = contexte.getService(PointageRepository.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
-        this.pointageRapideFactory = contexte.getService(PointageRapideFactory.class);
-        this.pointageEnCoursFactory = contexte.getService(PointageEnCoursFactory.class);
-        this.pointageInfoFactory = contexte.getService(PointageInfoFactory.class);
+        this.pointageStatutFactory = contexte.getService(PointageStatutFactory.class);
+        this.pointageRecapitulatifFactory = contexte.getService(PointageRecapitulatifFactory.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
     }
 
@@ -75,8 +71,9 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         out.onDemarrer(info);
 
         Pointage pointage = lireDernierPointage();
-        PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointage);
-        out.onPointageRapide(pointageRapide);
+        PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
+        PointageStatut pointageStatut = pointageStatutFactory.getStatut(pointageWrapper);
+        out.onPointageStatutUpdate(pointageStatut);
 
         lancerRafraichissementAuto();
     }
@@ -93,11 +90,10 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             pointage.setDebut(new Date());
         }
 
-        PointageWrapper pointageWrapper = persister(pointage);
-        if (pointageWrapper != null) {
-            PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointageWrapper);
+        if (persister(pointage)) {
             lancerRafraichissementAuto();
-            out.onPointageRapide(pointageRapide);
+            PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
+            out.onPointageStatutUpdate(pointageStatutFactory.getStatut(pointageWrapper));
             if (pointageWrapper.isTermine()) {
                 out.toast(R.get("toast_pointage_complet", pointageWrapper.getHeureFin()));
                 notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageWrapper.getHeureFin(), pointageWrapper.getDuree()));
@@ -115,13 +111,10 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        PointageWrapper pointageWrapper = persister(pointage);
-        if (pointageWrapper != null) {
-            PointageInfo pointageInfo = pointageInfoFactory.getPointageInfo(pointageWrapper);
-            out.onPointageInsere(pointageInfo);
+        if (persister(pointage)) {
             out.toast(R.get("toast_pointage_insere"));
-            // on rafraichit la vue sur l'en-cours (jour / semaine)
-            rafraichirEnCours();
+            // on rafraichit le récapitulatif sur la vue
+            rafraichirRecapitulatif();
         }
     }
 
@@ -141,35 +134,35 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         return pointage;
     }
 
-    private PointageWrapper persister(Pointage pointage) {
-        PointageWrapper pointageWrapper = null;
+    private boolean persister(Pointage pointage) {
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
             repository.persister(pointage);
-            pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
         } else {
             out.onErreur(erreur);
         }
-        return pointageWrapper;
+        return erreur == null;
     }
 
-    private PointageEnCours rafraichirEnCours() {
+    private boolean rafraichirRecapitulatif() {
         Date maintenant = new Date();
 
         List<Pointage> pointagesJour = repository.recupererEntre(Periode.JOUR.getDebutPeriode(maintenant), Periode.JOUR.getFinPeriode(maintenant));
         List<Pointage> pointagesSema = repository.recupererEntre(Periode.SEMAINE.getDebutPeriode(maintenant), Periode.SEMAINE.getFinPeriode(maintenant));
 
-        PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema);
-        out.onPointageEnCours(enCours);
-        return enCours;
+        PointageWrapperListe pointagesWrapperJour = pointageWrapperFactory.getPointageWrapper(pointagesJour);
+        PointageWrapperListe pointagesWrapperSema = pointageWrapperFactory.getPointageWrapper(pointagesSema);
+
+        PointageRecapitulatif recap = pointageRecapitulatifFactory.getRecapitulatif(pointagesWrapperJour, pointagesWrapperSema);
+        out.onPointageRecapitulatifUpdate(recap);
+
+        // retourne true si un rafraichissement auto est nécessaire (si il y a du pointage 'en cours')
+        return pointagesWrapperSema.isEnCours() || pointagesWrapperJour.isEnCours();
     }
 
     private void lancerRafraichissementAuto() {
-        // rafraichir
-        PointageEnCours enCours = rafraichirEnCours();
-
-        // relancer toutes les 30 secondes (si toujours en cours)
-        if (enCours.isEnCours()) {
+        // relancer toutes les 30 secondes (si nécessaire)
+        if (rafraichirRecapitulatif()) {
             out.executerFutur(new Runnable() {
                 @Override
                 public void run() {

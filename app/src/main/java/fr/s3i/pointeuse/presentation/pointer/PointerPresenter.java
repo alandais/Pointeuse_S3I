@@ -19,10 +19,9 @@
 
 package fr.s3i.pointeuse.presentation.pointer;
 
-import fr.s3i.pointeuse.domaine.pointages.interactors.communs.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageEnCours;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRapide;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
 
 /**
@@ -35,32 +34,22 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     }
 
     @Override
-    public void onPointageRapide(final PointageRapide pointage) {
+    public void onPointageStatutUpdate(final PointageStatut pointage) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                vue.updateInfoPointageRapide(pointage.getDescription());
+                vue.updatePointageStatut(pointage.getStatut());
             }
         });
     }
 
     @Override
-    public void onPointageInsere(final PointageInfo pointage) {
+    public void onPointageRecapitulatifUpdate(final PointageRecapitulatif pointage) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                vue.updateInfoPointageInsere(pointage.toString());
-            }
-        });
-    }
-
-    @Override
-    public void onPointageEnCours(final PointageEnCours pointage) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                vue.updateInfoPointageEnCoursJour(pointage.getDureeTotaleJour());
-                vue.updateInfoPointageEnCoursSemaine(pointage.getDureeTotaleSemaine());
+                vue.updatePointageRecapJour(pointage.getDureeTotaleJour());
+                vue.updatePointageRecapSemaine(pointage.getDureeTotaleSemaine());
             }
         });
     }

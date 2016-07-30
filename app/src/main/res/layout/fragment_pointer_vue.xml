@@ -28,7 +28,7 @@
     tools:context="fr.s3i.pointeuse.presentation.pointer.PointerVue" >
 
     <TextView
-        android:id="@+id/txtPointageRapide"
+        android:id="@+id/txtPointageStatut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -93,7 +93,7 @@
                 android:text="@string/pointageEnCousDureeJourLibelle" />
 
             <TextView
-                android:id="@+id/txtPointageEnCoursJour"
+                android:id="@+id/txtPointageRecapJour"
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
@@ -112,7 +112,7 @@
                 android:text="@string/pointageEnCousDureeSemaineLibelle" />
 
             <TextView
-                android:id="@+id/txtPointageEnCoursSemaine"
+                android:id="@+id/txtPointageRecapSemaine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"

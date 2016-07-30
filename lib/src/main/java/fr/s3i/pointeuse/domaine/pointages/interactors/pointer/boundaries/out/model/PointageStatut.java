@@ -17,19 +17,21 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out;
-
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
+package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model;
 
 /**
- * Created by Adrien on 19/07/2016.
+ * Created by Adrien on 26/07/2016.
  */
-public interface PointerOut extends OutBoundary {
+public class PointageStatut {
 
-    void onPointageStatutUpdate(PointageStatut pointage);
+    private final String statut;
 
-    void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage);
+    PointageStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
 
 }

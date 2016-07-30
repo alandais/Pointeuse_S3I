@@ -19,25 +19,25 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model;
 
+import fr.s3i.pointeuse.domaine.communs.R;
+import fr.s3i.pointeuse.domaine.communs.services.Service;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
+
 /**
  * Created by Adrien on 26/07/2016.
  */
-public class PointageRapide {
+public class PointageStatutFactory implements Service {
 
-    private final String description;
-
-    private final boolean isEnCours;
-
-    PointageRapide(String description, boolean isEnCours) {
-        this.description = description;
-        this.isEnCours = isEnCours;
+    public PointageStatut getStatut(PointageWrapper pointageWrapper) {
+        String statut;
+        if (pointageWrapper.isVide()) {
+            statut = R.get("info_pointage_null");
+        } else if (pointageWrapper.isTermine()) {
+            statut = R.get("info_pointage_termine", pointageWrapper.getDuree());
+        } else {
+            statut = R.get("info_pointage_en_cours", pointageWrapper.getHeureDebut());
+        }
+        return new PointageStatut(statut);
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isEnCours() {
-        return isEnCours;
-    }
 }

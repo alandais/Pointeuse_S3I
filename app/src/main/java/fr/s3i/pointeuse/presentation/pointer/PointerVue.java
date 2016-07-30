@@ -38,9 +38,9 @@ import fr.s3i.pointeuse.presentation.dialogue.SelectionListener;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
-    private static final String STATE_POINTAGE_RAPIDE_TEXTE = "POINTAGE_RAPIDE_TEXTE";
-    private static final String STATE_POINTAGE_EN_COURS_JOUR_TEXTE = "POINTAGE_EN_COURS_JOUR_TEXTE";
-    private static final String STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE = "POINTAGE_EN_COURS_SEMAINE_TEXTE";
+    private static final String STATE_POINTAGE_STATUT = "POINTAGE_STATUT";
+    private static final String STATE_POINTAGE_RECAP_JOUR = "POINTAGE_RECAP_JOUR";
+    private static final String STATE_POINTAGE_RECAP_SEMAINE = "POINTAGE_RECAP_SEMAINE";
 
     public static PointerVue getInstance(String titre) {
         PointerVue vue = new PointerVue();
@@ -77,9 +77,9 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         super.onActivityCreated(savedInstanceState);
         // récupération de l'état de la vue en cas de changement de configuration (rotation de l'écran par exemple)
         if (savedInstanceState != null) {
-            updateInfoPointageRapide(savedInstanceState.getString(STATE_POINTAGE_RAPIDE_TEXTE));
-            updateInfoPointageEnCoursJour(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_JOUR_TEXTE));
-            updateInfoPointageEnCoursSemaine(savedInstanceState.getString(STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE));
+            updatePointageStatut(savedInstanceState.getString(STATE_POINTAGE_STATUT));
+            updatePointageRecapJour(savedInstanceState.getString(STATE_POINTAGE_RECAP_JOUR));
+            updatePointageRecapSemaine(savedInstanceState.getString(STATE_POINTAGE_RECAP_SEMAINE));
         }
     }
 
@@ -88,12 +88,12 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         super.onSaveInstanceState(outState);
 
         if (this.getView() != null) {
-            TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageRapide);
-            outState.putString(STATE_POINTAGE_RAPIDE_TEXTE, textRapide.getText().toString());
-            TextView textEnCoursJour = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursJour);
-            outState.putString(STATE_POINTAGE_EN_COURS_JOUR_TEXTE, textEnCoursJour.getText().toString());
-            TextView textEnCoursSemaine = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursSemaine);
-            outState.putString(STATE_POINTAGE_EN_COURS_SEMAINE_TEXTE, textEnCoursSemaine.getText().toString());
+            TextView textStatut = (TextView) this.getView().findViewById(R.id.txtPointageStatut);
+            outState.putString(STATE_POINTAGE_STATUT, textStatut.getText().toString());
+            TextView textRecapJour = (TextView) this.getView().findViewById(R.id.txtPointageRecapJour);
+            outState.putString(STATE_POINTAGE_RECAP_JOUR, textRecapJour.getText().toString());
+            TextView textRecapSemaine = (TextView) this.getView().findViewById(R.id.txtPointageRecapSemaine);
+            outState.putString(STATE_POINTAGE_RECAP_SEMAINE, textRecapSemaine.getText().toString());
         }
     }
 
@@ -165,27 +165,23 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         controleur.inserer(debut, fin, choixDateFin.getCommentaire());
     }
 
-    public void updateInfoPointageRapide(String texte) {
+    public void updatePointageStatut(String texte) {
         if (this.getView() != null) {
-            TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageRapide);
+            TextView textRapide = (TextView) this.getView().findViewById(R.id.txtPointageStatut);
             textRapide.setText(texte);
         }
     }
 
-    public void updateInfoPointageInsere(String texte) {
-        // TODO
-    }
-
-    public void updateInfoPointageEnCoursJour(String texte) {
+    public void updatePointageRecapJour(String texte) {
         if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursJour);
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageRecapJour);
             textEnCours.setText(texte);
         }
     }
 
-    public void updateInfoPointageEnCoursSemaine(String texte) {
+    public void updatePointageRecapSemaine(String texte) {
         if (this.getView() != null) {
-            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageEnCoursSemaine);
+            TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageRecapSemaine);
             textEnCours.setText(texte);
         }
     }

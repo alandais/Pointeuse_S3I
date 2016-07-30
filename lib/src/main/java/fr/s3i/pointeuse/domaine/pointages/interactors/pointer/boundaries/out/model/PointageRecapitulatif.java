@@ -22,18 +22,15 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.mo
 /**
  * Created by Adrien on 28/07/2016.
  */
-public class PointageEnCours {
+public class PointageRecapitulatif {
 
     private final String dureeTotaleJour;
 
     private final String dureeTotaleSemaine;
 
-    private final boolean isEnCours;
-
-    PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine, boolean isEnCours) {
+    PointageRecapitulatif(String dureeTotaleJour, String dureeTotaleSemaine) {
         this.dureeTotaleJour = dureeTotaleJour;
         this.dureeTotaleSemaine = dureeTotaleSemaine;
-        this.isEnCours = isEnCours;
     }
 
     public String getDureeTotaleJour() {
@@ -44,7 +41,4 @@ public class PointageEnCours {
         return dureeTotaleSemaine;
     }
 
-    public boolean isEnCours() {
-        return isEnCours;
-    }
 }

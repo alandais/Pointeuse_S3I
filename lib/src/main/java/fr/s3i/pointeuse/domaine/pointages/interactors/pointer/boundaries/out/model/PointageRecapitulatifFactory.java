@@ -19,35 +19,18 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model;
 
-import java.util.Collection;
-
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.services.Service;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
-import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
 
 /**
  * Created by Adrien on 26/07/2016.
  */
-public class PointageEnCoursFactory implements Service {
+public class PointageRecapitulatifFactory implements Service {
 
-    private final PointageWrapperFactory pointageWrapperFactory;
-
-    public PointageEnCoursFactory(Contexte contexte) {
-        pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
-    }
-
-    public PointageEnCours getPointageEnCours(Collection<Pointage> jour, Collection<Pointage> semaine) {
-        PointageWrapperListe pointageWrapperJour = pointageWrapperFactory.getPointageWrapper(jour);
-        PointageWrapperListe pointageWrapperSemaine = pointageWrapperFactory.getPointageWrapper(semaine);
-
+    public PointageRecapitulatif getRecapitulatif(PointageWrapperListe pointageWrapperJour, PointageWrapperListe pointageWrapperSemaine) {
         String dureeJour = pointageWrapperJour.getDureeTotale();
         String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
-        boolean isEnCours = pointageWrapperSemaine.isEnCours() || pointageWrapperJour.isEnCours();
-
-        return new PointageEnCours(dureeJour, dureeSemaine, isEnCours);
+        return new PointageRecapitulatif(dureeJour, dureeSemaine);
     }
 
 }
