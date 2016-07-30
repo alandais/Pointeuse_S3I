@@ -28,10 +28,11 @@ import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 public class PointageInfoFactory implements Service {
 
     public PointageInfo getPointageInfo(PointageWrapper pointageWrapper) {
+        Long id = pointageWrapper.getId();
         String debut = pointageWrapper.getDateDebut();
         String fin = pointageWrapper.getDateFin();
         String duree = pointageWrapper.getDuree();
-        return new PointageInfo(debut, fin, duree);
+        return new PointageInfo(id, debut, fin, duree);
     }
 
 }

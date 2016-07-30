@@ -19,11 +19,14 @@
 
 package fr.s3i.pointeuse.presentation.calendrier;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -42,7 +45,7 @@ import fr.s3i.pointeuse.presentation.commun.Vue;
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener {
+public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     public static CalendrierVue getInstance(String titre) {
         CalendrierVue vue = new CalendrierVue();
@@ -95,6 +98,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     private DatePicker calendrier;
     private RadioGroup calendrierFiltre;
+    private ListView calendrierListe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,10 +116,12 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
         View view = inflater.inflate(R.layout.fragment_calendrier_vue, container, false);
 
         calendrier = (DatePicker) view.findViewById(R.id.calendrier);
-        calendrier.init(-1, -1, -1, this);
+        calendrier.init(calendrier.getYear(), calendrier.getMonth(), calendrier.getDayOfMonth(), this);
 
         calendrierFiltre = (RadioGroup) view.findViewById(R.id.radiogroup);
-        calendrierFiltre.setOnCheckedChangeListener(this);
+
+        calendrierListe = (ListView) view.findViewById(R.id.calendrier_liste);
+        calendrierListe.setLongClickable(true);
 
         return view;
     }
@@ -127,6 +133,22 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
         if (savedInstanceState != null) {
             // TODO restaure état vue
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        calendrierFiltre.setOnCheckedChangeListener(this);
+        calendrierListe.setOnItemClickListener(this);
+        calendrierListe.setOnItemLongClickListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        calendrierFiltre.setOnCheckedChangeListener(null);
+        calendrierListe.setOnItemClickListener(null);
+        calendrierListe.setOnItemLongClickListener(null);
     }
 
     @Override
@@ -183,6 +205,28 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
             ListView liste = (ListView) this.getView().findViewById(R.id.calendrier_liste);
             liste.setAdapter(new PointageInfoListeAdaptateur(this.getContext(), listePointage));
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, final long l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        AlertDialog dialog = builder
+            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    controleur.supprimer(l);
+                }
+            })
+            .setNegativeButton("Non", null)
+            .setTitle("Etes vous sur de vouloir supprimer le pointage #" + l + " ?")
+            .create();
+        dialog.show();
+        return true;
     }
 
 }

@@ -57,7 +57,7 @@ public class PointageInfoListeAdaptateur extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i; // pointageInfoListe.get(i).getId();
+        return pointageInfoListe.get(i).getId();
     }
 
     @Override

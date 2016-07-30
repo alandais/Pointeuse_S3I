@@ -24,16 +24,23 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out
  */
 public class PointageInfo {
 
+    private final Long id;
+
     private final String debut;
 
     private final String fin;
 
     private final String duree;
 
-    PointageInfo(String debut, String fin, String duree) {
+    PointageInfo(Long id, String debut, String fin, String duree) {
+        this.id = id;
         this.debut = debut;
         this.fin = fin;
         this.duree = duree;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getDebut() {
