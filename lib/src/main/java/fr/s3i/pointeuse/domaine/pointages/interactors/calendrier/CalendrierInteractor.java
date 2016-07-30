@@ -69,14 +69,21 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
     }
 
     @Override
+    public void modifier(long id) {
+        Pointage pointage = repository.recuperer(id);
+        out.onPointageModication(pointage);
+    }
+
+    @Override
     public void modifier(long id, Date debut, Date fin, String commentaire) {
         Pointage pointage = repository.recuperer(id);
         pointage.setDebut(debut);
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
-        repository.persister(pointage);
-        out.toast(R.get("toast_pointage_modifie"));
-        out.updatePointageInfoListe();
+        if (persister(pointage)) {
+            out.toast(R.get("toast_pointage_modifie"));
+            out.updatePointageInfoListe();
+        }
     }
 
     @Override
@@ -105,4 +112,13 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         out.onPointageInfoListeUpdate(pointageInfoListe);
     }
 
+    private boolean persister(Pointage pointage) {
+        String erreur = pointage.getErrorMessage();
+        if (erreur == null) {
+            repository.persister(pointage);
+        } else {
+            out.onErreur(erreur);
+        }
+        return erreur == null;
+    }
 }

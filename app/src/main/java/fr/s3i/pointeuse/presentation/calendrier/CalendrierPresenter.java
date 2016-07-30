@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.presentation.calendrier;
 
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListe;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
@@ -39,6 +40,16 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Cal
             public void run() {
                 vue.onDureeTotaleUpdate(pointageInfoListe.getDureeTotale());
                 vue.onPointageListeUpdate(pointageInfoListe.getListePointageInfo());
+            }
+        });
+    }
+
+    @Override
+    public void onPointageModication(final Pointage pointage) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.onPointageModification(pointage);
             }
         });
     }

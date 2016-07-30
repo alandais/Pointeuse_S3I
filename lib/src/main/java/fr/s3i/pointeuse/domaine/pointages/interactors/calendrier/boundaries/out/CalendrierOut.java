@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListe;
 
 /**
@@ -28,6 +29,8 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.
 public interface CalendrierOut extends OutBoundary {
 
     void onPointageInfoListeUpdate(PointageInfoListe pointageInfoListe);
+
+    void onPointageModication(Pointage pointage);
 
     void updatePointageInfoListe();
 

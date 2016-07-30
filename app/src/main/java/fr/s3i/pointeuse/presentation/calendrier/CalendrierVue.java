@@ -37,10 +37,13 @@ import java.util.Date;
 import java.util.List;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.presentation.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.commun.Vue;
+import fr.s3i.pointeuse.presentation.dialogue.PointageInsererDialog;
+import fr.s3i.pointeuse.presentation.dialogue.SelectionListener;
 
 /**
  * Created by Adrien on 30/07/2016.
@@ -210,8 +213,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        // TODO
-        //controleur.modifier(l, dateDebut, dateFin, commentaire);
+        controleur.modifier(l);
     }
 
     @Override
@@ -229,6 +231,68 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
             .create();
         dialog.show();
         return true;
+    }
+
+    public void onPointageModification(final Pointage pointage) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pointage.getDebut());
+
+        String commentaire = pointage.getCommentaire();
+        int annee = calendar.get(Calendar.YEAR);
+        int mois = calendar.get(Calendar.MONTH);
+        int jour = calendar.get(Calendar.DAY_OF_MONTH);
+        int heure = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        PointageInsererDialog test = new PointageInsererDialog();
+        PointageInsererDialog.Resultat valeurInitiales = new PointageInsererDialog.Resultat(commentaire, annee, mois, jour, heure, minute);
+        test.afficher(getActivity(), "Choisir l'heure de début", valeurInitiales, new SelectionListener<PointageInsererDialog.Resultat>() {
+            @Override
+            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
+                onPointageModificationDateDebutChoisie(valeurSelectionnee, pointage);
+            }
+        });
+    }
+
+    private void onPointageModificationDateDebutChoisie(final PointageInsererDialog.Resultat dateDebutChoisie, final Pointage pointage) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pointage.getFin());
+
+        String commentaire = dateDebutChoisie.getCommentaire();
+        int annee = calendar.get(Calendar.YEAR);
+        int mois = calendar.get(Calendar.MONTH);
+        int jour = calendar.get(Calendar.DAY_OF_MONTH);
+        int heure = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        PointageInsererDialog test = new PointageInsererDialog();
+        PointageInsererDialog.Resultat valeurInitiales = new PointageInsererDialog.Resultat(commentaire, annee, mois, jour, heure, minute);
+        test.afficher(getActivity(), "Choisir l'heure de fin", valeurInitiales, new SelectionListener<PointageInsererDialog.Resultat>() {
+            @Override
+            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
+                onPointageModificationDateFinChoisie(dateDebutChoisie, valeurSelectionnee, pointage);
+            }
+        });
+    }
+
+    private void onPointageModificationDateFinChoisie(PointageInsererDialog.Resultat choixDateDebut, PointageInsererDialog.Resultat choixDateFin, Pointage pointage) {
+        Calendar cal = Calendar.getInstance();
+
+        cal.set(Calendar.YEAR, choixDateDebut.getAnnee());
+        cal.set(Calendar.MONTH, choixDateDebut.getMois());
+        cal.set(Calendar.DAY_OF_MONTH, choixDateDebut.getJour());
+        cal.set(Calendar.HOUR_OF_DAY, choixDateDebut.getHeure());
+        cal.set(Calendar.MINUTE, choixDateDebut.getMinute());
+        Date debut = cal.getTime();
+
+        cal.set(Calendar.YEAR, choixDateFin.getAnnee());
+        cal.set(Calendar.MONTH, choixDateFin.getMois());
+        cal.set(Calendar.DAY_OF_MONTH, choixDateFin.getJour());
+        cal.set(Calendar.HOUR_OF_DAY, choixDateFin.getHeure());
+        cal.set(Calendar.MINUTE, choixDateFin.getMinute());
+        Date fin = cal.getTime();
+
+        controleur.modifier(pointage.getId(), debut, fin, choixDateFin.getCommentaire());
     }
 
 }
