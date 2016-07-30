@@ -43,4 +43,13 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Cal
         });
     }
 
+    @Override
+    public void updatePointageInfoListe() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.updateListeCalendrier();
+            }
+        });
+    }
 }

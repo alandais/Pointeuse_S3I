@@ -30,6 +30,8 @@ public interface CalendrierIn extends InBoundary {
 
     void supprimer(long id);
 
+    void modifier(long id, Date debut, Date fin, String commentaire);
+
     void listerJour(Date reference);
 
     void listerSemaine(Date reference);

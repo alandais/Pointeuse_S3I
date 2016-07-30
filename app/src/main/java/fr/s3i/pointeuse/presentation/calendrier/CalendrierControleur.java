@@ -51,6 +51,16 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
     }
 
     @Override
+    public void modifier(final long id, final Date debut, final Date fin, final String commentaire) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                interactor.modifier(id, debut, fin, commentaire);
+            }
+        });
+    }
+
+    @Override
     public void listerJour(final Date reference) {
         tacheDeFond.execute(new Runnable() {
             @Override

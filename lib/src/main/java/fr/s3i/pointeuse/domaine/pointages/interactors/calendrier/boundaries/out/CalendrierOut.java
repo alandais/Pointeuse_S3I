@@ -29,4 +29,6 @@ public interface CalendrierOut extends OutBoundary {
 
     void onPointageInfoListeUpdate(PointageInfoListe pointageInfoListe);
 
+    void updatePointageInfoListe();
+
 }

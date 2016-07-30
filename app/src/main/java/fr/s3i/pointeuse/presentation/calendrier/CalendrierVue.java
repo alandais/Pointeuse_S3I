@@ -168,15 +168,16 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     @Override
     public void onDateChanged(DatePicker datePicker, int annee, int mois, int jour) {
-        onFiltreChanged(new FiltreCalendrier());
+        updateListeCalendrier();
     }
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int numero) {
-        onFiltreChanged(new FiltreCalendrier());
+        updateListeCalendrier();
     }
 
-    private void onFiltreChanged(FiltreCalendrier filtre) {
+    public void updateListeCalendrier() {
+        FiltreCalendrier filtre = new FiltreCalendrier();
         switch (filtre.getFiltrePeriode()) {
             case JOUR:
                 controleur.listerJour(filtre.getDateReference());
@@ -209,7 +210,8 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        // TODO
+        //controleur.modifier(l, dateDebut, dateFin, commentaire);
     }
 
     @Override

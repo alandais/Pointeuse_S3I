@@ -58,12 +58,25 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
     public void initialiser() {
         CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_calendrier_nom"));
         out.onDemarrer(info);
+        out.updatePointageInfoListe();
     }
 
     @Override
     public void supprimer(long id) {
         repository.supprimer(id);
         out.toast(R.get("toast_pointage_supprime"));
+        out.updatePointageInfoListe();
+    }
+
+    @Override
+    public void modifier(long id, Date debut, Date fin, String commentaire) {
+        Pointage pointage = repository.recuperer(id);
+        pointage.setDebut(debut);
+        pointage.setFin(fin);
+        pointage.setCommentaire(commentaire);
+        repository.persister(pointage);
+        out.toast(R.get("toast_pointage_modifie"));
+        out.updatePointageInfoListe();
     }
 
     @Override
