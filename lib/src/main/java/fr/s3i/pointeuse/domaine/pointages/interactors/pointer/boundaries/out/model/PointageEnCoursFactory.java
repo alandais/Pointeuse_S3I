@@ -45,8 +45,9 @@ public class PointageEnCoursFactory implements Service {
 
         String dureeJour = pointageWrapperJour.getDureeTotale();
         String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
+        boolean isEnCours = pointageWrapperSemaine.isEnCours() || pointageWrapperJour.isEnCours();
 
-        return new PointageEnCours(dureeJour, dureeSemaine);
+        return new PointageEnCours(dureeJour, dureeSemaine, isEnCours);
     }
 
 }

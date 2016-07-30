@@ -78,8 +78,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointage);
         out.onPointageRapide(pointageRapide);
 
-        // on rafraichit la vue sur l'en-cours (avec relance si le pointage est réellement en cours)
-        rafraichirEnCours(pointageRapide.isEnCours());
+        lancerRafraichissementAuto();
     }
 
     @Override
@@ -97,8 +96,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageWrapper pointageWrapper = persister(pointage);
         if (pointageWrapper != null) {
             PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointageWrapper);
-            // on rafraichit la vue sur l'en-cours (avec relance si le pointage est réellement en cours)
-            rafraichirEnCours(pointageRapide.isEnCours());
+            lancerRafraichissementAuto();
             out.onPointageRapide(pointageRapide);
             if (pointageWrapper.isTermine()) {
                 out.toast(R.get("toast_pointage_complet", pointageWrapper.getHeureFin()));
@@ -122,8 +120,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             PointageInfo pointageInfo = pointageInfoFactory.getPointageInfo(pointageWrapper);
             out.onPointageInsere(pointageInfo);
             out.toast(R.get("toast_pointage_insere"));
-            // on rafraichit la vue (sans relance, car géré par les pointages rapide)
-            rafraichirEnCours(false);
+            // on rafraichit la vue sur l'en-cours (jour / semaine)
+            rafraichirEnCours();
         }
     }
 
@@ -155,7 +153,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         return pointageWrapper;
     }
 
-    private void rafraichirEnCours(boolean relance) {
+    private PointageEnCours rafraichirEnCours() {
         Date maintenant = new Date();
 
         List<Pointage> pointagesJour = repository.recupererEntre(Periode.JOUR.getDebutPeriode(maintenant), Periode.JOUR.getFinPeriode(maintenant));
@@ -163,13 +161,19 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
         PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema);
         out.onPointageEnCours(enCours);
+        return enCours;
+    }
 
-        // on relance le rafraichissement toutes les 30 secondes (si relance)
-        if (relance) {
+    private void lancerRafraichissementAuto() {
+        // rafraichir
+        PointageEnCours enCours = rafraichirEnCours();
+
+        // relancer toutes les 30 secondes (si toujours en cours)
+        if (enCours.isEnCours()) {
             out.executerFutur(new Runnable() {
                 @Override
                 public void run() {
-                    rafraichirEnCours(true);
+                    lancerRafraichissementAuto();
                 }
             }, 30, TimeUnit.SECONDS);
         }

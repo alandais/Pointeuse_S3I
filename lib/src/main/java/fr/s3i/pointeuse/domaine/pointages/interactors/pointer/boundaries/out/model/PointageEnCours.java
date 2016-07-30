@@ -28,9 +28,12 @@ public class PointageEnCours {
 
     private final String dureeTotaleSemaine;
 
-    PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine) {
+    private final boolean isEnCours;
+
+    PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine, boolean isEnCours) {
         this.dureeTotaleJour = dureeTotaleJour;
         this.dureeTotaleSemaine = dureeTotaleSemaine;
+        this.isEnCours = isEnCours;
     }
 
     public String getDureeTotaleJour() {
@@ -41,4 +44,7 @@ public class PointageEnCours {
         return dureeTotaleSemaine;
     }
 
+    public boolean isEnCours() {
+        return isEnCours;
+    }
 }
