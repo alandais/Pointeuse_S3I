@@ -31,4 +31,7 @@
     <string name="pointageEnCousDureeJourLibelle">Aujourd\'hui</string>
     <string name="pointageEnCousDureeSemaineLibelle">Cette semaine</string>
     <string name="realise">Réalisé</string>
+    <string name="libelle_commentaire">Commentaire :</string>
+    <string name="ok">OK</string>
+    <string name="annuler">Annuler</string>
 </resources>
