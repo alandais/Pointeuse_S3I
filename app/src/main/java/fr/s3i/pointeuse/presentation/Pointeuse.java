@@ -31,7 +31,6 @@ import android.widget.Toast;
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.presentation.commun.Vue;
-import fr.s3i.pointeuse.presentation.commun.VueTest;
 
 public class Pointeuse extends AppCompatActivity {
 
@@ -44,7 +43,7 @@ public class Pointeuse extends AppCompatActivity {
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), new Vue[]{
                 application.creerVuePointer(),
-                VueTest.getInstance("Calendrier") // pas encore développée
+                application.creerVueCalendrier()
         });
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);

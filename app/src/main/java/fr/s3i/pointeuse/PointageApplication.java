@@ -28,6 +28,8 @@ import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.persistance.dao.PointageDao;
+import fr.s3i.pointeuse.presentation.calendrier.CalendrierControleur;
+import fr.s3i.pointeuse.presentation.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 import fr.s3i.pointeuse.presentation.pointer.PointerControleur;
 import fr.s3i.pointeuse.presentation.pointer.PointerVue;
@@ -54,6 +56,11 @@ public class PointageApplication extends Application {
     public Vue creerVuePointer() {
         CasUtilisationInfo info = modulePointage.getInteracteurInfo(PointerControleur.getCasUtilisationClass());
         return PointerVue.getInstance(info.getNom());
+    }
+
+    public Vue creerVueCalendrier() {
+        CasUtilisationInfo info = modulePointage.getInteracteurInfo(CalendrierControleur.getCasUtilisationClass());
+        return CalendrierVue.getInstance(info.getNom());
     }
 
     @Override

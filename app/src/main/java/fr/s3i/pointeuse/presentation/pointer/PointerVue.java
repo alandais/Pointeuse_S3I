@@ -115,12 +115,6 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
         }
     }
 
-    @Override
-    public void onError(String message) {
-        // TODO améliorer la présentation des erreurs
-        toast(message);
-    }
-
     public void onPointerPressed() {
         controleur.pointer();
     }

@@ -76,7 +76,10 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         controleur = null;
     }
 
-    public abstract void onError(String message);
+    public void onError(String message) {
+        // à surcharger si besoin d'une meilleure gestion d'erreur
+        toast(message);
+    }
 
     public void toast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
