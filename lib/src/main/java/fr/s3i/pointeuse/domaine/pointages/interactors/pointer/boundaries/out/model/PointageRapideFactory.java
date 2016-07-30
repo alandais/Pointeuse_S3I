@@ -50,7 +50,7 @@ public class PointageRapideFactory implements Service {
         } else {
             description = R.get("info_pointage_en_cours", pointageWrapper.getHeureDebut());
         }
-        return new PointageRapide(description);
+        return new PointageRapide(description, pointageWrapper.isEnCours());
     }
 
 }

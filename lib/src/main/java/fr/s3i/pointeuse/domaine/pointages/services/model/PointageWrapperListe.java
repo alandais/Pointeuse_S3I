@@ -63,6 +63,15 @@ public class PointageWrapperListe {
         return formateur.formatDuree(calculateur.calculDureeTotale(pointages));
     }
 
+    public boolean isEnCours() {
+        for (Pointage pointage : pointages) {
+            if (pointageWrapperFactory.getPointageWrapper(pointage).isEnCours()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<PointageWrapper> getPointages() {
         List<PointageWrapper> resultat = new ArrayList<>();
         for (Pointage pointage : pointages) {

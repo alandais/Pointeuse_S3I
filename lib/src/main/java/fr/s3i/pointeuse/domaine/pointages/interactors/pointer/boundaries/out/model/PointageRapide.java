@@ -26,12 +26,18 @@ public class PointageRapide {
 
     private final String description;
 
-    PointageRapide(String description) {
+    private final boolean isEnCours;
+
+    PointageRapide(String description, boolean isEnCours) {
         this.description = description;
+        this.isEnCours = isEnCours;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public boolean isEnCours() {
+        return isEnCours;
+    }
 }

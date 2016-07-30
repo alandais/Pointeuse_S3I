@@ -28,7 +28,7 @@ public class PointageEnCours {
 
     private final String dureeTotaleSemaine;
 
-    public PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine) {
+    PointageEnCours(String dureeTotaleJour, String dureeTotaleSemaine) {
         this.dureeTotaleJour = dureeTotaleJour;
         this.dureeTotaleSemaine = dureeTotaleSemaine;
     }

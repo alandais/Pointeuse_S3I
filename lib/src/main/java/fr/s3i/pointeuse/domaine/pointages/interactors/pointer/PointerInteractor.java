@@ -78,7 +78,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointage);
         out.onPointageRapide(pointageRapide);
 
-        rafraichirEnCours();
+        // on rafraichit la vue sur l'en-cours (avec relance si le pointage est réellement en cours)
+        rafraichirEnCours(pointageRapide.isEnCours());
     }
 
     @Override
@@ -96,6 +97,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         PointageWrapper pointageWrapper = persister(pointage);
         if (pointageWrapper != null) {
             PointageRapide pointageRapide = pointageRapideFactory.getPointageRapide(pointageWrapper);
+            // on rafraichit la vue sur l'en-cours (avec relance si le pointage est réellement en cours)
+            rafraichirEnCours(pointageRapide.isEnCours());
             out.onPointageRapide(pointageRapide);
             if (pointageWrapper.isTermine()) {
                 out.toast(R.get("toast_pointage_complet", pointageWrapper.getHeureFin()));
@@ -119,6 +122,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             PointageInfo pointageInfo = pointageInfoFactory.getPointageInfo(pointageWrapper);
             out.onPointageInsere(pointageInfo);
             out.toast(R.get("toast_pointage_insere"));
+            // on rafraichit la vue (sans relance, car géré par les pointages rapide)
+            rafraichirEnCours(false);
         }
     }
 
@@ -150,21 +155,24 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         return pointageWrapper;
     }
 
-    private void rafraichirEnCours() {
+    private void rafraichirEnCours(boolean relance) {
         Date maintenant = new Date();
+
         List<Pointage> pointagesJour = repository.recupererEntre(Periode.JOUR.getDebutPeriode(maintenant), Periode.JOUR.getFinPeriode(maintenant));
         List<Pointage> pointagesSema = repository.recupererEntre(Periode.SEMAINE.getDebutPeriode(maintenant), Periode.SEMAINE.getFinPeriode(maintenant));
-        List<Pointage> pointagesMois = repository.recupererEntre(Periode.MOIS.getDebutPeriode(maintenant), Periode.MOIS.getFinPeriode(maintenant));
 
-        PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema, pointagesMois);
+        PointageEnCours enCours = pointageEnCoursFactory.getPointageEnCours(pointagesJour, pointagesSema);
         out.onPointageEnCours(enCours);
-        // on relance le rafraichissement toutes les 30 secondes
-        out.executerFutur(new Runnable() {
-            @Override
-            public void run() {
-                rafraichirEnCours();
-            }
-        }, 30, TimeUnit.SECONDS);
+
+        // on relance le rafraichissement toutes les 30 secondes (si relance)
+        if (relance) {
+            out.executerFutur(new Runnable() {
+                @Override
+                public void run() {
+                    rafraichirEnCours(true);
+                }
+            }, 30, TimeUnit.SECONDS);
+        }
     }
 
 }

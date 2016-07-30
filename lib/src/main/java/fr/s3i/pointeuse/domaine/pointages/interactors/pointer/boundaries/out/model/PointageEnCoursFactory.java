@@ -26,6 +26,7 @@ import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.services.Service;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
 
 /**
  * Created by Adrien on 26/07/2016.
@@ -38,9 +39,13 @@ public class PointageEnCoursFactory implements Service {
         pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
     }
 
-    public PointageEnCours getPointageEnCours(Collection<Pointage> jour, Collection<Pointage> semaine, Collection<Pointage> mois) {
-        String dureeJour = pointageWrapperFactory.getPointageWrapper(jour).getDureeTotale();
-        String dureeSemaine = pointageWrapperFactory.getPointageWrapper(semaine).getDureeTotale();
+    public PointageEnCours getPointageEnCours(Collection<Pointage> jour, Collection<Pointage> semaine) {
+        PointageWrapperListe pointageWrapperJour = pointageWrapperFactory.getPointageWrapper(jour);
+        PointageWrapperListe pointageWrapperSemaine = pointageWrapperFactory.getPointageWrapper(semaine);
+
+        String dureeJour = pointageWrapperJour.getDureeTotale();
+        String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
+
         return new PointageEnCours(dureeJour, dureeSemaine);
     }
 
