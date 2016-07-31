@@ -22,7 +22,7 @@ package fr.s3i.pointeuse.presentation.dialogue;
 /**
  * Created by Adrien on 29/07/2016.
  */
-public interface SelectionListener<T> {
+public interface Listener<T> {
 
     void onSelected(T valeurSelectionnee);
 

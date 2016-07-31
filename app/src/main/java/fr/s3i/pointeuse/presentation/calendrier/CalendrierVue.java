@@ -42,8 +42,8 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.presentation.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.commun.Vue;
-import fr.s3i.pointeuse.presentation.dialogue.PointageInsererDialog;
-import fr.s3i.pointeuse.presentation.dialogue.SelectionListener;
+import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
+import fr.s3i.pointeuse.presentation.dialogue.Listener;
 
 /**
  * Created by Adrien on 30/07/2016.
@@ -132,10 +132,10 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // récupération de l'état de la vue en cas de changement de configuration (rotation de l'écran par exemple)
-        if (savedInstanceState != null) {
-            // TODO restaure état vue
-        }
+
+        // if (savedInstanceState != null) {
+            // si un état est à restaurer (après rotation de l'écran par exemple), c'est ici qu'il faut le faire
+        // }
     }
 
     @Override
@@ -158,9 +158,9 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (this.getView() != null) {
-            // TODO sauvegarde état vue
-        }
+        // if (this.getView() != null) {
+            // si un état est à sauvegarder (avant rotation de l'écran par exemple), c'est ici qu'il faut le faire
+        // }
     }
 
     @Override
@@ -234,69 +234,18 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     }
 
     public void onPointageModification(final Pointage pointage) {
-        Calendar calendar = Calendar.getInstance();
-        if (pointage.getDebut() != null) {
-            calendar.setTime(pointage.getDebut());
-        }
-
-        String commentaire = pointage.getCommentaire();
-        int annee = calendar.get(Calendar.YEAR);
-        int mois = calendar.get(Calendar.MONTH);
-        int jour = calendar.get(Calendar.DAY_OF_MONTH);
-        int heure = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        PointageInsererDialog test = new PointageInsererDialog();
-        PointageInsererDialog.Resultat valeurInitiales = new PointageInsererDialog.Resultat(commentaire, annee, mois, jour, heure, minute);
-        test.afficher(getActivity(), "Choisir l'heure de début", valeurInitiales, new SelectionListener<PointageInsererDialog.Resultat>() {
+        DialoguePointageInfo.Resultat valeursInitiales = new DialoguePointageInfo.Resultat(pointage.getDebut(), pointage.getFin(), pointage.getCommentaire());
+        DialoguePointageInfo dialoguePointageInfo = new DialoguePointageInfo();
+        dialoguePointageInfo.lancer(getActivity(), new Listener<DialoguePointageInfo.Resultat>() {
             @Override
-            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
-                onPointageModificationDateDebutChoisie(valeurSelectionnee, pointage);
+            public void onSelected(DialoguePointageInfo.Resultat valeurSelectionnee) {
+                onPointageInfoSaisie(pointage.getId(), valeurSelectionnee);
             }
-        });
+        }, valeursInitiales);
     }
 
-    private void onPointageModificationDateDebutChoisie(final PointageInsererDialog.Resultat dateDebutChoisie, final Pointage pointage) {
-        Calendar calendar = Calendar.getInstance();
-        if (pointage.getFin() != null) {
-            calendar.setTime(pointage.getFin());
-        }
-
-        String commentaire = dateDebutChoisie.getCommentaire();
-        int annee = calendar.get(Calendar.YEAR);
-        int mois = calendar.get(Calendar.MONTH);
-        int jour = calendar.get(Calendar.DAY_OF_MONTH);
-        int heure = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        PointageInsererDialog test = new PointageInsererDialog();
-        PointageInsererDialog.Resultat valeurInitiales = new PointageInsererDialog.Resultat(commentaire, annee, mois, jour, heure, minute);
-        test.afficher(getActivity(), "Choisir l'heure de fin", valeurInitiales, new SelectionListener<PointageInsererDialog.Resultat>() {
-            @Override
-            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
-                onPointageModificationDateFinChoisie(dateDebutChoisie, valeurSelectionnee, pointage);
-            }
-        });
-    }
-
-    private void onPointageModificationDateFinChoisie(PointageInsererDialog.Resultat choixDateDebut, PointageInsererDialog.Resultat choixDateFin, Pointage pointage) {
-        Calendar cal = Calendar.getInstance();
-
-        cal.set(Calendar.YEAR, choixDateDebut.getAnnee());
-        cal.set(Calendar.MONTH, choixDateDebut.getMois());
-        cal.set(Calendar.DAY_OF_MONTH, choixDateDebut.getJour());
-        cal.set(Calendar.HOUR_OF_DAY, choixDateDebut.getHeure());
-        cal.set(Calendar.MINUTE, choixDateDebut.getMinute());
-        Date debut = cal.getTime();
-
-        cal.set(Calendar.YEAR, choixDateFin.getAnnee());
-        cal.set(Calendar.MONTH, choixDateFin.getMois());
-        cal.set(Calendar.DAY_OF_MONTH, choixDateFin.getJour());
-        cal.set(Calendar.HOUR_OF_DAY, choixDateFin.getHeure());
-        cal.set(Calendar.MINUTE, choixDateFin.getMinute());
-        Date fin = cal.getTime();
-
-        controleur.modifier(pointage.getId(), debut, fin, choixDateFin.getCommentaire());
+    private void onPointageInfoSaisie(Long id, DialoguePointageInfo.Resultat saisie) {
+        controleur.modifier(id, saisie.getDebut(), saisie.getFin(), saisie.getCommentaire());
     }
 
 }

@@ -27,14 +27,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.presentation.commun.Vue;
-import fr.s3i.pointeuse.presentation.dialogue.PointageInsererDialog;
-import fr.s3i.pointeuse.presentation.dialogue.SelectionListener;
+import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
+import fr.s3i.pointeuse.presentation.dialogue.Listener;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
@@ -120,43 +117,17 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     }
 
     public void onInsererPressed() {
-        PointageInsererDialog test = new PointageInsererDialog();
-        test.afficher(getActivity(), "Choisir l'heure de début", new SelectionListener<PointageInsererDialog.Resultat>() {
+        DialoguePointageInfo dialoguePointageInfo = new DialoguePointageInfo();
+        dialoguePointageInfo.lancer(getActivity(), new Listener<DialoguePointageInfo.Resultat>() {
             @Override
-            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
-                onDateDebutChoisie(valeurSelectionnee);
+            public void onSelected(DialoguePointageInfo.Resultat valeurSelectionnee) {
+                onPointageInfoSaisi(valeurSelectionnee);
             }
         });
     }
 
-    public void onDateDebutChoisie(final PointageInsererDialog.Resultat choixDateDebut) {
-        PointageInsererDialog test = new PointageInsererDialog();
-        test.afficher(getActivity(), "Choisir l'heure de fin", choixDateDebut, new SelectionListener<PointageInsererDialog.Resultat>() {
-            @Override
-            public void onSelected(PointageInsererDialog.Resultat valeurSelectionnee) {
-                onDateFinChoisie(choixDateDebut, valeurSelectionnee);
-            }
-        });
-    }
-
-    public void onDateFinChoisie(PointageInsererDialog.Resultat choixDateDebut, PointageInsererDialog.Resultat choixDateFin) {
-        Calendar cal = Calendar.getInstance();
-
-        cal.set(Calendar.YEAR, choixDateDebut.getAnnee());
-        cal.set(Calendar.MONTH, choixDateDebut.getMois());
-        cal.set(Calendar.DAY_OF_MONTH, choixDateDebut.getJour());
-        cal.set(Calendar.HOUR_OF_DAY, choixDateDebut.getHeure());
-        cal.set(Calendar.MINUTE, choixDateDebut.getMinute());
-        Date debut = cal.getTime();
-
-        cal.set(Calendar.YEAR, choixDateFin.getAnnee());
-        cal.set(Calendar.MONTH, choixDateFin.getMois());
-        cal.set(Calendar.DAY_OF_MONTH, choixDateFin.getJour());
-        cal.set(Calendar.HOUR_OF_DAY, choixDateFin.getHeure());
-        cal.set(Calendar.MINUTE, choixDateFin.getMinute());
-        Date fin = cal.getTime();
-
-        controleur.inserer(debut, fin, choixDateFin.getCommentaire());
+    public void onPointageInfoSaisi(DialoguePointageInfo.Resultat saisie) {
+        controleur.inserer(saisie.getDebut(), saisie.getFin(), saisie.getCommentaire());
     }
 
     public void updatePointageStatut(String texte) {

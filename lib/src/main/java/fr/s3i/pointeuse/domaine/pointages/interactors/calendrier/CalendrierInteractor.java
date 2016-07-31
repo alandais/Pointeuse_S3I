@@ -77,7 +77,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        if (BusPointage.RAFRAICHIR.equals(event.getType()) && event.getOriginator() != this) {
+        if (BusPointage.RAFRAICHIR.equals(event.getType())) {
             out.updatePointageInfoListe();
         }
         return true;

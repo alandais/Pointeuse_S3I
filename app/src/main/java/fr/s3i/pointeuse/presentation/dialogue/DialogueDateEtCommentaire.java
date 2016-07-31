@@ -38,7 +38,7 @@ import fr.s3i.pointeuse.R;
 /**
  * Created by Adrien on 29/07/2016.
  */
-public class PointageInsererDialog extends DialogFragment implements DialogInterface.OnClickListener {
+public class DialogueDateEtCommentaire extends DialogFragment implements DialogInterface.OnClickListener {
 
     public static class Resultat {
         private final String commentaire;
@@ -82,7 +82,7 @@ public class PointageInsererDialog extends DialogFragment implements DialogInter
         }
     }
 
-    private SelectionListener<Resultat> listener;
+    private Listener<Resultat> listener;
 
     private String titre;
 
@@ -129,14 +129,14 @@ public class PointageInsererDialog extends DialogFragment implements DialogInter
         return builder.create();
     }
 
-    public void afficher(FragmentActivity parent, String titre, Resultat valeursParDefaut, SelectionListener<Resultat> listener) {
+    public void afficher(FragmentActivity parent, String titre, Resultat valeursParDefaut, Listener<Resultat> listener) {
         this.titre = titre;
         this.listener = listener;
         this.valeursParDefaut = valeursParDefaut;
         show(parent.getSupportFragmentManager(), this.getClass().getSimpleName());
     }
 
-    public void afficher(FragmentActivity parent, String titre, SelectionListener<Resultat> listener) {
+    public void afficher(FragmentActivity parent, String titre, Listener<Resultat> listener) {
         afficher(parent, titre, null, listener);
     }
 

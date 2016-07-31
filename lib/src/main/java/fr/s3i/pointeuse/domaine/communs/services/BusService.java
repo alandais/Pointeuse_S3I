@@ -80,7 +80,7 @@ public abstract class BusService implements Service {
 
     public void post(Event event) {
         for (Listener listener : listeners) {
-            if (!listener.onEvent(event)) {
+            if (event.getOriginator() != listener && !listener.onEvent(event)) {
                 return;
             }
         }

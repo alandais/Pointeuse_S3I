@@ -90,7 +90,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        if (BusPointage.RAFRAICHIR.equals(event.getType()) && event.getOriginator() != this) {
+        if (BusPointage.RAFRAICHIR.equals(event.getType())) {
             rafraichirStatut();
             rafraichirRecapitulatif();
         }
