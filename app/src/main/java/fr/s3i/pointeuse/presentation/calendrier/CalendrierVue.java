@@ -235,7 +235,9 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     public void onPointageModification(final Pointage pointage) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(pointage.getDebut());
+        if (pointage.getDebut() != null) {
+            calendar.setTime(pointage.getDebut());
+        }
 
         String commentaire = pointage.getCommentaire();
         int annee = calendar.get(Calendar.YEAR);
@@ -256,7 +258,9 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     private void onPointageModificationDateDebutChoisie(final PointageInsererDialog.Resultat dateDebutChoisie, final Pointage pointage) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(pointage.getFin());
+        if (pointage.getFin() != null) {
+            calendar.setTime(pointage.getFin());
+        }
 
         String commentaire = dateDebutChoisie.getCommentaire();
         int annee = calendar.get(Calendar.YEAR);
