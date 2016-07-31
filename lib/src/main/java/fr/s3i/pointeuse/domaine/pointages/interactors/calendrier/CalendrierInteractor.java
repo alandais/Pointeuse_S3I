@@ -101,6 +101,11 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         lister(Periode.MOIS, reference);
     }
 
+    @Override
+    public void listerAnnee(Date reference) {
+        lister(Periode.ANNEE, reference);
+    }
+
     private void lister(Periode periode, Date reference) {
         Date debutPeriode = periode.getDebutPeriode(reference);
         Date finPeriode = periode.getFinPeriode(reference);

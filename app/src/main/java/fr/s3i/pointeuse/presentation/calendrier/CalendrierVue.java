@@ -192,7 +192,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
                 controleur.listerMois(filtre.getDateReference());
                 break;
             case ANNEE:
-                // TODO
+                controleur.listerAnnee(filtre.getDateReference());
                 break;
         }
     }

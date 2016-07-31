@@ -100,4 +100,13 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         });
     }
 
+    @Override
+    public void listerAnnee(final Date reference) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                interactor.listerAnnee(reference);
+            }
+        });
+    }
 }

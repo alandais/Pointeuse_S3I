@@ -40,4 +40,6 @@ public interface CalendrierIn extends InBoundary {
 
     void listerMois(Date reference);
 
+    void listerAnnee(Date reference);
+
 }
