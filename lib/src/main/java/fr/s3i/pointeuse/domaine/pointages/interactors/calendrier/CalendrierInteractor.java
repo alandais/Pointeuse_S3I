@@ -24,10 +24,10 @@ import java.util.Date;
 import java.util.List;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
@@ -62,7 +62,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
 
     @Override
     public void initialiser() {
-        CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_calendrier_nom"));
+        CasUtilisationInfo info = new CasUtilisationInfo(Chaines.interacteur_calendrier_nom);
         out.onDemarrer(info);
         out.updatePointageInfoListe();
 
@@ -86,7 +86,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
     @Override
     public void supprimer(long id) {
         repository.supprimer(id);
-        out.toast(R.get("toast_pointage_supprime"));
+        out.toast(Chaines.toast_pointage_supprime);
         out.updatePointageInfoListe();
         bus.post(this, BusPointage.RAFRAICHIR);
     }
@@ -104,7 +104,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
         if (persister(pointage)) {
-            out.toast(R.get("toast_pointage_modifie"));
+            out.toast(Chaines.toast_pointage_modifie);
             out.updatePointageInfoListe();
             bus.post(this, BusPointage.RAFRAICHIR);
         }

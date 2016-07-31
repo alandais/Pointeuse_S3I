@@ -25,11 +25,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
@@ -73,7 +73,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     @Override
     public void initialiser() {
-        CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_pointer_nom"));
+        CasUtilisationInfo info = new CasUtilisationInfo(Chaines.interacteur_pointer_nom);
         out.onDemarrer(info);
 
         rafraichirStatut();
@@ -114,11 +114,11 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
             out.onPointageStatutUpdate(pointageStatutFactory.getStatut(pointageWrapper));
             if (pointageWrapper.isTermine()) {
-                out.toast(R.get("toast_pointage_complet", pointageWrapper.getHeureFin()));
-                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_fin_travail", pointageWrapper.getHeureFin(), pointageWrapper.getDuree()));
+                out.toast(Chaines.toastPointageComplet(pointageWrapper));
+                notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationFinTravail(pointageWrapper));
             } else {
-                out.toast(R.get("toast_pointage_partiel", pointageWrapper.getHeureDebut()));
-                notificationSystem.notifier(R.get("notification_titre"), R.get("notification_debut_travail", pointageWrapper.getHeureDebut()));
+                out.toast(Chaines.toastPointagePartiel(pointageWrapper));
+                notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationDebutTravail(pointageWrapper));
             }
         }
     }
@@ -131,7 +131,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         pointage.setCommentaire(commentaire);
 
         if (persister(pointage)) {
-            out.toast(R.get("toast_pointage_insere"));
+            out.toast(Chaines.toast_pointage_insere);
             // on rafraichit le récapitulatif sur la vue
             rafraichirRecapitulatif();
         }
@@ -153,7 +153,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         List<Pointage> pointages = repository.recupererEnCours();
         if (pointages.size() > 1) {
             // Cas bizarre : il y a plusieurs pointages en cours, on ne plante pas et on corrige la base de données
-            out.onErreur(R.get("erreur6"));
+            out.onErreur(Chaines.erreur_plusieurs_pointage_en_cours);
             for (int i = 0; i < pointages.size() - 1; i++) {
                 repository.supprimer(pointages.get(i).getId());
             }

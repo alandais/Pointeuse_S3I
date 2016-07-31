@@ -21,8 +21,8 @@ package fr.s3i.pointeuse.domaine.pointages.entities;
 
 import java.util.Date;
 
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.entities.Entity;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 
 public class Pointage extends Entity<Long> {
 
@@ -59,10 +59,10 @@ public class Pointage extends Entity<Long> {
     @Override
     public String getErrorMessage() {
         if (debut == null) {
-            return R.get("erreur2");
+            return Chaines.erreur_date_debut_non_renseignee;
         }
         if (fin != null && debut.after(fin)) {
-            return R.get("erreur3");
+            return Chaines.erreur_date_fin_invalide;
         }
         return null;
     }

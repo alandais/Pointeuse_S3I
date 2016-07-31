@@ -22,7 +22,6 @@ package fr.s3i.pointeuse.domaine.pointages;
 import java.util.Collection;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.composition.Composant;
 import fr.s3i.pointeuse.domaine.communs.composition.Module;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
@@ -53,8 +52,8 @@ public class ModulePointage extends Module {
         enregistrerService(PointageRecapitulatifFactory.class, new PointageRecapitulatifFactory());
         enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
         enregistrerService(PointageInfoListeFactory.class, new PointageInfoListeFactory(contexte));
-        enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(R.get("interactor_pointer_nom")));
-        enregistrerInteracteur(CalendrierIn.class, new CasUtilisationInfo(R.get("interactor_calendrier_nom")));
+        enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(Chaines.interacteur_pointer_nom));
+        enregistrerInteracteur(CalendrierIn.class, new CasUtilisationInfo(Chaines.interacteur_calendrier_nom));
     }
 
     @Override

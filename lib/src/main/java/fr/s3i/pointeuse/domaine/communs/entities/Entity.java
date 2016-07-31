@@ -19,8 +19,6 @@
 
 package fr.s3i.pointeuse.domaine.communs.entities;
 
-import fr.s3i.pointeuse.domaine.communs.R;
-
 public abstract class Entity<T> {
 
     private T id = null;
@@ -31,7 +29,7 @@ public abstract class Entity<T> {
 
     public void setId(T id) {
         if (this.id != null && !this.id.equals(id)) {
-            throw new IllegalStateException(R.get("erreur1"));
+            throw new IllegalStateException("L'entité ne peut plus changer d'identifiant");
         }
         this.id = id;
     }

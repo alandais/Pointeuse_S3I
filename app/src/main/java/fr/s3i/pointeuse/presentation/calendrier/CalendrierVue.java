@@ -228,7 +228,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
                 }
             })
             .setNegativeButton(Chaines.non, null)
-            .setTitle(Chaines.demandeConfirmationSuppression((PointageInfo) adapterView.getItemAtPosition(i)))
+            .setTitle(Chaines.demanderConfirmationSuppression((PointageInfo) adapterView.getItemAtPosition(i)))
             .create();
         dialog.show();
         return true;

@@ -19,8 +19,8 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model;
 
-import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.services.Service;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 
 /**
@@ -31,11 +31,11 @@ public class PointageStatutFactory implements Service {
     public PointageStatut getStatut(PointageWrapper pointageWrapper) {
         String statut;
         if (pointageWrapper.isVide()) {
-            statut = R.get("info_pointage_null");
+            statut = Chaines.statut_pointage_aucun;
         } else if (pointageWrapper.isTermine()) {
-            statut = R.get("info_pointage_termine", pointageWrapper.getDuree());
+            statut = Chaines.statutPointageTermine(pointageWrapper);
         } else {
-            statut = R.get("info_pointage_en_cours", pointageWrapper.getHeureDebut());
+            statut = Chaines.statutPointageEncours(pointageWrapper);
         }
         return new PointageStatut(statut);
     }
