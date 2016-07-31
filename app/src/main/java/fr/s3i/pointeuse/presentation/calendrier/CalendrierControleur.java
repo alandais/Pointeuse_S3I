@@ -25,6 +25,7 @@ import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.CalendrierInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.presentation.commun.Controleur;
 
 /**
@@ -32,8 +33,8 @@ import fr.s3i.pointeuse.presentation.commun.Controleur;
  */
 public class CalendrierControleur extends Controleur<CalendrierInteractor> implements CalendrierIn {
 
-    protected CalendrierControleur(Contexte contexte) {
-        super(new CalendrierInteractor(contexte));
+    protected CalendrierControleur(Contexte contexte, CalendrierOut out) {
+        super(new CalendrierInteractor(contexte, out));
     }
 
     public static Class<? extends InBoundary> getCasUtilisationClass() {

@@ -52,8 +52,8 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
 
     private final BusPointage bus;
 
-    public CalendrierInteractor(Contexte contexte) {
-        super(contexte.getService(CalendrierOut.class));
+    public CalendrierInteractor(Contexte contexte, CalendrierOut out) {
+        super(out);
         this.repository = contexte.getService(PointageRepository.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
         this.pointageInfoListeFactory = contexte.getService(PointageInfoListeFactory.class);

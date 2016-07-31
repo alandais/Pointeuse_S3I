@@ -39,7 +39,6 @@ import java.util.List;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.presentation.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.commun.Vue;
@@ -108,8 +107,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new CalendrierPresenter(this);
-        contexte.enregistrerService(CalendrierOut.class, presenter);
-        controleur = new CalendrierControleur(contexte);
+        controleur = new CalendrierControleur(contexte, presenter);
     }
 
     @Override
@@ -162,12 +160,6 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
         // if (this.getView() != null) {
             // si un état est à sauvegarder (avant rotation de l'écran par exemple), c'est ici qu'il faut le faire
         // }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        contexte.detruireService(CalendrierOut.class);
     }
 
     @Override

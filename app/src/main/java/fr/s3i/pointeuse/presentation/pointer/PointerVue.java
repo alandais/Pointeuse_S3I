@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
 import fr.s3i.pointeuse.presentation.dialogue.Listener;
@@ -49,8 +48,7 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new PointerPresenter(this);
-        contexte.enregistrerService(PointerOut.class, presenter);
-        controleur = new PointerControleur(contexte);
+        controleur = new PointerControleur(contexte, presenter);
     }
 
     @Override
@@ -92,12 +90,6 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
             TextView textRecapSemaine = (TextView) this.getView().findViewById(R.id.txtPointageRecapSemaine);
             outState.putString(STATE_POINTAGE_RECAP_SEMAINE, textRecapSemaine.getText().toString());
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        contexte.detruireService(PointerOut.class);
     }
 
     @Override

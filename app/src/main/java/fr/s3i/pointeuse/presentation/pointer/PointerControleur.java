@@ -25,6 +25,7 @@ import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.presentation.commun.Controleur;
 
 /**
@@ -36,8 +37,8 @@ public class PointerControleur extends Controleur<PointerInteractor> implements 
         return PointerInteractor.class;
     }
 
-    public PointerControleur(Contexte contexte) {
-        super(new PointerInteractor(contexte));
+    public PointerControleur(Contexte contexte, PointerOut out) {
+        super(new PointerInteractor(contexte, out));
     }
 
     @Override

@@ -61,8 +61,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final BusPointage bus;
 
-    public PointerInteractor(Contexte contexte) {
-        super(contexte.getService(PointerOut.class));
+    public PointerInteractor(Contexte contexte, PointerOut out) {
+        super(out);
         this.repository = contexte.getService(PointageRepository.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
         this.pointageStatutFactory = contexte.getService(PointageStatutFactory.class);
