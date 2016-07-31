@@ -31,6 +31,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListeFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatifFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatutFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.services.Calculateur;
@@ -44,6 +45,7 @@ public class ModulePointage extends Module {
     public ModulePointage(Contexte contexte) {
         super(contexte);
         enregistrerService(ModulePointage.class, this);
+        enregistrerService(BusPointage.class, new BusPointage());
         enregistrerService(Calculateur.class, new Calculateur(contexte));
         enregistrerService(Formateur.class, new Formateur(contexte));
         enregistrerService(PointageWrapperFactory.class, new PointageWrapperFactory(contexte));

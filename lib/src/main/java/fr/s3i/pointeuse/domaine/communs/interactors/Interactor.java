@@ -19,6 +19,8 @@
 
 package fr.s3i.pointeuse.domaine.communs.interactors;
 
+import java.io.IOException;
+
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
@@ -30,4 +32,8 @@ public abstract class Interactor<T extends OutBoundary> implements InBoundary {
         this.out = out;
     }
 
+    @Override
+    public void close() throws IOException {
+
+    }
 }

@@ -19,9 +19,11 @@
 
 package fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in;
 
+import java.io.Closeable;
+
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.Boundary;
 
-public interface InBoundary extends Boundary {
+public interface InBoundary extends Boundary, Closeable {
 
     void initialiser();
 

@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.calendrier;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,14 @@ import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
+import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListeFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
 import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
@@ -39,7 +42,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierInteractor extends Interactor<CalendrierOut> implements CalendrierIn {
+public class CalendrierInteractor extends Interactor<CalendrierOut> implements CalendrierIn, BusService.Listener {
 
     private final PointageRepository repository;
 
@@ -47,11 +50,14 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
 
     private final PointageInfoListeFactory pointageInfoListeFactory;
 
+    private final BusPointage bus;
+
     public CalendrierInteractor(Contexte contexte) {
         super(contexte.getService(CalendrierOut.class));
         this.repository = contexte.getService(PointageRepository.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
         this.pointageInfoListeFactory = contexte.getService(PointageInfoListeFactory.class);
+        this.bus = contexte.getService(BusPointage.class);
     }
 
     @Override
@@ -59,6 +65,22 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_calendrier_nom"));
         out.onDemarrer(info);
         out.updatePointageInfoListe();
+
+        bus.subscribe(this);
+    }
+
+    @Override
+    public void close() throws IOException {
+        super.close();
+        bus.unsuscribe(this);
+    }
+
+    @Override
+    public boolean onEvent(BusService.Event event) {
+        if (BusPointage.RAFRAICHIR.equals(event.getType()) && event.getOriginator() != this) {
+            out.updatePointageInfoListe();
+        }
+        return true;
     }
 
     @Override
@@ -66,6 +88,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         repository.supprimer(id);
         out.toast(R.get("toast_pointage_supprime"));
         out.updatePointageInfoListe();
+        bus.post(this, BusPointage.RAFRAICHIR);
     }
 
     @Override
@@ -83,6 +106,7 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         if (persister(pointage)) {
             out.toast(R.get("toast_pointage_modifie"));
             out.updatePointageInfoListe();
+            bus.post(this, BusPointage.RAFRAICHIR);
         }
     }
 
@@ -126,4 +150,5 @@ public class CalendrierInteractor extends Interactor<CalendrierOut> implements C
         }
         return erreur == null;
     }
+
 }

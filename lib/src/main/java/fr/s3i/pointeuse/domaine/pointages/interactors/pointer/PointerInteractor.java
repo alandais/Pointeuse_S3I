@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +29,7 @@ import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
+import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
@@ -36,6 +38,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.mod
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatifFactory;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatutFactory;
+import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
@@ -44,7 +47,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class PointerInteractor extends Interactor<PointerOut> implements PointerIn {
+public class PointerInteractor extends Interactor<PointerOut> implements PointerIn, BusService.Listener {
 
     private final PointageRepository repository;
 
@@ -56,6 +59,8 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     private final PointageRecapitulatifFactory pointageRecapitulatifFactory;
 
+    private final BusPointage bus;
+
     public PointerInteractor(Contexte contexte) {
         super(contexte.getService(PointerOut.class));
         this.repository = contexte.getService(PointageRepository.class);
@@ -63,6 +68,7 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         this.pointageStatutFactory = contexte.getService(PointageStatutFactory.class);
         this.pointageRecapitulatifFactory = contexte.getService(PointageRecapitulatifFactory.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
+        this.bus = contexte.getService(BusPointage.class);
     }
 
     @Override
@@ -70,12 +76,25 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         CasUtilisationInfo info = new CasUtilisationInfo(R.get("interactor_pointer_nom"));
         out.onDemarrer(info);
 
-        Pointage pointage = lireDernierPointage();
-        PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
-        PointageStatut pointageStatut = pointageStatutFactory.getStatut(pointageWrapper);
-        out.onPointageStatutUpdate(pointageStatut);
-
+        rafraichirStatut();
         lancerRafraichissementAuto();
+
+        bus.subscribe(this);
+    }
+
+    @Override
+    public void close() throws IOException {
+        super.close();
+        bus.unsuscribe(this);
+    }
+
+    @Override
+    public boolean onEvent(BusService.Event event) {
+        if (BusPointage.RAFRAICHIR.equals(event.getType()) && event.getOriginator() != this) {
+            rafraichirStatut();
+            rafraichirRecapitulatif();
+        }
+        return true;
     }
 
     @Override
@@ -118,6 +137,17 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         }
     }
 
+    private boolean persister(Pointage pointage) {
+        String erreur = pointage.getErrorMessage();
+        if (erreur == null) {
+            repository.persister(pointage);
+            bus.post(this, BusPointage.RAFRAICHIR);
+        } else {
+            out.onErreur(erreur);
+        }
+        return erreur == null;
+    }
+
     private Pointage lireDernierPointage() {
         Pointage pointage = null;
         List<Pointage> pointages = repository.recupererEnCours();
@@ -134,14 +164,11 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
         return pointage;
     }
 
-    private boolean persister(Pointage pointage) {
-        String erreur = pointage.getErrorMessage();
-        if (erreur == null) {
-            repository.persister(pointage);
-        } else {
-            out.onErreur(erreur);
-        }
-        return erreur == null;
+    private void rafraichirStatut() {
+        Pointage pointage = lireDernierPointage();
+        PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
+        PointageStatut pointageStatut = pointageStatutFactory.getStatut(pointageWrapper);
+        out.onPointageStatutUpdate(pointageStatut);
     }
 
     private boolean rafraichirRecapitulatif() {

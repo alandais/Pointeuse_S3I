@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
@@ -44,6 +46,11 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
                 @Override
                 public void initialiser() {
                     // rien
+                }
+
+                @Override
+                public void close() throws IOException {
+
                 }
             });
         }

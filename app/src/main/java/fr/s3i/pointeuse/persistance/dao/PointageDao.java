@@ -53,7 +53,7 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public void persister(Pointage entity) {
+    public synchronized void persister(Pointage entity) {
         ContentValues values = mapper.mapper(entity);
         if (entity.getId() == null) {
             // insert
@@ -67,13 +67,13 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public void supprimer(Long id) {
+    public synchronized void supprimer(Long id) {
         ContentValues filtre = mapper.getFiltre(id);
         table.delete(db, filtre);
     }
 
     @Override
-    public Pointage recuperer(Long id) {
+    public synchronized Pointage recuperer(Long id) {
         ContentValues filtre = mapper.getFiltre(id);
         Cursor resultat = table.select(db, filtre);
         resultat.moveToFirst();
@@ -83,7 +83,7 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public List<Pointage> recupererEntre(Date debut, Date fin) {
+    public synchronized List<Pointage> recupererEntre(Date debut, Date fin) {
         String filtreDebut = mapper.formatDate(debut);
         String filtreFin = mapper.formatDate(fin);
         Cursor resultat = table.selectBetween(db, filtreDebut, filtreFin);
@@ -92,7 +92,7 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public List<Pointage> recupererEnCours() {
+    public synchronized List<Pointage> recupererEnCours() {
         ContentValues filtre = mapper.getFiltreDernier();
         Cursor resultat = table.select(db, filtre);
         resultat.moveToFirst();
@@ -102,7 +102,7 @@ public class PointageDao implements Closeable, PointageRepository {
     }
 
     @Override
-    public List<Pointage> recupererTout() {
+    public synchronized List<Pointage> recupererTout() {
         Cursor resultat = table.select(db, new ContentValues());
         List<Pointage> pointages = mapper.mapperListe(resultat);
         resultat.close();
