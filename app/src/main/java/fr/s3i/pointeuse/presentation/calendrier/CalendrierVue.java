@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
@@ -220,14 +221,14 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, final long l) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         AlertDialog dialog = builder
-            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            .setPositiveButton(Chaines.oui, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     controleur.supprimer(l);
                 }
             })
-            .setNegativeButton("Non", null)
-            .setTitle("Etes vous sur de vouloir supprimer le pointage #" + l + " ?")
+            .setNegativeButton(Chaines.non, null)
+            .setTitle(Chaines.demandeConfirmationSuppression((PointageInfo) adapterView.getItemAtPosition(i)))
             .create();
         dialog.show();
         return true;

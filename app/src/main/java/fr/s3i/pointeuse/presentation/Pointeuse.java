@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 
 public class Pointeuse extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class Pointeuse extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         if (savedInstanceState == null) {
-            Toast.makeText(this, R.string.copyright, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Chaines.copyright, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 
 /**
  * Created by Adrien on 29/07/2016.
@@ -122,8 +123,8 @@ public class DialogueDateEtCommentaire extends DialogFragment implements DialogI
         builder
             .setTitle(titre)
             .setView(view)
-            .setPositiveButton(R.string.ok, this)
-            .setNegativeButton(R.string.annuler, null);
+            .setPositiveButton(Chaines.ok, this)
+            .setNegativeButton(Chaines.annuler, null);
 
         // and return it
         return builder.create();

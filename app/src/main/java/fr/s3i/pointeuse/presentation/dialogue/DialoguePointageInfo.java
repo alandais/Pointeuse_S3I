@@ -24,6 +24,8 @@ import android.support.v4.app.FragmentActivity;
 import java.util.Calendar;
 import java.util.Date;
 
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
+
 /**
  * Created by Adrien on 31/07/2016.
  */
@@ -67,7 +69,7 @@ public class DialoguePointageInfo {
             dateEtCommmentaireInitiaux = getDateEtCommentaire(valeursInitiales.getDebut(), valeursInitiales.getCommentaire());
         }
         DialogueDateEtCommentaire dateCommentaireDialog = new DialogueDateEtCommentaire();
-        dateCommentaireDialog.afficher(parent, "Choisir l'heure de début", dateEtCommmentaireInitiaux, new Listener<DialogueDateEtCommentaire.Resultat>() {
+        dateCommentaireDialog.afficher(parent, Chaines.demander_date_debut, dateEtCommmentaireInitiaux, new Listener<DialogueDateEtCommentaire.Resultat>() {
             @Override
             public void onSelected(DialogueDateEtCommentaire.Resultat choixDateDebut) {
                 onDateDebutChoisie(parent, listener, valeursInitiales, choixDateDebut);
@@ -85,7 +87,7 @@ public class DialoguePointageInfo {
         }
 
         DialogueDateEtCommentaire dateCommentaireDialog = new DialogueDateEtCommentaire();
-        dateCommentaireDialog.afficher(parent, "Choisir l'heure de fin", dateEtCommmentaireInitiaux, new Listener<DialogueDateEtCommentaire.Resultat>() {
+        dateCommentaireDialog.afficher(parent, Chaines.demander_date_fin, dateEtCommmentaireInitiaux, new Listener<DialogueDateEtCommentaire.Resultat>() {
             @Override
             public void onSelected(DialogueDateEtCommentaire.Resultat choixDateFin) {
                 onDateFinChoisie(listener, choixDateDebut, choixDateFin);
