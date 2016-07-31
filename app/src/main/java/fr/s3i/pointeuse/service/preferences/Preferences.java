@@ -48,7 +48,7 @@ public class Preferences implements PointagePreferences {
 
     @Override
     public String getDateFormat() {
-        return preferences.getString(PREF_DATE_FORMAT, "yyyy-MM-dd HH:mm:ss");
+        return preferences.getString(PREF_DATE_FORMAT, "yyyy-MM-dd HH:mm");
     }
 
     @Override
