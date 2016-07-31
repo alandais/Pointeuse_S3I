@@ -31,6 +31,7 @@ import fr.s3i.pointeuse.persistance.dao.PointageDao;
 import fr.s3i.pointeuse.presentation.calendrier.CalendrierControleur;
 import fr.s3i.pointeuse.presentation.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.commun.Vue;
+import fr.s3i.pointeuse.presentation.pointer.widget.WidgetService;
 import fr.s3i.pointeuse.presentation.pointer.PointerControleur;
 import fr.s3i.pointeuse.presentation.pointer.PointerVue;
 import fr.s3i.pointeuse.service.notification.NotificationService;
@@ -74,6 +75,7 @@ public class PointageApplication extends Application {
         contexte.enregistrerService(PointagePreferences.class, new Preferences(this.getApplicationContext()));
         contexte.enregistrerService(PointageRepository.class, new PointageDao(this.getApplicationContext()));
         modulePointage = new ModulePointage(contexte);
+        contexte.enregistrerService(WidgetService.class, new WidgetService(this));
     }
 
 }
