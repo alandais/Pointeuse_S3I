@@ -50,6 +50,14 @@ public class Contexte {
         return composant.getComposant();
     }
 
+    public <I> I getService(Class<I> type, I defaut) {
+        Composant<I, ? extends I> composant = retrouverComposant(type);
+        if (composant == null) {
+            return defaut;
+        }
+        return composant.getComposant();
+    }
+
     private void ajouterComposant(Composant<?, ?> composant) {
         if (!cache.add(composant)) {
             throw new IllegalStateException("Le contexte contient déjà une implémentation de " + composant.getType().getSimpleName());

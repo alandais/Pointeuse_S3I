@@ -24,9 +24,11 @@ import android.app.Application;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
+import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
+import fr.s3i.pointeuse.service.logging.AndroidLogger;
 import fr.s3i.pointeuse.persistance.dao.PointageDao;
 import fr.s3i.pointeuse.presentation.calendrier.CalendrierControleur;
 import fr.s3i.pointeuse.presentation.calendrier.CalendrierVue;
@@ -67,6 +69,7 @@ public class PointageApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.setLogger(new AndroidLogger());
         contexte.enregistrerService(NotificationSystem.class, new NotificationService(this.getApplicationContext()));
         chargerModulePointage();
     }
