@@ -22,6 +22,7 @@ package fr.s3i.pointeuse.domaine.pointages.utils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 /**
  * Created by Adrien on 24/07/2016.
@@ -32,8 +33,10 @@ public enum Periode {
     ANNEE(Calendar.DAY_OF_YEAR, Calendar.YEAR),
     MOIS(Calendar.DAY_OF_MONTH, Calendar.MONTH),
     SEMAINE(Calendar.DAY_OF_WEEK, Calendar.WEEK_OF_YEAR),
-    JOUR(Calendar.HOUR, Calendar.DAY_OF_MONTH);
+    JOUR(Calendar.HOUR_OF_DAY, Calendar.DAY_OF_MONTH);
     // @formatter:on
+
+    private static final Logger LOGGER = Logger.getLogger("Dataflow");
 
     private final int toReset;
     private final int toIncrease;
@@ -46,6 +49,7 @@ public enum Periode {
     public Date getDebutPeriode(Date reference) {
         Calendar calendar = getCalendar(reference);
         reset(calendar);
+        LOGGER.finer("getDebutPeriode(" + this + ", " + reference + ") == " + calendar.getTime());
         return calendar.getTime();
     }
 
@@ -53,6 +57,7 @@ public enum Periode {
         Calendar calendar = getCalendar(reference);
         reset(calendar);
         increase(calendar);
+        LOGGER.finer("getFinPeriode(" + this + ", " + reference + ") == " + calendar.getTime());
         return calendar.getTime();
     }
 
@@ -61,6 +66,7 @@ public enum Periode {
             calendar.set(toReset, calendar.getFirstDayOfWeek());
         } else {
             calendar.set(toReset, calendar.getActualMinimum(toReset));
+            LOGGER.finest("calendar.getActualMinimum(" + toReset + ") == " + calendar.get(toReset));
         }
     }
 
@@ -71,7 +77,7 @@ public enum Periode {
     private Calendar getCalendar(Date date) {
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(date);
-        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
