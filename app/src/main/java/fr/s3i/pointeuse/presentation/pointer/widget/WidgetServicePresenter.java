@@ -24,25 +24,19 @@ import android.widget.RemoteViews;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
 
 /**
  * Created by Adrien on 31/07/2016.
  */
-public class WidgetServicePresenter implements PointerOut {
+public class WidgetServicePresenter implements PointerOut, RecapOut {
 
     private final WidgetService service;
 
     public WidgetServicePresenter(WidgetService service) {
         this.service = service;
-    }
-
-    @Override
-    public void onPointageStatutUpdate(PointageStatut pointage) {
-        // le statut n'est pas affiché sur le widget
     }
 
     @Override
@@ -57,11 +51,6 @@ public class WidgetServicePresenter implements PointerOut {
         RemoteViews views = service.getRemoteViews();
         views.setTextViewText(R.id.monTextWidget, recap.toString());
         service.update(views);
-    }
-
-    @Override
-    public void onDemarrer(CasUtilisationInfo info) {
-        // rien
     }
 
     @Override

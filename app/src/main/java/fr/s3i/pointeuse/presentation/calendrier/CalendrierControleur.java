@@ -22,23 +22,28 @@ package fr.s3i.pointeuse.presentation.calendrier;
 import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.CalendrierInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.ListerInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.in.ListerIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.ModifierInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.in.ModifierIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.SupprimerInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.in.SupprimerIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
 import fr.s3i.pointeuse.presentation.commun.Controleur;
 
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierControleur extends Controleur<CalendrierInteractor> implements CalendrierIn {
+public class CalendrierControleur<T extends ListerOut & ModifierOut & SupprimerOut> extends Controleur implements ListerIn, ModifierIn, SupprimerIn {
 
-    protected CalendrierControleur(Contexte contexte, CalendrierOut out) {
-        super(new CalendrierInteractor(contexte, out));
-    }
-
-    public static Class<? extends InBoundary> getCasUtilisationClass() {
-        return CalendrierInteractor.class;
+    protected CalendrierControleur(Contexte contexte, T out) {
+        super(
+                new ListerInteractor(contexte, out),
+                new ModifierInteractor(contexte, out),
+                new SupprimerInteractor(contexte, out)
+        );
     }
 
     @Override
@@ -46,7 +51,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.supprimer(id);
+                getInteracteur(SupprimerInteractor.class).supprimer(id);
             }
         });
     }
@@ -56,7 +61,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.modifier(id);
+                getInteracteur(ModifierInteractor.class).modifier(id);
             }
         });
     }
@@ -66,7 +71,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.modifier(id, debut, fin, commentaire);
+                getInteracteur(ModifierInteractor.class).modifier(id, debut, fin, commentaire);
             }
         });
     }
@@ -76,7 +81,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.listerJour(reference);
+                getInteracteur(ListerInteractor.class).listerJour(reference);
             }
         });
     }
@@ -86,7 +91,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.listerSemaine(reference);
+                getInteracteur(ListerInteractor.class).listerSemaine(reference);
             }
         });
     }
@@ -96,7 +101,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.listerMois(reference);
+                getInteracteur(ListerInteractor.class).listerMois(reference);
             }
         });
     }
@@ -106,7 +111,7 @@ public class CalendrierControleur extends Controleur<CalendrierInteractor> imple
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                interactor.listerAnnee(reference);
+                getInteracteur(ListerInteractor.class).listerAnnee(reference);
             }
         });
     }

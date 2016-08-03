@@ -24,7 +24,6 @@ import android.support.annotation.CallSuper;
 
 import java.util.concurrent.TimeUnit;
 
-import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
 /**
@@ -38,11 +37,6 @@ public abstract class Presenter<V extends Vue> implements OutBoundary {
 
     protected Presenter(V vue) {
         this.vue = vue;
-    }
-
-    @Override
-    public void onDemarrer(CasUtilisationInfo info) {
-        // rien
     }
 
     @CallSuper

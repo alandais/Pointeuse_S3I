@@ -20,16 +20,12 @@
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
 
 /**
  * Created by Adrien on 19/07/2016.
  */
 public interface PointerOut extends OutBoundary {
 
-    void onPointageStatutUpdate(PointageStatut pointage);
-
-    void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage);
+    // rien
 
 }

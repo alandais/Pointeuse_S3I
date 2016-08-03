@@ -33,33 +33,54 @@ public abstract class BusService implements Service {
 
     }
 
-    public interface Event {
+    public interface Event<T> {
 
-        Listener getOriginator();
+        Object getOriginator();
 
         String getType();
 
+        T getData();
+
     }
 
-    public static class BaseEvent implements Event {
+    public abstract static class BaseEvent<T> implements Event<T> {
 
-        private final Listener originator;
+        private final Object originator;
 
         private final String type;
 
-        public BaseEvent(Listener originator, String type) {
+        private final T data;
+
+        public BaseEvent(Object originator, String type) {
+            this(originator, type, null);
+        }
+
+        public BaseEvent(Object originator, String type, T data) {
             this.originator = originator;
             this.type = type;
+            this.data = data;
         }
 
         @Override
-        public Listener getOriginator() {
+        public Object getOriginator() {
             return originator;
         }
 
         @Override
         public String getType() {
             return type;
+        }
+
+        @Override
+        public T getData() {
+            return data;
+        }
+    }
+
+    public static class NoDataEvent extends BaseEvent<Void> {
+
+        public NoDataEvent(Object originator, String type) {
+            super(originator, type);
         }
 
     }
@@ -74,8 +95,8 @@ public abstract class BusService implements Service {
         listeners.remove(listener);
     }
 
-    public void post(Listener originator, String typeEvent) {
-        post(new BaseEvent(originator, typeEvent));
+    public void post(Object originator, String typeEvent) {
+        post(new NoDataEvent(originator, typeEvent));
     }
 
     public void post(Event event) {

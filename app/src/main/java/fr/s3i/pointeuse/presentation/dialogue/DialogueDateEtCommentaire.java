@@ -87,8 +87,6 @@ public class DialogueDateEtCommentaire extends DialogFragment implements DialogI
 
     private String titre;
 
-    private View view;
-
     private TimePicker timePicker;
 
     private DatePicker datePicker;
@@ -103,7 +101,7 @@ public class DialogueDateEtCommentaire extends DialogFragment implements DialogI
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.dialog_choix_heure, null);
+        View view = inflater.inflate(R.layout.dialog_choix_heure, null);
         commentaire = (EditText) view.findViewById(R.id.txtCommentaire);
         datePicker = (DatePicker) view.findViewById(R.id.datePicker);
         timePicker = (TimePicker) view.findViewById(R.id.timePicker);

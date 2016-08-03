@@ -19,15 +19,18 @@
 
 package fr.s3i.pointeuse.presentation.pointer;
 
+import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.out.InsererOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.model.PointageStatut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.StatutOut;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
 
 /**
  * Created by Adrien on 23/07/2016.
  */
-public class PointerPresenter extends Presenter<PointerVue> implements PointerOut {
+public class PointerPresenter extends Presenter<PointerVue> implements PointerOut, InsererOut, RecapOut, StatutOut {
 
     public PointerPresenter(PointerVue vue) {
         super(vue);

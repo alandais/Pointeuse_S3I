@@ -20,7 +20,7 @@
 package fr.s3i.pointeuse.domaine.pointages;
 
 import fr.s3i.pointeuse.domaine.communs.R;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 
 /**

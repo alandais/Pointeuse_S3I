@@ -24,15 +24,12 @@ import java.util.Collection;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.composition.Composant;
 import fr.s3i.pointeuse.domaine.communs.composition.Module;
-import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.in.CalendrierIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListeFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageRecapitulatifFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.model.PointageStatutFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListeFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatifFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.model.PointageStatutFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.services.Calculateur;
 import fr.s3i.pointeuse.domaine.pointages.services.Formateur;
 
@@ -52,8 +49,6 @@ public class ModulePointage extends Module {
         enregistrerService(PointageRecapitulatifFactory.class, new PointageRecapitulatifFactory());
         enregistrerService(PointageInfoFactory.class, new PointageInfoFactory());
         enregistrerService(PointageInfoListeFactory.class, new PointageInfoListeFactory(contexte));
-        enregistrerInteracteur(PointerIn.class, new CasUtilisationInfo(Chaines.interacteur_pointer_nom));
-        enregistrerInteracteur(CalendrierIn.class, new CasUtilisationInfo(Chaines.interacteur_calendrier_nom));
     }
 
     @Override

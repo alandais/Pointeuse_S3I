@@ -28,9 +28,12 @@ public final class Log {
         // rien
     }
 
-    private static Logger LOGGER = new fr.s3i.pointeuse.domaine.communs.services.DefaultLogger();
+    private static Logger LOGGER = new DefaultLogger();
 
     public static final String DATAFLOW = "Dataflow";
+    public static final String LIFECYCLE = "Lifecycle";
+    public static final String STATE = "State";
+    public static final String EVENTS = "Events";
 
     public static void setLogger(Logger logger) {
         LOGGER = logger;

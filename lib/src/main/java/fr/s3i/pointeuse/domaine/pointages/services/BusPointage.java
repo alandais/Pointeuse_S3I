@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.domaine.pointages.services;
 
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 
 /**
  * Created by Adrien on 31/07/2016.
@@ -27,5 +28,15 @@ import fr.s3i.pointeuse.domaine.communs.services.BusService;
 public class BusPointage extends BusService {
 
     public static final String RAFRAICHIR = "RAFRAICHIR";
+
+    public static final String LANCER_RECAP_REFRESH = "LANCER_RECAP_REFRESH";
+
+    public static class PointageEvent extends BaseEvent<Pointage> {
+
+        public PointageEvent(Listener originator, String type, Pointage data) {
+            super(originator, type, data);
+        }
+
+    }
 
 }

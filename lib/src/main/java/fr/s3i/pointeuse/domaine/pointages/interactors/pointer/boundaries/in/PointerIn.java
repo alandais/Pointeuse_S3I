@@ -19,8 +19,6 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in;
 
-import java.util.Date;
-
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
@@ -29,7 +27,5 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 public interface PointerIn extends InBoundary {
 
     void pointer();
-
-    void inserer(Date debut, Date fin, String commentaire);
 
 }

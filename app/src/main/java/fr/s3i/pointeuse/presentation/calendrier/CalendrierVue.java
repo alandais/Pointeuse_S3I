@@ -39,7 +39,7 @@ import java.util.List;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.presentation.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
@@ -50,9 +50,9 @@ import fr.s3i.pointeuse.presentation.dialogue.Listener;
  */
 public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    public static CalendrierVue getInstance(String titre) {
+    public static CalendrierVue getInstance() {
         CalendrierVue vue = new CalendrierVue();
-        vue.setTitre(titre);
+        vue.setTitre("Calendrier");
         return vue;
     }
 

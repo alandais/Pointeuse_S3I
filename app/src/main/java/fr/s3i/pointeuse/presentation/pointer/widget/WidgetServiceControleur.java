@@ -24,17 +24,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.RecapitulatifInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
 
 /**
  * Created by Adrien on 31/07/2016.
  */
-public class WidgetServiceControleur extends PointerInteractor {
+public class WidgetServiceControleur extends RecapitulatifInteractor {
 
     protected ScheduledExecutorService tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
 
-    public WidgetServiceControleur(Contexte contexte, PointerOut out) {
+    public WidgetServiceControleur(Contexte contexte, RecapOut out) {
         super(contexte, out);
     }
 

@@ -19,33 +19,33 @@
 
 package fr.s3i.pointeuse.presentation.commun;
 
-import android.support.annotation.CallSuper;
-
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
  * Created by Adrien on 24/07/2016.
  */
-public abstract class Controleur<I extends InBoundary> implements InBoundary {
+public abstract class Controleur implements Closeable, InBoundary {
 
     protected ScheduledExecutorService tacheDeFond;
 
-    protected final I interactor;
+    private final Interactor[] interactors;
 
-    protected Controleur(I interactor) {
-        this.interactor = interactor;
+    public Controleur(Interactor... interactors) {
+        this.interactors = interactors;
     }
 
-    @CallSuper
-    @Override
     public void initialiser() {
         tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-        interactor.initialiser();
+        for (Interactor interactor : interactors) {
+            interactor.initialiser();
+        }
     }
 
     public void executerFutur(Runnable action, long delai, TimeUnit unit) {
@@ -55,7 +55,18 @@ public abstract class Controleur<I extends InBoundary> implements InBoundary {
     @Override
     public void close() throws IOException {
         tacheDeFond.shutdownNow();
-        interactor.close();
+        for (Interactor interactor : interactors) {
+            interactor.close();
+        }
+    }
+
+    protected <T extends Interactor> T getInteracteur(Class<T> type) {
+        for (Interactor interactor : interactors) {
+            if (interactor.getClass().isAssignableFrom(type)) {
+                return (T) interactor;
+            }
+        }
+        return null;
     }
 
 }

@@ -26,9 +26,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import java.util.concurrent.TimeUnit;
+
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 
 /**
  * Implementation of App Widget functionality.
@@ -59,10 +63,23 @@ public class PointerWidget extends AppWidgetProvider {
         if ("Pointer".equals(intent.getAction())) {
             PointageApplication application = (PointageApplication) context.getApplicationContext();
             Contexte contexte = application.getContexte();
-            WidgetServiceControleur controleur = contexte.getService(WidgetServiceControleur.class);
-            if (controleur != null) {
-                controleur.pointer();
-            }
+            PointerInteractor pointer = new PointerInteractor(contexte, new PointerOut() {
+                @Override
+                public void onErreur(String message) {
+                    // rien
+                }
+
+                @Override
+                public void executerFutur(Runnable action, long delai, TimeUnit unit) {
+                    // rien
+                }
+
+                @Override
+                public void toast(String message) {
+                    //rien
+                }
+            });
+            pointer.pointer();
         }
     }
 

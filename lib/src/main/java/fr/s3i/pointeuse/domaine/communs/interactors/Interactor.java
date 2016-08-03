@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
+import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 
 public abstract class Interactor<T extends OutBoundary> implements InBoundary {
 
@@ -33,7 +34,13 @@ public abstract class Interactor<T extends OutBoundary> implements InBoundary {
     }
 
     @Override
-    public void close() throws IOException {
-
+    public void initialiser() {
+        Log.info(Log.LIFECYCLE, "{0} initialisation", this);
     }
+
+    @Override
+    public void close() throws IOException {
+        Log.info(Log.LIFECYCLE, "{0} fermeture", this);
+    }
+
 }

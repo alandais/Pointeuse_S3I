@@ -38,9 +38,9 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     private static final String STATE_POINTAGE_RECAP_JOUR = "POINTAGE_RECAP_JOUR";
     private static final String STATE_POINTAGE_RECAP_SEMAINE = "POINTAGE_RECAP_SEMAINE";
 
-    public static PointerVue getInstance(String titre) {
+    public static PointerVue getInstance() {
         PointerVue vue = new PointerVue();
-        vue.setTitre(titre);
+        vue.setTitre("Pointage");
         return vue;
     }
 

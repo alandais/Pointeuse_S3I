@@ -28,10 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.IOException;
-
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
-
 /**
  * Created by Adrien on 24/07/2016.
  * Fragment utilisé en développement, pour remplacer une vue pas encore développée
@@ -40,19 +36,9 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
 
     private static final String STATE_NOM = "NOM";
 
-    protected static class ControleurTest extends Controleur<InBoundary> {
+    protected static class ControleurTest extends Controleur {
         protected ControleurTest() {
-            super(new InBoundary() {
-                @Override
-                public void initialiser() {
-                    // rien
-                }
-
-                @Override
-                public void close() throws IOException {
-
-                }
-            });
+            super();
         }
     }
 

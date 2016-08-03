@@ -22,7 +22,6 @@ package fr.s3i.pointeuse;
 import android.app.Application;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.entities.CasUtilisationInfo;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
@@ -30,12 +29,7 @@ import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.service.logging.AndroidLogger;
 import fr.s3i.pointeuse.persistance.dao.PointageDao;
-import fr.s3i.pointeuse.presentation.calendrier.CalendrierControleur;
-import fr.s3i.pointeuse.presentation.calendrier.CalendrierVue;
-import fr.s3i.pointeuse.presentation.commun.Vue;
 import fr.s3i.pointeuse.presentation.pointer.widget.WidgetService;
-import fr.s3i.pointeuse.presentation.pointer.PointerControleur;
-import fr.s3i.pointeuse.presentation.pointer.PointerVue;
 import fr.s3i.pointeuse.service.notification.NotificationService;
 import fr.s3i.pointeuse.service.preferences.Preferences;
 
@@ -54,16 +48,6 @@ public class PointageApplication extends Application {
 
     public Contexte getContexte() {
         return contexte;
-    }
-
-    public Vue creerVuePointer() {
-        CasUtilisationInfo info = modulePointage.getInteracteurInfo(PointerControleur.getCasUtilisationClass());
-        return PointerVue.getInstance(info.getNom());
-    }
-
-    public Vue creerVueCalendrier() {
-        CasUtilisationInfo info = modulePointage.getInteracteurInfo(CalendrierControleur.getCasUtilisationClass());
-        return CalendrierVue.getInstance(info.getNom());
     }
 
     @Override

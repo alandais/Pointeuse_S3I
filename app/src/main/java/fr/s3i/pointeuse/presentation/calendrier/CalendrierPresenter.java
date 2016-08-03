@@ -20,14 +20,16 @@
 package fr.s3i.pointeuse.presentation.calendrier;
 
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.CalendrierOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.calendrier.boundaries.out.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
 import fr.s3i.pointeuse.presentation.commun.Presenter;
 
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierPresenter extends Presenter<CalendrierVue> implements CalendrierOut {
+public class CalendrierPresenter extends Presenter<CalendrierVue> implements ListerOut, ModifierOut, SupprimerOut {
 
     protected CalendrierPresenter(CalendrierVue vue) {
         super(vue);
@@ -45,7 +47,17 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Cal
     }
 
     @Override
-    public void onPointageModication(final Pointage pointage) {
+    public void refreshPointageInfoListe() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.updateListeCalendrier();
+            }
+        });
+    }
+
+    @Override
+    public void modifier(final Pointage pointage) {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -54,13 +66,4 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Cal
         });
     }
 
-    @Override
-    public void updatePointageInfoListe() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                vue.updateListeCalendrier();
-            }
-        });
-    }
 }
