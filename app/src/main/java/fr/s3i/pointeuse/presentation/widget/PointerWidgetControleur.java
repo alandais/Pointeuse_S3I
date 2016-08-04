@@ -17,29 +17,32 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer.widget;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+package fr.s3i.pointeuse.presentation.widget;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.RecapitulatifInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 
 /**
- * Created by Adrien on 31/07/2016.
+ * Created by Adrien on 04/08/2016.
  */
-public class WidgetServiceControleur extends RecapitulatifInteractor {
+public class PointerWidgetControleur {
 
-    protected ScheduledExecutorService tacheDeFond = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+    private final PointerInteractor pointer;
 
-    public WidgetServiceControleur(Contexte contexte, RecapOut out) {
-        super(contexte, out);
+    private final RecapitulatifInteractor recapitulatif;
+
+    public PointerWidgetControleur(Contexte contexte, PointerWidgetPresenter presenter) {
+        this.recapitulatif = new RecapitulatifInteractor(contexte, presenter);
+        this.pointer = new PointerInteractor(contexte, presenter);
     }
 
-    public void executerFutur(Runnable action, long delai, TimeUnit unit) {
-        tacheDeFond.schedule(action, delai, unit);
+    public void refresh() {
+        recapitulatif.wakeup();
+    }
+
+    public void pointer() {
+        pointer.pointer();
     }
 
 }

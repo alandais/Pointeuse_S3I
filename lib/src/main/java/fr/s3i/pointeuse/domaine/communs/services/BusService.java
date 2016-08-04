@@ -115,9 +115,14 @@ public abstract class BusService implements Service {
                 return;
             }
         }
-        // on diffuse l'evenement dans le système (pour activer une vue non démarrée par exemple)
+    }
+
+    public void diffuser(Event event) {
         if (activateur != null) {
             activateur.diffuser(event);
+        }
+        else {
+            post(event);
         }
     }
 

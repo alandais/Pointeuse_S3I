@@ -17,8 +17,9 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer.widget;
+package fr.s3i.pointeuse.presentation.widget;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -26,13 +27,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import java.util.concurrent.TimeUnit;
-
 import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 
 /**
  * Implementation of App Widget functionality.
@@ -46,14 +43,24 @@ public class PointerWidget extends AppWidgetProvider {
         PointageApplication application = (PointageApplication) context.getApplicationContext();
         Contexte contexte = application.getContexte();
 
-        WidgetServiceControleur controleur = contexte.getService(WidgetServiceControleur.class);
-        controleur.initialiser();
+        PointerWidgetPresenter presenter = new PointerWidgetPresenter(context);
+        PointerWidgetControleur controleur = new PointerWidgetControleur(contexte, presenter);
 
-        WidgetService service = contexte.getService(WidgetService.class);
-        RemoteViews views = service.getRemoteViews();
+        controleur.refresh();
+
+        RemoteViews views = presenter.getRemoteViews();
         PendingIntent intent = getPendingSelfIntent(context, "Pointer");
         views.setOnClickPendingIntent(R.id.monbouttonwidget, intent);
-        service.update(views);
+        presenter.update(views);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent intent = PointerWidget.getPendingSelfIntent(context, "Refresh");
+        alarmManager.cancel(intent);
     }
 
     @Override
@@ -63,28 +70,22 @@ public class PointerWidget extends AppWidgetProvider {
         if ("Pointer".equals(intent.getAction())) {
             PointageApplication application = (PointageApplication) context.getApplicationContext();
             Contexte contexte = application.getContexte();
-            PointerInteractor pointer = new PointerInteractor(contexte, new PointerOut() {
-                @Override
-                public void onErreur(String message) {
-                    // rien
-                }
+            PointerWidgetPresenter presenter = new PointerWidgetPresenter(context);
+            PointerWidgetControleur controleur = new PointerWidgetControleur(contexte, presenter);
+            controleur.pointer();
+        }
 
-                @Override
-                public void executerFutur(Runnable action, long delai, TimeUnit unit) {
-                    // rien
-                }
-
-                @Override
-                public void toast(String message) {
-                    //rien
-                }
-            });
-            pointer.pointer();
+        if ("Refresh".equals(intent.getAction())) {
+            PointageApplication application = (PointageApplication) context.getApplicationContext();
+            Contexte contexte = application.getContexte();
+            PointerWidgetPresenter presenter = new PointerWidgetPresenter(context);
+            PointerWidgetControleur controleur = new PointerWidgetControleur(contexte, presenter);
+            controleur.refresh();
         }
     }
 
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
-        Intent intent = new Intent(context, getClass());
+    public static PendingIntent getPendingSelfIntent(Context context, String action) {
+        Intent intent = new Intent(context, PointerWidget.class);
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }

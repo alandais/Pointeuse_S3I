@@ -89,7 +89,7 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
 
     @Override
     public void activer(BusPointage.WakeupRecapitulatifEvent event) {
-        initialiser();
+        refresh();
     }
 
     @Override
@@ -102,10 +102,10 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
         PointageWrapperListe pointagesWrapperJour = pointageWrapperFactory.getPointageWrapper(pointagesJour);
         PointageWrapperListe pointagesWrapperSema = pointageWrapperFactory.getPointageWrapper(pointagesSema);
 
+        Log.debug(Log.EVENTS, "{0} ({1}) rafraichissement recapitulatif", this.getClass().getSimpleName(), this);
+
         PointageRecapitulatif pointageRecapitulatif = pointageRecapitulatifFactory.getRecapitulatif(pointagesWrapperJour, pointagesWrapperSema);
         out.onPointageRecapitulatifUpdate(pointageRecapitulatif);
-
-        Log.debug(Log.EVENTS, "{0} ({1}) rafraichissement recapitulatif", this.getClass().getSimpleName(), this);
 
         // positionne le rafraichissement auto si nécessaire (si il y a du pointage 'en cours')
         if (pointagesWrapperSema.isEnCours() || pointagesWrapperJour.isEnCours()) {

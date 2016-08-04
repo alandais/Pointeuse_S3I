@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".presentation.pointer.widget.PointerWidget">
+        <receiver android:name=".presentation.widget.PointerWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
