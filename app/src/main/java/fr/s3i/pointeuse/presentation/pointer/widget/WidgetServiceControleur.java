@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.RecapitulatifInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 
 /**
  * Created by Adrien on 31/07/2016.

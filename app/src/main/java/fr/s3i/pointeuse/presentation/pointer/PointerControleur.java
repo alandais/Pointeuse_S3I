@@ -22,7 +22,6 @@ package fr.s3i.pointeuse.presentation.pointer;
 import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.InsererInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.in.InsererIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.out.InsererOut;
@@ -30,8 +29,8 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.RecapitulatifInteractor;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.in.RecapIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.in.RecapIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.StatutInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.in.StatutIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.StatutOut;

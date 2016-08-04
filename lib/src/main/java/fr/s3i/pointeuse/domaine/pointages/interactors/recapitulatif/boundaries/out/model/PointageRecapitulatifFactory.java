@@ -17,16 +17,20 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out;
+package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model;
 
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.communs.services.Service;
+import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
 
 /**
- * Created by Adrien on 19/07/2016.
+ * Created by Adrien on 26/07/2016.
  */
-public interface RecapOut extends OutBoundary {
+public class PointageRecapitulatifFactory implements Service {
 
-    void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage);
+    public PointageRecapitulatif getRecapitulatif(PointageWrapperListe pointageWrapperJour, PointageWrapperListe pointageWrapperSemaine) {
+        String dureeJour = pointageWrapperJour.getDureeTotale();
+        String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
+        return new PointageRecapitulatif(dureeJour, dureeSemaine);
+    }
 
 }

@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model;
+package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.model.OutModel;
 

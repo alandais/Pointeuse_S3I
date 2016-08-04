@@ -74,8 +74,8 @@ public class ListerInteractor extends Interactor<ListerOut> implements ListerIn,
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
-        if (BusPointage.RAFRAICHIR.equals(event.getType())) {
+        if (event instanceof BusPointage.RefreshListePointageEvent) {
+            Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
             out.refreshPointageInfoListe();
         }
         return true;

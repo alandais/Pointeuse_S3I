@@ -17,13 +17,15 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.in;
+package fr.s3i.pointeuse.domaine.communs.gateways;
 
-import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
+import fr.s3i.pointeuse.domaine.communs.services.BusService;
 
 /**
- * Created by Adrien on 19/07/2016.
+ * Created by Adrien on 04/08/2016.
  */
-public interface RecapIn extends InBoundary {
+public interface Activateur extends System {
+
+    void diffuser(BusService.Event event);
 
 }

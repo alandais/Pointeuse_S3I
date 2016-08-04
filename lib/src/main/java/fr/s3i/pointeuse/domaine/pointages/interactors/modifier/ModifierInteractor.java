@@ -23,12 +23,14 @@ import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
+import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.in.ModifierIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
 import fr.s3i.pointeuse.domaine.pointages.operations.EnregistrerPointage;
+import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 
 /**
  * Created by Adrien on 30/07/2016.
@@ -58,7 +60,10 @@ public class ModifierInteractor extends Interactor<ModifierOut> implements Modif
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        if(enregistrerPointage.executer(pointage)) {
+        BusService.Event<Pointage> event1 = new BusPointage.RefreshRecapitulatifEvent(this, pointage);
+        BusService.Event<Pointage> event2 = new BusPointage.RefreshListePointageEvent(this, pointage);
+        BusService.Event<Pointage> event3 = new BusPointage.RefreshStatutEvent(this, pointage);
+        if(enregistrerPointage.executer(pointage, event1, event2, event3)) {
             out.toast(Chaines.toast_pointage_modifie);
         }
     }

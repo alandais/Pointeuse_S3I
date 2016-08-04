@@ -60,13 +60,13 @@ public abstract class RefreshableInteractor<T extends OutBoundary> extends Inter
         super(out);
     }
 
-    public void refresh() {
-        Delay delay = update();
+    public void wakeup() {
+        Delay delay = refresh();
         if (delay.isActive()) {
             out.executerFutur(new Runnable() {
                 @Override
                 public void run() {
-                    refresh();
+                    wakeup();
                 }
             }, delay.getDelayQuantity(), delay.getDelayUnit());
         }
@@ -75,6 +75,6 @@ public abstract class RefreshableInteractor<T extends OutBoundary> extends Inter
         }
     }
 
-    protected abstract Delay update();
+    protected abstract Delay refresh();
 
 }

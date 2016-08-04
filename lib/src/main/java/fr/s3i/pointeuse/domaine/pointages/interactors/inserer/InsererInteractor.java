@@ -23,11 +23,13 @@ import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
+import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.in.InsererIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.out.InsererOut;
 import fr.s3i.pointeuse.domaine.pointages.operations.EnregistrerPointage;
+import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 
 /**
  * Created by Adrien on 19/07/2016.
@@ -48,7 +50,9 @@ public class InsererInteractor extends Interactor<InsererOut> implements Inserer
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        if(enregistrerPointage.executer(pointage)) {
+        BusService.Event<Pointage> event1 = new BusPointage.RefreshRecapitulatifEvent(this, pointage);
+        BusService.Event<Pointage> event3 = new BusPointage.RefreshListePointageEvent(this, pointage);
+        if(enregistrerPointage.executer(pointage, event1, event3)) {
             out.toast(Chaines.toast_pointage_insere);
         }
     }

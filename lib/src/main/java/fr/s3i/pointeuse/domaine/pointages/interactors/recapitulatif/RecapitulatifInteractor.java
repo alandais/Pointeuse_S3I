@@ -25,15 +25,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.communs.interactors.Activable;
 import fr.s3i.pointeuse.domaine.communs.interactors.RefreshableInteractor;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatifFactory;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.in.RecapIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatifFactory;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.in.RecapIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
@@ -42,7 +43,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener {
+public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener, Activable<BusPointage.WakeupRecapitulatifEvent> {
 
     private final BusPointage bus;
 
@@ -63,7 +64,7 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
     @Override
     public void initialiser() {
         super.initialiser();
-        refresh();
+        wakeup();
         bus.subscribe(this);
     }
 
@@ -75,18 +76,24 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
-        if (BusPointage.RAFRAICHIR.equals(event.getType())) {
-            update();
-        }
-        if (BusPointage.LANCER_RECAP_REFRESH.equals(event.getType())) {
+        if (event instanceof BusPointage.RefreshRecapitulatifEvent) {
+            Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
             refresh();
+        }
+        if (event instanceof BusPointage.WakeupRecapitulatifEvent) {
+            Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
+            wakeup();
         }
         return true;
     }
 
     @Override
-    protected Delay update() {
+    public void activer(BusPointage.WakeupRecapitulatifEvent event) {
+        initialiser();
+    }
+
+    @Override
+    protected Delay refresh() {
         Date maintenant = new Date();
 
         List<Pointage> pointagesJour = repository.recupererEntre(Periode.JOUR.getDebutPeriode(maintenant), Periode.JOUR.getFinPeriode(maintenant));

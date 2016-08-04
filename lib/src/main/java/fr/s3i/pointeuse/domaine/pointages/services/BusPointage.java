@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.domaine.pointages.services;
 
+import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 
@@ -27,14 +28,38 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
  */
 public class BusPointage extends BusService {
 
-    public static final String RAFRAICHIR = "RAFRAICHIR";
+    public BusPointage(Contexte contexte) {
+        super(contexte);
+    }
 
-    public static final String LANCER_RECAP_REFRESH = "LANCER_RECAP_REFRESH";
+    public static class RefreshStatutEvent extends BaseEvent<Pointage> {
 
-    public static class PointageEvent extends BaseEvent<Pointage> {
+        public RefreshStatutEvent(Object originator, Pointage data) {
+            super(originator, RefreshStatutEvent.class.getName(), data);
+        }
 
-        public PointageEvent(Listener originator, String type, Pointage data) {
-            super(originator, type, data);
+    }
+
+    public static class RefreshRecapitulatifEvent extends BaseEvent<Pointage> {
+
+        public RefreshRecapitulatifEvent(Object originator, Pointage data) {
+            super(originator, RefreshRecapitulatifEvent.class.getName(), data);
+        }
+
+    }
+
+    public static class RefreshListePointageEvent extends BaseEvent<Pointage> {
+
+        public RefreshListePointageEvent(Object originator, Pointage data) {
+            super(originator, RefreshListePointageEvent.class.getName(), data);
+        }
+
+    }
+
+    public static class WakeupRecapitulatifEvent extends BaseEvent<Pointage> {
+
+        public WakeupRecapitulatifEvent(Object originator, Pointage data) {
+            super(originator, WakeupRecapitulatifEvent.class.getName(), data);
         }
 
     }

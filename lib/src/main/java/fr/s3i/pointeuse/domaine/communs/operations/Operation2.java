@@ -17,20 +17,19 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model;
+package fr.s3i.pointeuse.domaine.communs.operations;
 
-import fr.s3i.pointeuse.domaine.communs.services.Service;
-import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
 /**
- * Created by Adrien on 26/07/2016.
+ * Created by Adrien on 03/08/2016.
  */
-public class PointageRecapitulatifFactory implements Service {
+public abstract class Operation2<T, U, V> extends BaseOperation {
 
-    public PointageRecapitulatif getRecapitulatif(PointageWrapperListe pointageWrapperJour, PointageWrapperListe pointageWrapperSemaine) {
-        String dureeJour = pointageWrapperJour.getDureeTotale();
-        String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
-        return new PointageRecapitulatif(dureeJour, dureeSemaine);
+    public Operation2(OutBoundary out) {
+        super(out);
     }
+
+    public abstract T executer(U param1, V param2);
 
 }

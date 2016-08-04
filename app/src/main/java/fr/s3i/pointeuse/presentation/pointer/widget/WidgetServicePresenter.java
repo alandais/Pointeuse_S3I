@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.model.PointageRecapitulatif;
-import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.out.RecapOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 
 /**
  * Created by Adrien on 31/07/2016.

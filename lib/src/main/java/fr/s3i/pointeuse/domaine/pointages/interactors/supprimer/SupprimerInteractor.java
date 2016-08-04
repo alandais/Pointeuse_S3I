@@ -21,8 +21,8 @@ package fr.s3i.pointeuse.domaine.pointages.interactors.supprimer;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
-import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
+import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.in.SupprimerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
@@ -45,10 +45,16 @@ public class SupprimerInteractor extends Interactor<SupprimerOut> implements Sup
 
     @Override
     public void supprimer(long id) {
-        repository.supprimer(id);
-        out.toast(Chaines.toast_pointage_supprime);
-        //out.onPointageSuppression(pointage);
-        bus.post(this, BusPointage.RAFRAICHIR);
+        Pointage pointage = repository.recuperer(id);
+        if (pointage != null) {
+            repository.supprimer(id);
+            out.toast(Chaines.toast_pointage_supprime);
+            //out.onPointageSuppression(pointage);
+            bus.post(new BusPointage.RefreshStatutEvent(this, pointage));
+            bus.post(new BusPointage.RefreshRecapitulatifEvent(this, pointage));
+            bus.post(new BusPointage.RefreshListePointageEvent(this, pointage));
+        }
+        // else out.toast ?
     }
 
 }
