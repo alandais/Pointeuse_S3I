@@ -24,7 +24,6 @@ import java.util.Date;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
@@ -71,16 +70,13 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
             pointage.setDebut(new Date());
         }
 
-        BusService.Event<Pointage> event1 = new BusPointage.RefreshStatutEvent(this, pointage);
-        BusService.Event<Pointage> event2 = new BusPointage.RefreshListePointageEvent(this, pointage);
-        if(enregistrerPointage.executer(pointage, event1, event2)) {
+        BusPointage.PointageChangedEvent event = new BusPointage.PointageChangedEvent(this, pointage);
+        if(enregistrerPointage.executer(pointage, event)) {
             PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
             if (pointageWrapper.isTermine()) {
-                bus.post(new BusPointage.RefreshRecapitulatifEvent(this, pointage));
                 out.toast(Chaines.toastPointageComplet(pointageWrapper));
                 notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationFinTravail(pointageWrapper));
             } else {
-                bus.post(new BusPointage.WakeupRecapitulatifEvent(this, pointage)); // lancement du refresh auto du récapitulatif
                 out.toast(Chaines.toastPointagePartiel(pointageWrapper));
                 notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationDebutTravail(pointageWrapper));
             }

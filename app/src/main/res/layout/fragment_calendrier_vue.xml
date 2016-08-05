@@ -25,7 +25,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@color/cardview_dark_background"
-    tools:context="fr.s3i.pointeuse.presentation.calendrier.CalendrierVue" >
+    tools:context=".presentation.fragment.calendrier.CalendrierVue" >
 
     <DatePicker
         android:id="@+id/calendrier"

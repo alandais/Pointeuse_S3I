@@ -50,9 +50,8 @@ public class InsererInteractor extends Interactor<InsererOut> implements Inserer
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        BusService.Event<Pointage> event1 = new BusPointage.RefreshRecapitulatifEvent(this, pointage);
-        BusService.Event<Pointage> event3 = new BusPointage.RefreshListePointageEvent(this, pointage);
-        if(enregistrerPointage.executer(pointage, event1, event3)) {
+        BusPointage.PointageChangedEvent event = new BusPointage.PointageChangedEvent(this, pointage);
+        if(enregistrerPointage.executer(pointage, event)) {
             out.toast(Chaines.toast_pointage_insere);
         }
     }

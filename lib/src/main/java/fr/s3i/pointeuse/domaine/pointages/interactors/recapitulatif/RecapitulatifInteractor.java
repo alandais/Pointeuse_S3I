@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.interactors.Activable;
 import fr.s3i.pointeuse.domaine.communs.interactors.RefreshableInteractor;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
@@ -43,7 +42,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener, Activable<BusPointage.WakeupRecapitulatifEvent> {
+public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener {
 
     private final BusPointage bus;
 
@@ -76,20 +75,11 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        if (event instanceof BusPointage.RefreshRecapitulatifEvent) {
-            Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
-            refresh();
-        }
-        if (event instanceof BusPointage.WakeupRecapitulatifEvent) {
+        if (event instanceof BusPointage.PointageChangedEvent) {
             Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
             wakeup();
         }
         return true;
-    }
-
-    @Override
-    public void activer(BusPointage.WakeupRecapitulatifEvent event) {
-        refresh();
     }
 
     @Override

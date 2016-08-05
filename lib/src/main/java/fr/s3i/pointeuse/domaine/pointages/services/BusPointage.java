@@ -32,34 +32,10 @@ public class BusPointage extends BusService {
         super(contexte);
     }
 
-    public static class RefreshStatutEvent extends BaseEvent<Pointage> {
+    public static class PointageChangedEvent extends BaseEvent<Pointage> {
 
-        public RefreshStatutEvent(Object originator, Pointage data) {
-            super(originator, RefreshStatutEvent.class.getName(), data);
-        }
-
-    }
-
-    public static class RefreshRecapitulatifEvent extends BaseEvent<Pointage> {
-
-        public RefreshRecapitulatifEvent(Object originator, Pointage data) {
-            super(originator, RefreshRecapitulatifEvent.class.getName(), data);
-        }
-
-    }
-
-    public static class RefreshListePointageEvent extends BaseEvent<Pointage> {
-
-        public RefreshListePointageEvent(Object originator, Pointage data) {
-            super(originator, RefreshListePointageEvent.class.getName(), data);
-        }
-
-    }
-
-    public static class WakeupRecapitulatifEvent extends BaseEvent<Pointage> {
-
-        public WakeupRecapitulatifEvent(Object originator, Pointage data) {
-            super(originator, WakeupRecapitulatifEvent.class.getName(), data);
+        public PointageChangedEvent(Object originator, Pointage data) {
+            super(originator, PointageChangedEvent.class.getName(), data);
         }
 
     }

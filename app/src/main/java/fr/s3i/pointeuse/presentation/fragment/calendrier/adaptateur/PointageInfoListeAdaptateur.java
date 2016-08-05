@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.calendrier.adaptateur;
+package fr.s3i.pointeuse.presentation.fragment.calendrier.adaptateur;
 
 import android.content.Context;
 import android.view.LayoutInflater;

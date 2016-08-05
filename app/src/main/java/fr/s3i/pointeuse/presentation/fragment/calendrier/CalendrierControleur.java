@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.calendrier;
+package fr.s3i.pointeuse.presentation.fragment.calendrier;
 
 import java.util.Date;
 
@@ -31,7 +31,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.Mo
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.SupprimerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.in.SupprimerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
-import fr.s3i.pointeuse.presentation.commun.Controleur;
+import fr.s3i.pointeuse.presentation.fragment.commun.Controleur;
 
 /**
  * Created by Adrien on 30/07/2016.

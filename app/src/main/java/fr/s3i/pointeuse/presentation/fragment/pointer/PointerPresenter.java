@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
+package fr.s3i.pointeuse.presentation.fragment.pointer;
 
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.out.InsererOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
@@ -25,7 +25,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.o
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.model.PointageStatut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.StatutOut;
-import fr.s3i.pointeuse.presentation.commun.Presenter;
+import fr.s3i.pointeuse.presentation.fragment.commun.Presenter;
 
 /**
  * Created by Adrien on 23/07/2016.

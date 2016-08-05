@@ -22,7 +22,6 @@ package fr.s3i.pointeuse.domaine.pointages.operations;
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 import fr.s3i.pointeuse.domaine.communs.operations.Operation2;
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
@@ -30,7 +29,7 @@ import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 /**
  * Created by Adrien on 03/08/2016.
  */
-public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusService.Event<Pointage>[]> {
+public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusPointage.PointageChangedEvent> {
 
     private final BusPointage bus;
 
@@ -43,14 +42,11 @@ public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusServic
     }
 
     @Override
-    @SafeVarargs
-    public final Boolean executer(Pointage pointage, BusService.Event<Pointage>... events) {
+    public final Boolean executer(Pointage pointage, BusPointage.PointageChangedEvent event) {
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
             repository.persister(pointage);
-            for(BusService.Event<Pointage> event : events) {
-                bus.post(event);
-            }
+            bus.post(event);
         }
         else {
             out.onErreur(erreur);

@@ -25,7 +25,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="@color/cardview_dark_background"
-    tools:context="fr.s3i.pointeuse.presentation.pointer.PointerVue" >
+    tools:context=".presentation.fragment.pointer.PointerVue" >
 
     <TextView
         android:id="@+id/txtPointageStatut"

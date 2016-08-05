@@ -71,7 +71,7 @@ public class StatutInteractor extends Interactor<StatutOut> implements StatutIn,
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        if (event instanceof BusPointage.RefreshStatutEvent) {
+        if (event instanceof BusPointage.PointageChangedEvent) {
             Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
             rafraichirStatut();
         }

@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
+package fr.s3i.pointeuse.presentation.fragment.pointer;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.o
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.StatutInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.in.StatutIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.StatutOut;
-import fr.s3i.pointeuse.presentation.commun.Controleur;
+import fr.s3i.pointeuse.presentation.fragment.commun.Controleur;
 
 /**
  * Created by Adrien on 23/07/2016.
@@ -79,4 +79,5 @@ public class PointerControleur<T extends PointerOut & InsererOut & RecapOut & St
             }
         });
     }
+
 }

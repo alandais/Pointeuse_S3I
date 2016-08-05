@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.commun;
+package fr.s3i.pointeuse.presentation.fragment.commun;
 
 import android.graphics.Color;
 import android.os.Bundle;

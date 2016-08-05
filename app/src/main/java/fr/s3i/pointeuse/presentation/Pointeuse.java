@@ -28,12 +28,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import fr.s3i.pointeuse.PointageApplication;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
-import fr.s3i.pointeuse.presentation.calendrier.CalendrierVue;
-import fr.s3i.pointeuse.presentation.commun.Vue;
-import fr.s3i.pointeuse.presentation.pointer.PointerVue;
+import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
+import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
+import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
 
 public class Pointeuse extends AppCompatActivity {
 

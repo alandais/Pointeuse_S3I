@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class PointerWidgetPresenter implements PointerOut, RecapOut {
 
     @Override
     public void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage) {
+        Log.d(PointerWidget.class.getSimpleName(), "Presenter : mise a jour du statut");
         RemoteViews views = getRemoteViews();
         StringBuilder recap = new StringBuilder();
         recap.append("Réalisé: ");

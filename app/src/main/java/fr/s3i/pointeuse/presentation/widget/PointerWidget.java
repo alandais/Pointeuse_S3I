@@ -25,6 +25,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import fr.s3i.pointeuse.PointageApplication;
@@ -39,6 +40,8 @@ public class PointerWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+        Log.d(PointerWidget.class.getSimpleName(), "---------- onUpdate ----------");
 
         PointageApplication application = (PointageApplication) context.getApplicationContext();
         Contexte contexte = application.getContexte();
@@ -58,6 +61,8 @@ public class PointerWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         super.onDisabled(context);
 
+        Log.d(PointerWidget.class.getSimpleName(), "---------- onDisabled ----------");
+
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent intent = PointerWidget.getPendingSelfIntent(context, "Refresh");
         alarmManager.cancel(intent);
@@ -66,6 +71,9 @@ public class PointerWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+
+        Log.d(PointerWidget.class.getSimpleName(), "---------- onReceive ----------");
+        Log.d(PointerWidget.class.getSimpleName(), "intent = " + intent);
 
         if ("Pointer".equals(intent.getAction())) {
             PointageApplication application = (PointageApplication) context.getApplicationContext();

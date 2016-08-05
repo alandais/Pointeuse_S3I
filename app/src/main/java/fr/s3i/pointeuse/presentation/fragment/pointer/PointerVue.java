@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.pointer;
+package fr.s3i.pointeuse.presentation.fragment.pointer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.presentation.commun.Vue;
+import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
 import fr.s3i.pointeuse.presentation.dialogue.Listener;
 
@@ -48,7 +48,7 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new PointerPresenter(this);
-        controleur = new PointerControleur(contexte, presenter);
+        controleur = new PointerControleur<>(contexte, presenter);
     }
 
     @Override

@@ -60,10 +60,8 @@ public class ModifierInteractor extends Interactor<ModifierOut> implements Modif
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        BusService.Event<Pointage> event1 = new BusPointage.RefreshRecapitulatifEvent(this, pointage);
-        BusService.Event<Pointage> event2 = new BusPointage.RefreshListePointageEvent(this, pointage);
-        BusService.Event<Pointage> event3 = new BusPointage.RefreshStatutEvent(this, pointage);
-        if(enregistrerPointage.executer(pointage, event1, event2, event3)) {
+        BusPointage.PointageChangedEvent event = new BusPointage.PointageChangedEvent(this, pointage);
+        if(enregistrerPointage.executer(pointage, event)) {
             out.toast(Chaines.toast_pointage_modifie);
         }
     }
