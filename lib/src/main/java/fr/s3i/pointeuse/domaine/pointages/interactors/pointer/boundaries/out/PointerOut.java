@@ -26,6 +26,8 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
  */
 public interface PointerOut extends OutBoundary {
 
-    // rien
+    void onPointageDemarre();
+
+    void onPointageTermine();
 
 }

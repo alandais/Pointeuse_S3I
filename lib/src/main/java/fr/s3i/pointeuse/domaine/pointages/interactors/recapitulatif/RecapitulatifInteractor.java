@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.interactors.RefreshableInteractor;
+import fr.s3i.pointeuse.domaine.communs.interactors.AutoRefreshableInteractor;
 import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
@@ -42,7 +42,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 19/07/2016.
  */
-public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener {
+public class RecapitulatifInteractor extends AutoRefreshableInteractor<RecapOut> implements RecapIn, BusService.Listener {
 
     private final BusPointage bus;
 
@@ -63,7 +63,7 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
     @Override
     public void initialiser() {
         super.initialiser();
-        wakeup();
+        lancerCalculRecapitulatifAutomatique();
         bus.subscribe(this);
     }
 
@@ -75,11 +75,26 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
 
     @Override
     public boolean onEvent(BusService.Event event) {
-        if (event instanceof BusPointage.PointageChangedEvent) {
+        if (event instanceof BusPointage.PointageDemarreEvent) {
             Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
-            wakeup();
+            lancerCalculRecapitulatifAutomatique();
+        }
+        else if (event instanceof BusPointage.PointageEvent) {
+            Log.info(Log.EVENTS, "{0} ({1}) evenement {2} recu de {3}", this.getClass().getSimpleName(), this, event.getType(), event.getOriginator());
+            recalculerRecapitulatif();
         }
         return true;
+    }
+
+    @Override
+    public void recalculerRecapitulatif() {
+        refresh();
+    }
+
+    @Override
+    public void lancerCalculRecapitulatifAutomatique() {
+        Log.info(Log.STATE, "Rafraichissement auto recapitulatif DEMARRE ({0})", toString());
+        autoRefresh();
     }
 
     @Override
@@ -95,15 +110,21 @@ public class RecapitulatifInteractor extends RefreshableInteractor<RecapOut> imp
         Log.debug(Log.EVENTS, "{0} ({1}) rafraichissement recapitulatif", this.getClass().getSimpleName(), this);
 
         PointageRecapitulatif pointageRecapitulatif = pointageRecapitulatifFactory.getRecapitulatif(pointagesWrapperJour, pointagesWrapperSema);
-        out.onPointageRecapitulatifUpdate(pointageRecapitulatif);
+        out.onPointageRecapitulatifRecalcule(pointageRecapitulatif);
 
         // positionne le rafraichissement auto si nécessaire (si il y a du pointage 'en cours')
         if (pointagesWrapperSema.isEnCours() || pointagesWrapperJour.isEnCours()) {
-            return new Delay(3, TimeUnit.SECONDS);
+            return new AutoRefreshableInteractor.Delay(3, TimeUnit.SECONDS);
         }
         else {
-            return Delay.NO_REFRESH;
+            Log.info(Log.STATE, "Rafraichissement auto recapitulatif ARRET ({0})", toString());
+            return AutoRefreshableInteractor.Delay.NO_REFRESH;
         }
+    }
+
+    @Override
+    protected void scheduleAutoRefresh(Delay delay) {
+        out.onPointageRecapitulatifRecalculAutomatiqueDemande(delay.getDelayQuantity(), delay.getDelayUnit());
     }
 
 }

@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -69,6 +70,7 @@ public abstract class WidgetPresenter implements OutBoundary {
     @Override
     public final void executerFutur(Runnable action, long delai, TimeUnit unit) {
         // le widget est stateless et ne peut pas implémenter cette méthode
+        Log.e(WidgetPresenter.class.getSimpleName(), "Méthode executerFutur() n'est pas supportée par les widgets");
     }
 
 }

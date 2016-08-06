@@ -23,7 +23,6 @@ import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.in.InsererIn;
@@ -50,7 +49,7 @@ public class InsererInteractor extends Interactor<InsererOut> implements Inserer
         pointage.setFin(fin);
         pointage.setCommentaire(commentaire);
 
-        BusPointage.PointageChangedEvent event = new BusPointage.PointageChangedEvent(this, pointage);
+        BusPointage.PointageEvent event = new BusPointage.PointageInsereEvent(this, pointage);
         if(enregistrerPointage.executer(pointage, event)) {
             out.toast(Chaines.toast_pointage_insere);
         }

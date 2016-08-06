@@ -50,7 +50,7 @@ public class SupprimerInteractor extends Interactor<SupprimerOut> implements Sup
             repository.supprimer(id);
             out.toast(Chaines.toast_pointage_supprime);
             //out.onPointageSuppression(pointage);
-            bus.post(new BusPointage.PointageChangedEvent(this, pointage));
+            bus.post(new BusPointage.PointageSupprimeEvent(this, pointage));
         }
         // else out.toast ?
     }

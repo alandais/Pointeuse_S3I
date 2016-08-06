@@ -60,23 +60,27 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     @Override
     public void pointer() {
+        BusPointage.PointageEvent event;
         Pointage pointage = lirePointageRecent.executer();
         if (pointage != null) {
             // pointage en cours
             pointage.setFin(new Date());
+            event = new BusPointage.PointageTermineEvent(this, pointage);
         } else {
             // nouveau pointage
             pointage = new Pointage();
             pointage.setDebut(new Date());
+            event = new BusPointage.PointageDemarreEvent(this, pointage);
         }
 
-        BusPointage.PointageChangedEvent event = new BusPointage.PointageChangedEvent(this, pointage);
         if(enregistrerPointage.executer(pointage, event)) {
             PointageWrapper pointageWrapper = pointageWrapperFactory.getPointageWrapper(pointage);
             if (pointageWrapper.isTermine()) {
+                out.onPointageTermine();
                 out.toast(Chaines.toastPointageComplet(pointageWrapper));
                 notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationFinTravail(pointageWrapper));
             } else {
+                out.onPointageDemarre();
                 out.toast(Chaines.toastPointagePartiel(pointageWrapper));
                 notificationSystem.notifier(Chaines.notification_titre, Chaines.notificationDebutTravail(pointageWrapper));
             }

@@ -29,7 +29,7 @@ import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 /**
  * Created by Adrien on 03/08/2016.
  */
-public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusPointage.PointageChangedEvent> {
+public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusPointage.PointageEvent> {
 
     private final BusPointage bus;
 
@@ -42,7 +42,7 @@ public class EnregistrerPointage extends Operation2<Boolean, Pointage, BusPointa
     }
 
     @Override
-    public final Boolean executer(Pointage pointage, BusPointage.PointageChangedEvent event) {
+    public final Boolean executer(Pointage pointage, BusPointage.PointageEvent event) {
         String erreur = pointage.getErrorMessage();
         if (erreur == null) {
             repository.persister(pointage);

@@ -19,6 +19,8 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out;
 
+import java.util.concurrent.TimeUnit;
+
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
 
@@ -27,6 +29,8 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.o
  */
 public interface RecapOut extends OutBoundary {
 
-    void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage);
+    void onPointageRecapitulatifRecalcule(PointageRecapitulatif pointage);
+
+    void onPointageRecapitulatifRecalculAutomatiqueDemande(int delay, TimeUnit unit);
 
 }

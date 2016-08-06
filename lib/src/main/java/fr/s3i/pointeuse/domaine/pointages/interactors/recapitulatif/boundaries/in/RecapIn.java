@@ -26,4 +26,8 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
  */
 public interface RecapIn extends InBoundary {
 
+    void recalculerRecapitulatif();
+
+    void lancerCalculRecapitulatifAutomatique();
+
 }

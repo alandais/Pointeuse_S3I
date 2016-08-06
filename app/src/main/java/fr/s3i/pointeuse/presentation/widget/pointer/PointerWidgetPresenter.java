@@ -17,16 +17,11 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.widget;
+package fr.s3i.pointeuse.presentation.widget.pointer;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,59 +29,46 @@ import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
+import fr.s3i.pointeuse.presentation.widget.commun.WidgetPresenter;
 
 /**
  * Created by Adrien on 04/08/2016.
  */
-public class PointerWidgetPresenter implements PointerOut, RecapOut {
-
-    private final Context context;
-
-    private final ComponentName widget;
+public class PointerWidgetPresenter extends WidgetPresenter implements PointerOut, RecapOut {
 
     public PointerWidgetPresenter(Context context) {
-        this.context = context;
-        this.widget = new ComponentName(context, PointerWidget.class);
+        super(context, PointerWidgetProvider.class, R.layout.pointer_widget);
     }
 
     @Override
-    public void onPointageRecapitulatifUpdate(PointageRecapitulatif pointage) {
-        Log.d(PointerWidget.class.getSimpleName(), "Presenter : mise a jour du statut");
-        RemoteViews views = getRemoteViews();
+    public void onPointageRecapitulatifRecalcule(PointageRecapitulatif pointage) {
+        Log.d(PointerWidgetProvider.class.getSimpleName(), "Presenter : mise a jour du statut");
+
         StringBuilder recap = new StringBuilder();
         recap.append("Réalisé: ");
         recap.append(pointage.getDureeTotaleJour());
         recap.append('\n');
         recap.append("Sem.: ");
         recap.append(pointage.getDureeTotaleSemaine());
-        //views.setTextViewText(R.id.monTextWidget, pointage.getRecapitulatif());
+
+        RemoteViews views = getRemoteViews();
         views.setTextViewText(R.id.monTextWidget, recap.toString());
-        update(views);
+        updateRemoteViews(views);
     }
 
     @Override
-    public void onErreur(String message) {
-        toast(message);
+    public void onPointageDemarre() {
+        PointerWidgetProvider.lancerRefreshAuto(context);
     }
 
     @Override
-    public void toast(String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    public void onPointageTermine() {
+        PointerWidgetProvider.arreterRefreshAuto(context);
     }
 
     @Override
-    public void executerFutur(Runnable action, long delai, TimeUnit unit) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent intent = PointerWidget.getPendingSelfIntent(context, "Refresh");
-        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(delai, unit), intent);
-    }
-
-    public RemoteViews getRemoteViews() {
-        return new RemoteViews(context.getPackageName(), R.layout.pointer_widget);
-    }
-
-    public void update(RemoteViews views) {
-        AppWidgetManager.getInstance(context).updateAppWidget(widget, views);
+    public void onPointageRecapitulatifRecalculAutomatiqueDemande(int delay, TimeUnit unit) {
+        PointerWidgetProvider.planifierRefreshAuto(context, delay, unit);
     }
 
 }

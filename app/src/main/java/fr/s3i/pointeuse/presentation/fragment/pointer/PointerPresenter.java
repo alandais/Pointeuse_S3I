@@ -19,6 +19,8 @@
 
 package fr.s3i.pointeuse.presentation.fragment.pointer;
 
+import java.util.concurrent.TimeUnit;
+
 import fr.s3i.pointeuse.domaine.pointages.interactors.inserer.boundaries.out.InsererOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
@@ -47,7 +49,7 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     }
 
     @Override
-    public void onPointageRecapitulatifUpdate(final PointageRecapitulatif pointage) {
+    public void onPointageRecapitulatifRecalcule(final PointageRecapitulatif pointage) {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -57,4 +59,23 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
         });
     }
 
+    @Override
+    public void onPointageDemarre() {
+        vue.demarrerWidget();
+    }
+
+    @Override
+    public void onPointageTermine() {
+        vue.arreterWidget();
+    }
+
+    @Override
+    public void onPointageRecapitulatifRecalculAutomatiqueDemande(final int delay, final TimeUnit unit) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                vue.onPointageRecapitulatifRecalculAutomatiqueDemande(delay, unit);
+            }
+        });
+    }
 }

@@ -17,32 +17,41 @@
  *
  */
 
-package fr.s3i.pointeuse.presentation.widget;
+package fr.s3i.pointeuse.presentation.widget.pointer;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.PointerInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.in.PointerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.RecapitulatifInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.in.RecapIn;
+import fr.s3i.pointeuse.presentation.widget.commun.WidgetControler;
 
 /**
  * Created by Adrien on 04/08/2016.
  */
-public class PointerWidgetControleur {
+public class PointerWidgetControler extends WidgetControler implements PointerIn, RecapIn {
 
     private final PointerInteractor pointer;
 
     private final RecapitulatifInteractor recapitulatif;
 
-    public PointerWidgetControleur(Contexte contexte, PointerWidgetPresenter presenter) {
-        this.recapitulatif = new RecapitulatifInteractor(contexte, presenter);
+    public PointerWidgetControler(Contexte contexte, PointerWidgetPresenter presenter) {
         this.pointer = new PointerInteractor(contexte, presenter);
+        this.recapitulatif = new RecapitulatifInteractor(contexte, presenter);
     }
 
-    public void refresh() {
-        recapitulatif.wakeup();
-    }
-
+    @Override
     public void pointer() {
         pointer.pointer();
     }
 
+    @Override
+    public void recalculerRecapitulatif() {
+        recapitulatif.recalculerRecapitulatif();
+    }
+
+    @Override
+    public void lancerCalculRecapitulatifAutomatique() {
+        recapitulatif.lancerCalculRecapitulatifAutomatique();
+    }
 }

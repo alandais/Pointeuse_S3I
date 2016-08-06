@@ -22,27 +22,26 @@ package fr.s3i.pointeuse.domaine.communs.interactors;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 
 /**
  * Created by Adrien on 03/08/2016.
  */
-public abstract class RefreshableInteractor<T extends OutBoundary> extends Interactor<T> {
+public abstract class AutoRefreshableInteractor<T extends OutBoundary> extends Interactor<T> {
 
     public static class Delay {
 
         public static final Delay NO_REFRESH = new Delay(-1, null);
 
-        private final long delayQuantity;
+        private final int delayQuantity;
 
         private final TimeUnit delayUnit;
 
-        public Delay(long delayQuantity, TimeUnit delayUnit) {
+        public Delay(int delayQuantity, TimeUnit delayUnit) {
             this.delayQuantity = delayQuantity;
             this.delayUnit = delayUnit;
         }
 
-        public long getDelayQuantity() {
+        public int getDelayQuantity() {
             return delayQuantity;
         }
 
@@ -56,25 +55,19 @@ public abstract class RefreshableInteractor<T extends OutBoundary> extends Inter
 
     }
 
-    public RefreshableInteractor(T out) {
+    public AutoRefreshableInteractor(T out) {
         super(out);
     }
 
-    public void wakeup() {
-        Delay delay = refresh();
+    protected abstract Delay refresh();
+
+    protected abstract void scheduleAutoRefresh(Delay delay);
+
+    protected void autoRefresh() {
+        AutoRefreshableInteractor.Delay delay = refresh();
         if (delay.isActive()) {
-            out.executerFutur(new Runnable() {
-                @Override
-                public void run() {
-                    wakeup();
-                }
-            }, delay.getDelayQuantity(), delay.getDelayUnit());
-        }
-        else {
-            Log.info(Log.STATE, "{0} ({1}) rafraichissement automatique ARRET", this.getClass().getSimpleName(), this);
+            scheduleAutoRefresh(delay);
         }
     }
-
-    protected abstract Delay refresh();
 
 }

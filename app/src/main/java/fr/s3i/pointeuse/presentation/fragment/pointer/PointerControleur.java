@@ -80,4 +80,24 @@ public class PointerControleur<T extends PointerOut & InsererOut & RecapOut & St
         });
     }
 
+    @Override
+    public void recalculerRecapitulatif() {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(RecapitulatifInteractor.class).recalculerRecapitulatif();
+            }
+        });
+    }
+
+    @Override
+    public void lancerCalculRecapitulatifAutomatique() {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(RecapitulatifInteractor.class).lancerCalculRecapitulatifAutomatique();
+            }
+        });
+    }
+
 }

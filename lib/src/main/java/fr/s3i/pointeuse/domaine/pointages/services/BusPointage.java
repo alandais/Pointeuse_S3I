@@ -27,10 +27,50 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
  */
 public class BusPointage extends BusService {
 
-    public static class PointageChangedEvent extends BaseEvent<Pointage> {
+    public static abstract class PointageEvent extends BaseEvent<Pointage> {
 
-        public PointageChangedEvent(Object originator, Pointage data) {
-            super(originator, PointageChangedEvent.class.getName(), data);
+        public PointageEvent(Object originator, Pointage data) {
+            super(originator, PointageEvent.class.getName(), data);
+        }
+
+    }
+
+    public static class PointageDemarreEvent extends PointageEvent {
+
+        public PointageDemarreEvent(Object originator, Pointage data) {
+            super(originator, data);
+        }
+
+    }
+
+    public static class PointageTermineEvent extends PointageEvent {
+
+        public PointageTermineEvent(Object originator, Pointage data) {
+            super(originator, data);
+        }
+
+    }
+
+    public static class PointageModifieEvent extends PointageEvent {
+
+        public PointageModifieEvent(Object originator, Pointage data) {
+            super(originator, data);
+        }
+
+    }
+
+    public static class PointageSupprimeEvent extends PointageEvent {
+
+        public PointageSupprimeEvent(Object originator, Pointage data) {
+            super(originator, data);
+        }
+
+    }
+
+    public static class PointageInsereEvent extends PointageEvent {
+
+        public PointageInsereEvent(Object originator, Pointage data) {
+            super(originator, data);
         }
 
     }
