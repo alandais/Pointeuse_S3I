@@ -51,6 +51,7 @@ public class InsererInteractor extends Interactor<InsererOut> implements Inserer
 
         BusPointage.PointageEvent event = new BusPointage.PointageInsereEvent(this, pointage);
         if(enregistrerPointage.executer(pointage, event)) {
+            out.onPointageInsere();
             out.toast(Chaines.toast_pointage_insere);
         }
     }

@@ -71,6 +71,11 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     }
 
     @Override
+    public void onPointageInsere() {
+        PointerWidgetProvider.refresh(vue.getContext());
+    }
+
+    @Override
     public void onPointageRecapitulatifRecalculAutomatiqueDemande(final int delay, final TimeUnit unit) {
         vue.getControleur().executerFutur(new Runnable() {
             @Override

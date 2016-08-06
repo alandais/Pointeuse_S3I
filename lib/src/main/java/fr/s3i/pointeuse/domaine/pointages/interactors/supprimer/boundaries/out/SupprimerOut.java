@@ -26,6 +26,6 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
  */
 public interface SupprimerOut extends OutBoundary {
 
-    // void onPointageSuppression(Pointage pointage);
+    void onPointageSupprime();
 
 }

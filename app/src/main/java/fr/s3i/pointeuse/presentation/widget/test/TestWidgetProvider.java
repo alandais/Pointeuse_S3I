@@ -41,7 +41,7 @@ public class TestWidgetProvider extends WidgetProvider<TestWidgetPresenter, Test
         Log.e("TestWidget", "--- onRefresh");
 
         RemoteViews views = presenter.getRemoteViews();
-        views.setOnClickPendingIntent(R.id.monbouttonwidget, getPendingSelfIntent(context, INTENT_ACTION_WAKEUP));
+        views.setOnClickPendingIntent(R.id.monbouttonwidget, getPendingIntent(context, INTENT_ACTION_WAKEUP, getClass()));
         presenter.updateRemoteViews(views);
 
         controler.refresh();
@@ -73,15 +73,15 @@ public class TestWidgetProvider extends WidgetProvider<TestWidgetPresenter, Test
     }
 
     public static void wakeUp(Context context) {
-        new TestWidgetProvider().sendIntent(context, INTENT_ACTION_WAKEUP);
+        WidgetProvider.sendIntent(context, INTENT_ACTION_WAKEUP, TestWidgetProvider.class);
     }
 
     public static void wakeUpIn(Context context, int delay, TimeUnit unit) {
-        new TestWidgetProvider().sendIntent(context, INTENT_ACTION_WAKEUP, delay, unit);
+        WidgetProvider.sendIntent(context, INTENT_ACTION_WAKEUP, delay, unit, TestWidgetProvider.class);
     }
 
     public static void cancelWakeUp(Context context) {
-        new TestWidgetProvider().cancelIntent(context, INTENT_ACTION_WAKEUP);
+        WidgetProvider.cancelIntent(context, INTENT_ACTION_WAKEUP, TestWidgetProvider.class);
     }
 
 }

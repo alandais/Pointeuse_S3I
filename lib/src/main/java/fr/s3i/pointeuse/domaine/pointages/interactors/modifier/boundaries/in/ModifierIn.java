@@ -28,7 +28,7 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
  */
 public interface ModifierIn extends InBoundary {
 
-    void modifier(long id);
+    void recupererPourModification(long id);
 
     void modifier(long id, Date debut, Date fin, String commentaire);
 

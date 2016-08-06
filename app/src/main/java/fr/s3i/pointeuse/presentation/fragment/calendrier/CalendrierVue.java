@@ -205,7 +205,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        controleur.modifier(l);
+        controleur.recupererPourModification(l);
     }
 
     @Override
@@ -225,18 +225,18 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
         return true;
     }
 
-    public void onPointageModification(final Pointage pointage) {
+    public void onPointageRecuperePourModification(final Pointage pointage) {
         DialoguePointageInfo.Resultat valeursInitiales = new DialoguePointageInfo.Resultat(pointage.getDebut(), pointage.getFin(), pointage.getCommentaire());
         DialoguePointageInfo dialoguePointageInfo = new DialoguePointageInfo();
         dialoguePointageInfo.lancer(getActivity(), new Listener<DialoguePointageInfo.Resultat>() {
             @Override
             public void onSelected(DialoguePointageInfo.Resultat valeurSelectionnee) {
-                onPointageInfoSaisie(pointage.getId(), valeurSelectionnee);
+                onPointageInfoSaisiePourModification(pointage.getId(), valeurSelectionnee);
             }
         }, valeursInitiales);
     }
 
-    private void onPointageInfoSaisie(Long id, DialoguePointageInfo.Resultat saisie) {
+    private void onPointageInfoSaisiePourModification(Long id, DialoguePointageInfo.Resultat saisie) {
         controleur.modifier(id, saisie.getDebut(), saisie.getFin(), saisie.getCommentaire());
     }
 

@@ -25,6 +25,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.mode
 import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
 import fr.s3i.pointeuse.presentation.fragment.commun.Presenter;
+import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 
 /**
  * Created by Adrien on 30/07/2016.
@@ -57,13 +58,23 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Lis
     }
 
     @Override
-    public void modifier(final Pointage pointage) {
+    public void onPointageRecuperePourModification(final Pointage pointage) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                vue.onPointageModification(pointage);
+                vue.onPointageRecuperePourModification(pointage);
             }
         });
+    }
+
+    @Override
+    public void onPointageModifie() {
+        PointerWidgetProvider.refresh(vue.getContext());
+    }
+
+    @Override
+    public void onPointageSupprime() {
+        PointerWidgetProvider.refresh(vue.getContext());
     }
 
 }

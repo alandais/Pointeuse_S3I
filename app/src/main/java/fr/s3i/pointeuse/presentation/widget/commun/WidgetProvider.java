@@ -66,34 +66,6 @@ public abstract class WidgetProvider<P extends WidgetPresenter, C extends Widget
         onDisabled(context, presenter, controler);
     }
 
-    public Intent getSelfIntent(Context context, String action) {
-        Intent intent = new Intent(context, getClass());
-        intent.setAction(action);
-        return intent;
-    }
-
-    public PendingIntent getPendingSelfIntent(Context context, String action) {
-        Intent intent = getSelfIntent(context, action);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
-    }
-
-    public void sendIntent(Context context, String action) {
-        Intent intent = getSelfIntent(context, action);
-        context.sendBroadcast(intent);
-    }
-
-    public void sendIntent(Context context, String action, int delay, TimeUnit unit) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent intent = getPendingSelfIntent(context, action);
-        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(delay, unit), intent);
-    }
-
-    public void cancelIntent(Context context, String action) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent intent = getPendingSelfIntent(context, action);
-        alarmManager.cancel(intent);
-    }
-
     protected Contexte getApplicationContexte(Context context) {
         PointageApplication application = (PointageApplication) context.getApplicationContext();
         return application.getContexte();
@@ -108,5 +80,33 @@ public abstract class WidgetProvider<P extends WidgetPresenter, C extends Widget
     protected abstract void onDisabled(Context context, P presenter, C controler);
 
     protected abstract void onReceive(Context context, P presenter, C controler, Intent intent);
+
+    protected static Intent getIntent(Context context, String action, Class<? extends WidgetProvider> type) {
+        Intent intent = new Intent(context, type);
+        intent.setAction(action);
+        return intent;
+    }
+
+    protected static PendingIntent getPendingIntent(Context context, String action, Class<? extends WidgetProvider> type) {
+        Intent intent = getIntent(context, action, type);
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+    protected static void sendIntent(Context context, String action, Class<? extends WidgetProvider> type) {
+        Intent intent = getIntent(context, action, type);
+        context.sendBroadcast(intent);
+    }
+
+    protected static void sendIntent(Context context, String action, int delay, TimeUnit unit, Class<? extends WidgetProvider> type) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent intent = getPendingIntent(context, action, type);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + TimeUnit.MILLISECONDS.convert(delay, unit), intent);
+    }
+
+    protected static void cancelIntent(Context context, String action, Class<? extends WidgetProvider> type) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent intent = getPendingIntent(context, action, type);
+        alarmManager.cancel(intent);
+    }
 
 }

@@ -35,18 +35,23 @@ import fr.s3i.pointeuse.presentation.widget.commun.WidgetProvider;
 public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter, PointerWidgetControler> {
 
     private static final String INTENT_ACTION_LANCER_REFRESH_AUTO = "LANCER_REFRESH_AUTO";
+    private static final String INTENT_ACTION_REFRESH = "REFRESH";
     private static final String INTENT_ACTION_POINTER = "POINTER";
 
     public static void planifierRefreshAuto(Context context, int delay, TimeUnit unit) {
-        new PointerWidgetProvider().sendIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO, delay, unit);
+        WidgetProvider.sendIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO, delay, unit, PointerWidgetProvider.class);
     }
 
     public static void lancerRefreshAuto(Context context) {
-        new PointerWidgetProvider().sendIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO);
+        WidgetProvider.sendIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO, PointerWidgetProvider.class);
     }
 
     public static void arreterRefreshAuto(Context context) {
-        new PointerWidgetProvider().cancelIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO);
+        WidgetProvider.cancelIntent(context, INTENT_ACTION_LANCER_REFRESH_AUTO, PointerWidgetProvider.class);
+    }
+
+    public static void refresh(Context context) {
+        WidgetProvider.sendIntent(context, INTENT_ACTION_REFRESH, PointerWidgetProvider.class);
     }
 
     @Override
@@ -61,10 +66,10 @@ public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter
 
     @Override
     protected void onRefresh(Context context, PointerWidgetPresenter presenter, PointerWidgetControler controler) {
-        Log.e("PointerWidgetProvider", "--- onRefresh");
+        Log.d("PointerWidgetProvider", "--- onRefresh");
 
         RemoteViews views = presenter.getRemoteViews();
-        views.setOnClickPendingIntent(R.id.monbouttonwidget, getPendingSelfIntent(context, INTENT_ACTION_POINTER));
+        views.setOnClickPendingIntent(R.id.monbouttonwidget, WidgetProvider.getPendingIntent(context, INTENT_ACTION_POINTER, getClass()));
         presenter.updateRemoteViews(views);
 
         controler.lancerCalculRecapitulatifAutomatique();
@@ -72,13 +77,13 @@ public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter
 
     @Override
     protected void onDisabled(Context context, PointerWidgetPresenter presenter, PointerWidgetControler controler) {
-        Log.e("PointerWidgetProvider", "--- onDisabled");
+        Log.d("PointerWidgetProvider", "--- onDisabled");
         arreterRefreshAuto(context);
     }
 
     @Override
     protected void onReceive(Context context, PointerWidgetPresenter presenter, PointerWidgetControler controler, Intent intent) {
-        Log.e("PointerWidgetProvider", "--- onReceive(intent = " + intent + ")");
+        Log.d("PointerWidgetProvider", "--- onReceive(intent = " + intent + ")");
 
         if (INTENT_ACTION_LANCER_REFRESH_AUTO.equals(intent.getAction())) {
             controler.lancerCalculRecapitulatifAutomatique();
@@ -86,6 +91,10 @@ public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter
 
         if (INTENT_ACTION_POINTER.equals(intent.getAction())) {
             controler.pointer();
+        }
+
+        if (INTENT_ACTION_REFRESH.equals(intent.getAction())) {
+            controler.recalculerRecapitulatif();
         }
     }
 

@@ -39,8 +39,6 @@ import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
  */
 public class PointerInteractor extends Interactor<PointerOut> implements PointerIn {
 
-    private final BusPointage bus;
-
     private final NotificationSystem notificationSystem;
 
     private final PointageWrapperFactory pointageWrapperFactory;
@@ -51,7 +49,6 @@ public class PointerInteractor extends Interactor<PointerOut> implements Pointer
 
     public PointerInteractor(Contexte contexte, PointerOut out) {
         super(out);
-        this.bus = contexte.getService(BusPointage.class);
         this.notificationSystem = contexte.getService(NotificationSystem.class);
         this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
         this.enregistrerPointage = new EnregistrerPointage(contexte, out);

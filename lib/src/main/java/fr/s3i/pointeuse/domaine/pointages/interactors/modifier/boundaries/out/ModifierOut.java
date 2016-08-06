@@ -27,6 +27,8 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
  */
 public interface ModifierOut extends OutBoundary {
 
-    void modifier(Pointage pointage);
+    void onPointageRecuperePourModification(Pointage pointage);
+
+    void onPointageModifie();
 
 }

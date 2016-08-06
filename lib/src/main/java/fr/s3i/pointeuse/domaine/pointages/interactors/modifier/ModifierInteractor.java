@@ -47,9 +47,9 @@ public class ModifierInteractor extends Interactor<ModifierOut> implements Modif
     }
 
     @Override
-    public void modifier(long id) {
+    public void recupererPourModification(long id) {
         Pointage pointage = repository.recuperer(id);
-        out.modifier(pointage);
+        out.onPointageRecuperePourModification(pointage);
     }
 
     @Override
@@ -61,6 +61,7 @@ public class ModifierInteractor extends Interactor<ModifierOut> implements Modif
 
         BusPointage.PointageEvent event = new BusPointage.PointageModifieEvent(this, pointage);
         if(enregistrerPointage.executer(pointage, event)) {
+            out.onPointageModifie();
             out.toast(Chaines.toast_pointage_modifie);
         }
     }

@@ -57,11 +57,11 @@ public class CalendrierControleur<T extends ListerOut & ModifierOut & SupprimerO
     }
 
     @Override
-    public void modifier(final long id) {
+    public void recupererPourModification(final long id) {
         tacheDeFond.execute(new Runnable() {
             @Override
             public void run() {
-                getInteracteur(ModifierInteractor.class).modifier(id);
+                getInteracteur(ModifierInteractor.class).recupererPourModification(id);
             }
         });
     }

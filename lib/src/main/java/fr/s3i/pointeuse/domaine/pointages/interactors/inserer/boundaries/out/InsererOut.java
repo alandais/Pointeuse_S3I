@@ -26,4 +26,6 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
  */
 public interface InsererOut extends OutBoundary {
 
+    void onPointageInsere();
+
 }
