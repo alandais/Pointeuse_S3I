@@ -42,14 +42,5 @@ public class PointageRecapitulatif implements OutModel {
     public String getDureeTotaleSemaine() {
         return dureeTotaleSemaine;
     }
-
-    public String getRecapitulatif() {
-        StringBuilder recap = new StringBuilder();
-        recap.append("Réalisé: ");
-        recap.append(dureeTotaleJour);
-        recap.append('\n');
-        recap.append("Sem.: ");
-        recap.append(dureeTotaleSemaine);
-        return recap.toString();
-    }
+    
 }

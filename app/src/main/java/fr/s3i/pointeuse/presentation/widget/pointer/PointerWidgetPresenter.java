@@ -44,15 +44,11 @@ public class PointerWidgetPresenter extends WidgetPresenter implements PointerOu
     public void onPointageRecapitulatifRecalcule(PointageRecapitulatif pointage) {
         Log.d(PointerWidgetProvider.class.getSimpleName(), "Presenter : mise a jour du statut");
 
-        StringBuilder recap = new StringBuilder();
-        recap.append("Réalisé: ");
-        recap.append(pointage.getDureeTotaleJour());
-        recap.append('\n');
-        recap.append("Sem.: ");
-        recap.append(pointage.getDureeTotaleSemaine());
+        String recap = "Réalisé: " + pointage.getDureeTotaleJour() + '\n' +
+                       "Sem.: " + pointage.getDureeTotaleSemaine();
 
         RemoteViews views = getRemoteViews();
-        views.setTextViewText(R.id.monTextWidget, recap.toString());
+        views.setTextViewText(R.id.monTextWidget, recap);
         updateRemoteViews(views);
     }
 

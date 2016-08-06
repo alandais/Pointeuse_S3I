@@ -34,7 +34,7 @@ public abstract class Mapper<T extends Entity<?>> {
 
     public abstract ContentValues mapper(T pointage);
 
-    public abstract T mapper(Cursor curseur);
+    protected abstract T mapper(Cursor curseur);
 
     public List<T> mapperListe(Cursor curseur) {
         List<T> resultat = new ArrayList<>();

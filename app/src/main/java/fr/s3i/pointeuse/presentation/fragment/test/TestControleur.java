@@ -38,7 +38,7 @@ public class TestControleur implements EmiterIn, ReceiverIn {
     private final EmiterIn emiter;
     private final ReceiverIn receiver;
 
-    protected ScheduledExecutorService tacheDeFond;
+    private ScheduledExecutorService tacheDeFond;
 
     public TestControleur(TestPresenter out, Contexte contexte) {
         this.emiter = new EmiterInteractor(out, contexte);

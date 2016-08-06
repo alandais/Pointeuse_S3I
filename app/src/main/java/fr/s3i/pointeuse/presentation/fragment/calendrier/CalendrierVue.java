@@ -50,9 +50,9 @@ import fr.s3i.pointeuse.presentation.dialogue.Listener;
  */
 public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur> implements DatePicker.OnDateChangedListener, RadioGroup.OnCheckedChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    public static CalendrierVue getInstance() {
+    public static CalendrierVue getInstance(String titre) {
         CalendrierVue vue = new CalendrierVue();
-        vue.setTitre("Calendrier");
+        vue.setTitre(titre);
         return vue;
     }
 

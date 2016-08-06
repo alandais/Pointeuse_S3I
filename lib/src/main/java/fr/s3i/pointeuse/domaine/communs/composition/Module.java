@@ -30,7 +30,7 @@ public abstract class Module extends Contexte {
 
     private final Contexte contexte;
 
-    public Module(Contexte contexte) {
+    protected Module(Contexte contexte) {
         this.contexte = contexte;
     }
 

@@ -95,4 +95,8 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         return titre;
     }
 
+    public C getControleur() {
+        return controleur;
+    }
+
 }

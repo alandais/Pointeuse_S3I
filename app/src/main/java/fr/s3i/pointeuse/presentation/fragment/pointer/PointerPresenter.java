@@ -28,6 +28,7 @@ import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.mode
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.statut.boundaries.out.StatutOut;
 import fr.s3i.pointeuse.presentation.fragment.commun.Presenter;
+import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 
 /**
  * Created by Adrien on 23/07/2016.
@@ -61,21 +62,21 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
 
     @Override
     public void onPointageDemarre() {
-        vue.demarrerWidget();
+        PointerWidgetProvider.lancerRefreshAuto(vue.getContext());
     }
 
     @Override
     public void onPointageTermine() {
-        vue.arreterWidget();
+        PointerWidgetProvider.arreterRefreshAuto(vue.getContext());
     }
 
     @Override
     public void onPointageRecapitulatifRecalculAutomatiqueDemande(final int delay, final TimeUnit unit) {
-        handler.post(new Runnable() {
+        vue.getControleur().executerFutur(new Runnable() {
             @Override
             public void run() {
-                vue.onPointageRecapitulatifRecalculAutomatiqueDemande(delay, unit);
+                vue.getControleur().lancerCalculRecapitulatifAutomatique();
             }
-        });
+        }, delay, unit);
     }
 }

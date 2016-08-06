@@ -28,7 +28,7 @@ public abstract class BaseOperation {
 
     protected final OutBoundary out;
 
-    public BaseOperation(OutBoundary out) {
+    BaseOperation(OutBoundary out) {
         this.out = out;
     }
 

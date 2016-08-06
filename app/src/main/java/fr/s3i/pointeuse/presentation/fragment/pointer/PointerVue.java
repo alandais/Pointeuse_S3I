@@ -27,13 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.concurrent.TimeUnit;
-
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
 import fr.s3i.pointeuse.presentation.dialogue.Listener;
-import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 
 public class PointerVue extends Vue<PointerPresenter, PointerControleur> implements View.OnClickListener {
 
@@ -41,9 +38,9 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     private static final String STATE_POINTAGE_RECAP_JOUR = "POINTAGE_RECAP_JOUR";
     private static final String STATE_POINTAGE_RECAP_SEMAINE = "POINTAGE_RECAP_SEMAINE";
 
-    public static PointerVue getInstance() {
+    public static PointerVue getInstance(String titre) {
         PointerVue vue = new PointerVue();
-        vue.setTitre("Pointage");
+        vue.setTitre(titre);
         return vue;
     }
 
@@ -143,23 +140,6 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
             TextView textEnCours = (TextView) this.getView().findViewById(R.id.txtPointageRecapSemaine);
             textEnCours.setText(texte);
         }
-    }
-
-    public void onPointageRecapitulatifRecalculAutomatiqueDemande(int delai, TimeUnit unit) {
-        controleur.executerFutur(new Runnable() {
-            @Override
-            public void run() {
-                controleur.lancerCalculRecapitulatifAutomatique();
-            }
-        }, delai, unit);
-    }
-
-    public void demarrerWidget() {
-        PointerWidgetProvider.lancerRefreshAuto(getContext());
-    }
-
-    public void arreterWidget() {
-        PointerWidgetProvider.arreterRefreshAuto(getContext());
     }
 
 }

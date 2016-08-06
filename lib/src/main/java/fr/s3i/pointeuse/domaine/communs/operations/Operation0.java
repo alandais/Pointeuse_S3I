@@ -26,7 +26,7 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
  */
 public abstract class Operation0<T> extends BaseOperation {
 
-    public Operation0(OutBoundary out) {
+    protected Operation0(OutBoundary out) {
         super(out);
     }
 

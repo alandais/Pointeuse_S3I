@@ -29,7 +29,7 @@ public abstract class Interactor<T extends OutBoundary> implements InBoundary {
 
     protected final T out;
 
-    public Interactor(T out) {
+    protected Interactor(T out) {
         this.out = out;
     }
 

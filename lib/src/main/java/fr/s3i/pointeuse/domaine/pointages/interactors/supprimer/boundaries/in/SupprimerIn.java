@@ -19,8 +19,6 @@
 
 package fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.in;
 
-import java.util.Date;
-
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**

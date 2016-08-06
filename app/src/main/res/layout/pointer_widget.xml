@@ -25,7 +25,8 @@
     <ImageView
         android:layout_width="50dip"
         android:src="@drawable/logo_s3i"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_s3i" />
 
     <TextView
         android:background="#35FFFFFF"

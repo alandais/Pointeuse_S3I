@@ -65,18 +65,17 @@ public class TablePointage extends Table {
     }
 
     public Cursor selectBetween(SQLiteDatabase db, String dateDebutPeriode, String dateFinPeriode) {
-        StringBuilder where = new StringBuilder();
-        where.append(COL_DATE_DEBUT);
-        where.append(" BETWEEN '");
-        where.append(dateDebutPeriode);
-        where.append("' AND '");
-        where.append(dateFinPeriode);
-        where.append("' AND ");
-        where.append(COL_DATE_DEBUT);
-        where.append(" <> '");
-        where.append(dateFinPeriode);
-        where.append('\'');
-        return super.select(db, where.toString(), COL_DATE_DEBUT);
+        String where = COL_DATE_DEBUT +
+                " BETWEEN '" +
+                dateDebutPeriode +
+                "' AND '" +
+                dateFinPeriode +
+                "' AND " +
+                COL_DATE_DEBUT +
+                " <> '" +
+                dateFinPeriode +
+                '\'';
+        return super.select(db, where, COL_DATE_DEBUT);
     }
 
 }

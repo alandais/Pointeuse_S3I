@@ -41,7 +41,7 @@ public abstract class WidgetPresenter implements OutBoundary {
     private final ComponentName widget;
     private final int layoutId;
 
-    public WidgetPresenter(Context context, Class<? extends WidgetProvider> providerClass, @LayoutRes int layoutId) {
+    protected WidgetPresenter(Context context, Class<? extends WidgetProvider> providerClass, @LayoutRes int layoutId) {
         this.context = context;
         this.widget = new ComponentName(context, providerClass);
         this.layoutId = layoutId;

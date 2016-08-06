@@ -59,9 +59,7 @@ public abstract class Table {
     }
 
     public void drop(SQLiteDatabase db) {
-        StringBuilder requeteDrop = new StringBuilder("DROP TABLE IF EXISTS ");
-        requeteDrop.append(getNom());
-        db.execSQL(requeteDrop.toString());
+        db.execSQL("DROP TABLE IF EXISTS " + getNom());
     }
 
     public long insert(SQLiteDatabase db, ContentValues values) {

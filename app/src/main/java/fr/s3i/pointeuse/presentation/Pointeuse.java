@@ -42,8 +42,8 @@ public class Pointeuse extends AppCompatActivity {
         setContentView(R.layout.activity_pointeuse);
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), new Vue[]{
-                PointerVue.getInstance(),
-                CalendrierVue.getInstance()
+                PointerVue.getInstance(Chaines.interacteur_pointer_nom),
+                CalendrierVue.getInstance(Chaines.interacteur_calendrier_nom)
         });
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);

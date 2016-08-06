@@ -55,7 +55,7 @@ public abstract class AutoRefreshableInteractor<T extends OutBoundary> extends I
 
     }
 
-    public AutoRefreshableInteractor(T out) {
+    protected AutoRefreshableInteractor(T out) {
         super(out);
     }
 
