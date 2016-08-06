@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,10 +27,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
+import fr.s3i.pointeuse.presentation.activity.FragmentContainer;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
@@ -53,6 +58,42 @@ public class Pointeuse extends AppCompatActivity {
         if (savedInstanceState == null) {
             Toast.makeText(this, Chaines.copyright, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pointeuse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, FragmentContainer.class);
+        switch (item.getItemId()) {
+            case R.id.menu_item_suppression:
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, "Suppression");
+                break;
+            case R.id.menu_item_preferences:
+                //TODO
+                break;
+            case R.id.menu_item_export:
+                //TODO
+                break;
+            case R.id.menu_item_aide:
+                //TODO
+                break;
+            case R.id.menu_item_licence:
+                //TODO
+                break;
+            case R.id.menu_item_s3i:
+                //TODO
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        startActivity(intent);
+        return true;
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {

@@ -43,6 +43,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/pointer_widget_info" />
         </receiver>
+
+        <activity android:name=".presentation.activity.FragmentContainer"></activity>
     </application>
 
 </manifest>
