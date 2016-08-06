@@ -17,22 +17,32 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.services;
+package fr.s3i.pointeuse.presentation.widget.test;
 
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.pointages.interactors.test.ReceiverInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.test.in.ReceiverIn;
+import fr.s3i.pointeuse.presentation.widget.commun.WidgetControler;
 
 /**
- * Created by Adrien on 31/07/2016.
+ * Created by Adrien on 05/08/2016.
  */
-public class BusPointage extends BusService {
+public class TestWidgetControler extends WidgetControler implements ReceiverIn {
 
-    public static class PointageChangedEvent extends BaseEvent<Pointage> {
+    private final ReceiverIn receiver;
 
-        public PointageChangedEvent(Object originator, Pointage data) {
-            super(originator, PointageChangedEvent.class.getName(), data);
-        }
+    public TestWidgetControler(TestWidgetPresenter out, Contexte contexte) {
+        receiver = new ReceiverInteractor(out, contexte);
+    }
 
+    @Override
+    public void refresh() {
+        receiver.refresh();
+    }
+
+    @Override
+    public void autoRefresh() {
+        receiver.autoRefresh();
     }
 
 }

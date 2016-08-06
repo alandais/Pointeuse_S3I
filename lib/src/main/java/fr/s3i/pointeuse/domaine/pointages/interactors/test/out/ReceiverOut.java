@@ -17,22 +17,19 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.services;
+package fr.s3i.pointeuse.domaine.pointages.interactors.test.out;
 
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import java.util.concurrent.TimeUnit;
+
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
 /**
- * Created by Adrien on 31/07/2016.
+ * Created by Adrien on 05/08/2016.
  */
-public class BusPointage extends BusService {
+public interface ReceiverOut extends OutBoundary {
 
-    public static class PointageChangedEvent extends BaseEvent<Pointage> {
+    void onRefresh(long timestamp);
 
-        public PointageChangedEvent(Object originator, Pointage data) {
-            super(originator, PointageChangedEvent.class.getName(), data);
-        }
-
-    }
+    void onAutoRefresh(int delay, TimeUnit unit);
 
 }

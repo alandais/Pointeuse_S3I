@@ -106,8 +106,7 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new CalendrierPresenter(this);
-        controleur = new CalendrierControleur(contexte, presenter);
+        controleur = new CalendrierControleur<>(contexte, new CalendrierPresenter(this));
     }
 
     @Override

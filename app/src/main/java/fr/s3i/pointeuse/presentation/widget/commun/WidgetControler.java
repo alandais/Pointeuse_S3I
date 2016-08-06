@@ -17,22 +17,25 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.services;
+package fr.s3i.pointeuse.presentation.widget.commun;
 
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import java.io.IOException;
+
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
- * Created by Adrien on 31/07/2016.
+ * Created by Adrien on 06/08/2016.
  */
-public class BusPointage extends BusService {
+public abstract class WidgetControler implements InBoundary {
 
-    public static class PointageChangedEvent extends BaseEvent<Pointage> {
+    @Override
+    public final void initialiser() {
+        throw new IllegalStateException("Le widget doit être stateless (interdiction d'appeler les méthodes initialiser() et close() des interacteurs)");
+    }
 
-        public PointageChangedEvent(Object originator, Pointage data) {
-            super(originator, PointageChangedEvent.class.getName(), data);
-        }
-
+    @Override
+    public final void close() throws IOException {
+        throw new IllegalStateException("Le widget doit être stateless (interdiction d'appeler les méthodes initialiser() et close() des interacteurs)");
     }
 
 }

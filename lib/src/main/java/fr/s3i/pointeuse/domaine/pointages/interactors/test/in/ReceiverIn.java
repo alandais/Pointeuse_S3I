@@ -17,22 +17,17 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.services;
+package fr.s3i.pointeuse.domaine.pointages.interactors.test.in;
 
-import fr.s3i.pointeuse.domaine.communs.services.BusService;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 
 /**
- * Created by Adrien on 31/07/2016.
+ * Created by Adrien on 05/08/2016.
  */
-public class BusPointage extends BusService {
+public interface ReceiverIn extends InBoundary {
 
-    public static class PointageChangedEvent extends BaseEvent<Pointage> {
+    void refresh();
 
-        public PointageChangedEvent(Object originator, Pointage data) {
-            super(originator, PointageChangedEvent.class.getName(), data);
-        }
-
-    }
+    void autoRefresh();
 
 }

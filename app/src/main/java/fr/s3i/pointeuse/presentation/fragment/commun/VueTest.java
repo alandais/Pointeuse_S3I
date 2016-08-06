@@ -57,7 +57,6 @@ public class VueTest extends Vue<VueTest.PresenterTest, VueTest.ControleurTest> 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new PresenterTest(this);
         controleur = new ControleurTest();
     }
 

@@ -54,10 +54,10 @@ public abstract class Controleur implements Closeable, InBoundary {
 
     @Override
     public void close() throws IOException {
-        tacheDeFond.shutdownNow();
         for (Interactor interactor : interactors) {
             interactor.close();
         }
+        tacheDeFond.shutdownNow();
     }
 
     protected <T extends Interactor> T getInteracteur(Class<T> type) {

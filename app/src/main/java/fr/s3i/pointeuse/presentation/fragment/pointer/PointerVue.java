@@ -47,8 +47,7 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new PointerPresenter(this);
-        controleur = new PointerControleur<>(contexte, presenter);
+        controleur = new PointerControleur<>(contexte, new PointerPresenter(this));
     }
 
     @Override

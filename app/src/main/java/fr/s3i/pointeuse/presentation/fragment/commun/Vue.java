@@ -40,8 +40,6 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
 
     protected Contexte contexte;
 
-    protected P presenter;
-
     protected C controleur;
 
     @CallSuper
@@ -66,14 +64,6 @@ public abstract class Vue<P extends Presenter, C extends Controleur> extends Fra
         catch (IOException ex) {
             Log.e(Vue.class.getSimpleName(), "Erreur lors de la fermeture du contrôleur", ex);
         }
-    }
-
-    @CallSuper
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter = null;
-        controleur = null;
     }
 
     public void onError(String message) {

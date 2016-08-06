@@ -22,9 +22,6 @@ package fr.s3i.pointeuse.domaine.communs.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.s3i.pointeuse.domaine.communs.Contexte;
-import fr.s3i.pointeuse.domaine.communs.gateways.Activateur;
-
 /**
  * Created by Adrien on 31/07/2016.
  */
@@ -91,12 +88,6 @@ public abstract class BusService implements Service {
 
     private final List<Listener> listeners = new ArrayList<>();
 
-    private final Activateur activateur;
-
-    public BusService(Contexte contexte) {
-        activateur = contexte.getService(Activateur.class, null);
-    }
-
     public void subscribe(Listener listener) {
         listeners.add(listener);
     }
@@ -114,15 +105,6 @@ public abstract class BusService implements Service {
             if (event.getOriginator() != listener && !listener.onEvent(event)) {
                 return;
             }
-        }
-    }
-
-    public void diffuser(Event event) {
-        if (activateur != null) {
-            activateur.diffuser(event);
-        }
-        else {
-            post(event);
         }
     }
 
