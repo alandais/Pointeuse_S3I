@@ -21,7 +21,8 @@
 
     <!-- Base application theme. -->
     <style name="AppThemeNoir" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- pas de couleurs -->
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppThemeCouleur" parent="Theme.AppCompat.Light.DarkActionBar">

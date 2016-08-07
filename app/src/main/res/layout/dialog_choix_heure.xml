@@ -35,7 +35,6 @@
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text="@string/libelle_commentaire"
-            android:textColor="@android:color/tab_indicator_text"
             android:textSize="15sp"
             android:paddingTop="10sp"
             />
@@ -45,7 +44,6 @@
             android:layout_width="0dp"
             android:id="@+id/txtCommentaire"
             android:inputType="textShortMessage"
-            android:textColor="@android:color/tab_indicator_text"
             android:layout_weight="1"
             android:textSize="15sp"
             >

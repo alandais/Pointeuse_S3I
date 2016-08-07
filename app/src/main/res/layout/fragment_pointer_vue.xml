@@ -24,7 +24,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/cardview_dark_background"
     tools:context=".presentation.fragment.pointer.PointerVue" >
 
     <TextView
@@ -35,7 +34,7 @@
         android:padding="15dp"
         android:layout_gravity="start"
         android:layout_weight="0"
-        android:textColor="@android:color/tab_indicator_text" />
+        />
 
     <Button
         android:background="@drawable/bouton123"
@@ -48,7 +47,7 @@
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
         android:layout_weight="0"
-        android:textColor="@color/cardview_light_background" />
+        />
 
     <Button
         android:background="@drawable/bouton123"
@@ -61,7 +60,7 @@
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
         android:layout_weight="0"
-        android:textColor="@color/cardview_light_background" />
+        />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -75,7 +74,6 @@
                 android:text="@string/realise"
                 android:textSize="18sp"
                 android:padding="5dp"
-                android:textColor="@android:color/tab_indicator_text"
                 android:layout_gravity="center"
                 android:layout_span="2"
                 />
@@ -89,15 +87,15 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:textColor="@android:color/tab_indicator_text"
-                android:text="@string/pointageEnCousDureeJourLibelle" />
+                android:text="@string/pointageEnCousDureeJourLibelle"
+                />
 
             <TextView
                 android:id="@+id/txtPointageRecapJour"
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:textColor="@android:color/tab_indicator_text" />
+                />
 
         </TableRow>
 
@@ -108,8 +106,8 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:textColor="@android:color/tab_indicator_text"
-                android:text="@string/pointageEnCousDureeSemaineLibelle" />
+                android:text="@string/pointageEnCousDureeSemaineLibelle"
+                />
 
             <TextView
                 android:id="@+id/txtPointageRecapSemaine"
@@ -118,7 +116,7 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:textColor="@android:color/tab_indicator_text"  />
+                />
 
         </TableRow>
 
@@ -127,7 +125,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
         <ImageView
             android:id="@+id/imgS3i"
@@ -135,7 +134,8 @@
             android:src="@drawable/bandeau_s3i"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            />
 
     </FrameLayout>
 

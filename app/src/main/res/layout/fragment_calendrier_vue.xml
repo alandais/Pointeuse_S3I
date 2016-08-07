@@ -24,8 +24,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/cardview_dark_background"
-    tools:context=".presentation.fragment.calendrier.CalendrierVue" >
+    tools:context=".presentation.fragment.calendrier.CalendrierVue"
+    >
 
     <include layout="@layout/merge_choix_periode" />
 
@@ -34,15 +34,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="#FF0000"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        android:gravity="center" />
+        android:gravity="center"
+        />
 
     <ListView
         android:id="@+id/calendrier_liste"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>
