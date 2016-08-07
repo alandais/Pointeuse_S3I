@@ -72,9 +72,6 @@ public class Pointeuse extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(this, FragmentContainer.class);
         switch (item.getItemId()) {
-            case R.id.menu_item_suppression:
-                intent.putExtra(FragmentContainer.FRAGMENT_ID, "Suppression");
-                break;
             case R.id.menu_item_preferences:
                 intent = new Intent(this, Preferences.class);
                 break;

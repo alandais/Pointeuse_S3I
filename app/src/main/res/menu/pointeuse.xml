@@ -20,11 +20,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_item_suppression"
-        android:icon="@drawable/ipointage"
-        android:title="@string/supprimer" />
-
-    <item
         android:id="@+id/menu_item_preferences"
         android:icon="@drawable/ipointage"
         android:title="@string/preferences" />

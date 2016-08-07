@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.domaine.pointages.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -58,6 +59,34 @@ public enum Periode {
         increase(calendar);
         Log.verbose(Log.DATAFLOW, "getFinPeriode({0}, {1}) == {2}", this, reference, calendar.getTime());
         return calendar.getTime();
+    }
+
+    public String toString(Date reference) {
+        // TODO : refaire avec prise en compte de l'internationalisation
+        Calendar cal = getCalendar(reference);
+        StringBuilder builder = new StringBuilder();
+        switch(this) {
+            case ANNEE:
+                builder.append("Année ");
+                builder.append(cal.get(Calendar.YEAR));
+                break;
+            case MOIS:
+                builder.append("Mois de ");
+                builder.append(new SimpleDateFormat("MMM", Locale.getDefault()).format(cal.getTime()));
+                builder.append(' ');
+                builder.append(cal.get(Calendar.YEAR));
+                break;
+            case SEMAINE:
+                builder.append("Semaine n°");
+                builder.append(cal.get(Calendar.WEEK_OF_YEAR));
+                builder.append(" de l'année ");
+                builder.append(cal.get(Calendar.YEAR));
+                break;
+            case JOUR:
+                builder.append(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(cal.getTime()));
+                break;
+        }
+        return builder.toString();
     }
 
     private void reset(Calendar calendar) {

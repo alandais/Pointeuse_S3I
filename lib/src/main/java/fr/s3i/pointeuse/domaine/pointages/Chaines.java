@@ -19,9 +19,12 @@
 
 package fr.s3i.pointeuse.domaine.pointages;
 
+import java.util.Date;
+
 import fr.s3i.pointeuse.domaine.communs.R;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
+import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 
 /**
  * Expose les chaînes de caractères constantes, et les méthodes constantes générant des chaînes
@@ -76,8 +79,12 @@ public final class Chaines {
     }
 
     public static final String mail_corps = R.get("mail_corps");
-    public static final String mail_sujet = R.get("mail_sujet");
-    public static final String mail_nom_piece_jointe = R.get("mail_nom_piece_jointe");
+    public static String mailSujet(Periode periode, Date reference) {
+        return R.get("mail_sujet", periode.toString(reference));
+    }
+    public static String mailNomPieceJointe(Periode periode, Date reference) {
+        return R.get("mail_nom_piece_jointe", periode.toString(reference));
+    }
 
     public static final String erreur_date_debut_non_renseignee = R.get("erreur_date_debut_non_renseignee");
     public static final String erreur_date_fin_invalide = R.get("erreur_date_fin_invalide");
