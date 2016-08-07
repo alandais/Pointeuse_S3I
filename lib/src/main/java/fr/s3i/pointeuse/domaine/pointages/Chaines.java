@@ -91,5 +91,6 @@ public final class Chaines {
     public static final String erreur_date_fin_invalide = R.get("erreur_date_fin_invalide");
     public static final String erreur_plusieurs_pointage_en_cours = R.get("erreur_plusieurs_pointage_en_cours");
     public static final String erreur_export_indisponible = R.get("erreur_export_indisponible");
+    public static final String erreur_export_email_invalide = R.get("erreur_export_email_invalide");
 
 }

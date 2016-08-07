@@ -45,6 +45,19 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/pointer_widget_info" />
         </receiver>
+        
+        <provider
+            android:authorities="fr.s3i.pointeuse"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            >
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths"
+                />
+
+        </provider>
 
     </application>
 

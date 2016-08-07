@@ -25,10 +25,12 @@ import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.gateways.NotificationSystem;
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.ModulePointage;
+import fr.s3i.pointeuse.domaine.pointages.gateways.PointageEnvoiFichier;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.service.logging.AndroidLogger;
 import fr.s3i.pointeuse.persistance.dao.PointageDao;
+import fr.s3i.pointeuse.service.mail.MailService;
 import fr.s3i.pointeuse.service.notification.NotificationService;
 import fr.s3i.pointeuse.service.preferences.Preferences;
 
@@ -60,6 +62,7 @@ public class PointageApplication extends Application {
     private void chargerModulePointage() {
         contexte.enregistrerService(PointagePreferences.class, new Preferences(this.getApplicationContext()));
         contexte.enregistrerService(PointageRepository.class, new PointageDao(this.getApplicationContext()));
+        contexte.enregistrerService(PointageEnvoiFichier.class, new MailService(this.getApplicationContext()));
         modulePointage = new ModulePointage(contexte);
     }
 

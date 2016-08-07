@@ -83,7 +83,13 @@ public class ExporterInteractor extends Interactor<ExporterOut> implements Expor
     }
 
     private void exporter(Periode periode, Date reference) {
-        if (envoiFichier != null) {
+        if (preferences.getExportDestinataire() == null || "".equals(preferences.getExportDestinataire())) {
+            out.onErreur(Chaines.erreur_export_email_invalide);
+        }
+        else if (envoiFichier == null) {
+            out.onErreur(Chaines.erreur_export_indisponible);
+        }
+        else {
             Date debutPeriode = periode.getDebutPeriode(reference);
             Date finPeriode = periode.getFinPeriode(reference);
 
@@ -110,9 +116,6 @@ public class ExporterInteractor extends Interactor<ExporterOut> implements Expor
                     export.toString().getBytes());
             out.toast(Chaines.toast_export_termine);
             out.onExportTermine();
-        }
-        else {
-            out.onErreur(Chaines.erreur_export_indisponible);
         }
     }
 
