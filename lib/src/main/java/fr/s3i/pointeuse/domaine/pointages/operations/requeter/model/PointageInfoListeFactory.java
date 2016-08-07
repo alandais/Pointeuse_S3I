@@ -38,14 +38,14 @@ public class PointageInfoListeFactory implements Service {
         this.pointageInfoFactory = contexte.getService(PointageInfoFactory.class);
     }
 
-    public fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe getPointageInfoListe(PointageWrapperListe listePointageWrapper) {
+    public PointageInfoListe getPointageInfoListe(PointageWrapperListe listePointageWrapper) {
         String dureeTotale = listePointageWrapper.getDureeTotale();
         List<PointageWrapper> liste = listePointageWrapper.getPointages();
-        List<fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo> listePointageInfo = new ArrayList<>();
+        List<PointageInfo> listePointageInfo = new ArrayList<>();
         for (PointageWrapper pointageWrapper : liste) {
             listePointageInfo.add(pointageInfoFactory.getPointageInfo(pointageWrapper));
         }
-        return new fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe(listePointageInfo, dureeTotale);
+        return new PointageInfoListe(listePointageInfo, dureeTotale);
     }
 
 }
