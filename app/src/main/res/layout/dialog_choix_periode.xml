@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
   ~
@@ -17,32 +18,12 @@
   ~
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_calendrier"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/cardview_dark_background"
-    tools:context=".presentation.fragment.calendrier.CalendrierVue" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <include layout="@layout/merge_choix_periode" />
-
-    <TextView
-        android:id="@+id/duree"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#FF0000"
-        android:textStyle="bold"
-        android:gravity="center" />
-
-    <ListView
-        android:id="@+id/calendrier_liste"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
 
 </LinearLayout>

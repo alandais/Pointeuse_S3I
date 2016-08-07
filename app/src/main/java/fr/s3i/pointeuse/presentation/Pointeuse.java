@@ -76,8 +76,8 @@ public class Pointeuse extends AppCompatActivity {
                 intent = new Intent(this, Preferences.class);
                 break;
             case R.id.menu_item_export:
-                //TODO
-                break;
+                exporter(); // c'est la vue Calendrier qui gère les exports
+                return true;
             case R.id.menu_item_aide:
                 //TODO
                 break;
@@ -92,6 +92,13 @@ public class Pointeuse extends AppCompatActivity {
         }
         startActivity(intent);
         return true;
+    }
+
+    private void exporter() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        PagerAdapter adapter = (PagerAdapter) viewPager.getAdapter();
+        CalendrierVue calendrierVue = (CalendrierVue) adapter.getItem(1);
+        calendrierVue.onExport();
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {

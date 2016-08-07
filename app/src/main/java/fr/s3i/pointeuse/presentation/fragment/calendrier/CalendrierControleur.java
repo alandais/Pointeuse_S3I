@@ -22,6 +22,9 @@ package fr.s3i.pointeuse.presentation.fragment.calendrier;
 import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.ExporterInteractor;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.in.ExporterIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out.ExporterOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.ListerInteractor;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.in.ListerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
@@ -36,13 +39,14 @@ import fr.s3i.pointeuse.presentation.fragment.commun.Controleur;
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierControleur<T extends ListerOut & ModifierOut & SupprimerOut> extends Controleur implements ListerIn, ModifierIn, SupprimerIn {
+public class CalendrierControleur<T extends ListerOut & ModifierOut & SupprimerOut & ExporterOut> extends Controleur implements ListerIn, ModifierIn, SupprimerIn, ExporterIn {
 
     protected CalendrierControleur(Contexte contexte, T out) {
         super(
                 new ListerInteractor(contexte, out),
                 new ModifierInteractor(contexte, out),
-                new SupprimerInteractor(contexte, out)
+                new SupprimerInteractor(contexte, out),
+                new ExporterInteractor(contexte, out)
         );
     }
 
@@ -115,4 +119,45 @@ public class CalendrierControleur<T extends ListerOut & ModifierOut & SupprimerO
             }
         });
     }
+
+    @Override
+    public void exporterJour(final Date reference) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(ExporterInteractor.class).exporterJour(reference);
+            }
+        });
+    }
+
+    @Override
+    public void exporterSemaine(final Date reference) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(ExporterInteractor.class).exporterSemaine(reference);
+            }
+        });
+    }
+
+    @Override
+    public void exporterMois(final Date reference) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(ExporterInteractor.class).exporterMois(reference);
+            }
+        });
+    }
+
+    @Override
+    public void exporterAnnee(final Date reference) {
+        tacheDeFond.execute(new Runnable() {
+            @Override
+            public void run() {
+                getInteracteur(ExporterInteractor.class).exporterAnnee(reference);
+            }
+        });
+    }
+
 }

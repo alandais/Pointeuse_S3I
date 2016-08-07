@@ -61,6 +61,7 @@ public final class Chaines {
     public static final String toast_pointage_insere = R.get("toast_pointage_insere");
     public static final String toast_pointage_supprime = R.get("toast_pointage_supprime");
     public static final String toast_pointage_modifie = R.get("toast_pointage_modifie");
+    public static final String toast_export_termine = R.get("toast_export_termine");
 
     public static final String notification_titre = R.get("notification_titre");
     public static String notificationDebutTravail(PointageWrapper pointageWrapper) {

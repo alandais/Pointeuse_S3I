@@ -17,14 +17,14 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.export.out;
+package fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
 
 /**
  * Created by Adrien on 07/08/2016.
  */
-public interface ExportOut extends OutBoundary {
+public interface ExporterOut extends OutBoundary {
 
     void onExportTermine();
 

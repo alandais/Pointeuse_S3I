@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.export.in;
+package fr.s3i.pointeuse.domaine.pointages.interactors.exporter.in;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.in.InBoundary;
 /**
  * Created by Adrien on 07/08/2016.
  */
-public interface ExportIn extends InBoundary {
+public interface ExporterIn extends InBoundary {
 
     void exporterJour(Date reference);
 

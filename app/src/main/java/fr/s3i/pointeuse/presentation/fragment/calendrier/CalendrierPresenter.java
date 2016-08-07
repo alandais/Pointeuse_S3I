@@ -20,6 +20,7 @@
 package fr.s3i.pointeuse.presentation.fragment.calendrier;
 
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out.ExporterOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
@@ -30,7 +31,7 @@ import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class CalendrierPresenter extends Presenter<CalendrierVue> implements ListerOut, ModifierOut, SupprimerOut {
+public class CalendrierPresenter extends Presenter<CalendrierVue> implements ListerOut, ModifierOut, SupprimerOut, ExporterOut {
 
     protected CalendrierPresenter(CalendrierVue vue) {
         super(vue);
@@ -77,4 +78,8 @@ public class CalendrierPresenter extends Presenter<CalendrierVue> implements Lis
         PointerWidgetProvider.refresh(vue.getContext());
     }
 
+    @Override
+    public void onExportTermine() {
+        // on ne fait rien de spécial
+    }
 }

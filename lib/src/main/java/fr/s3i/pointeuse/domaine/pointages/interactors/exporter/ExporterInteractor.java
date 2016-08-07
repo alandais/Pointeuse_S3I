@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.export;
+package fr.s3i.pointeuse.domaine.pointages.interactors.exporter;
 
 import java.util.Date;
 import java.util.List;
@@ -29,8 +29,8 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageEnvoiFichier;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
-import fr.s3i.pointeuse.domaine.pointages.interactors.export.in.ExportIn;
-import fr.s3i.pointeuse.domaine.pointages.interactors.export.out.ExportOut;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.in.ExporterIn;
+import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out.ExporterOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListeFactory;
@@ -41,7 +41,7 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 /**
  * Created by Adrien on 07/08/2016.
  */
-public class ExportInteractor extends Interactor<ExportOut> implements ExportIn {
+public class ExporterInteractor extends Interactor<ExporterOut> implements ExporterIn {
 
     private final PointageRepository repository;
 
@@ -53,7 +53,7 @@ public class ExportInteractor extends Interactor<ExportOut> implements ExportIn 
 
     private final PointageEnvoiFichier envoiFichier;
 
-    protected ExportInteractor(Contexte contexte, ExportOut out) {
+    public ExporterInteractor(Contexte contexte, ExporterOut out) {
         super(out);
         this.repository = contexte.getService(PointageRepository.class);
         this.preferences = contexte.getService(PointagePreferences.class);
@@ -108,6 +108,7 @@ public class ExportInteractor extends Interactor<ExportOut> implements ExportIn 
                     Chaines.mail_corps,
                     Chaines.mailNomPieceJointe(periode, reference),
                     export.toString().getBytes());
+            out.toast(Chaines.toast_export_termine);
             out.onExportTermine();
         }
         else {

@@ -189,6 +189,24 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
         }
     }
 
+    public void onExport() {
+        FiltreCalendrier filtre = new FiltreCalendrier();
+        switch (filtre.getFiltrePeriode()) {
+            case JOUR:
+                controleur.exporterJour(filtre.getDateReference());
+                break;
+            case SEMAINE:
+                controleur.exporterSemaine(filtre.getDateReference());
+                break;
+            case MOIS:
+                controleur.exporterMois(filtre.getDateReference());
+                break;
+            case ANNEE:
+                controleur.exporterAnnee(filtre.getDateReference());
+                break;
+        }
+    }
+
     public void onDureeTotaleUpdate(String dureeTotale) {
         if (this.getView() != null) {
             TextView textEnCours = (TextView) this.getView().findViewById(R.id.duree);
