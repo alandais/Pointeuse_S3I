@@ -40,4 +40,8 @@
     <string name="infos3i">S3I</string>
     <string name="pref_libelle_delai_format">Format d\'affichage des durées</string>
     <string name="pref_description_delai_format">Défini le format d\'affichage des durées de pointages</string>
+    <string name="pref_export_separateur_libelle">Séparateur</string>
+    <string name="pref_export_separateur_description">Choix du caractére de séparation pour le fichier de sauvegarde</string>
+    <string name="pref_export_email_libelle">Email destinataire export</string>
+    <string name="pref_export_email_description">Entrez votre adresse Email</string>
 </resources>

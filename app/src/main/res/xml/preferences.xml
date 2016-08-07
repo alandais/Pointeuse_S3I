@@ -33,4 +33,24 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Export">
+
+        <EditTextPreference
+            android:key="@string/pref_export_email"
+            android:title="@string/pref_export_email_libelle"
+            android:summary="@string/pref_export_email_description"
+            android:dialogTitle="@string/pref_export_email_libelle"
+            android:inputType="textEmailAddress"
+            />
+
+        <EditTextPreference
+            android:key="@string/pref_export_separateur"
+            android:title="@string/pref_export_separateur_libelle"
+            android:defaultValue=";"
+            android:summary="@string/pref_export_separateur_description"
+            android:dialogTitle="@string/pref_export_separateur_libelle"
+            />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

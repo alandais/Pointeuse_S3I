@@ -83,7 +83,12 @@ public enum Periode {
                 builder.append(cal.get(Calendar.YEAR));
                 break;
             case JOUR:
-                builder.append(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(cal.getTime()));
+                builder.append("Journée du ");
+                builder.append(cal.get(Calendar.DAY_OF_MONTH));
+                builder.append(' ');
+                builder.append(new SimpleDateFormat("MMM", Locale.getDefault()).format(cal.getTime()));
+                builder.append(' ');
+                builder.append(cal.get(Calendar.YEAR));
                 break;
         }
         return builder.toString();

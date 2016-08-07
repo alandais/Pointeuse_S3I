@@ -32,4 +32,7 @@
         <item>DIXIEME_HEURE</item>
     </string-array>
 
+    <string name="pref_export_email">EXPORT_DESTINATAIRE</string>
+    <string name="pref_export_separateur">EXPORT_SEPARATEUR</string>
+
 </resources>

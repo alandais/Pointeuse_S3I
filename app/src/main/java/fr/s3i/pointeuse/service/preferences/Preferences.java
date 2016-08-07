@@ -40,8 +40,8 @@ public class Preferences implements PointagePreferences {
     //private static final String PREF_DELAI_FORMAT = "DELAI_FORMAT";
     private static final String PREF_PRECISION = "PRECISION";
     private static final String PREF_ARRONDI = "ARRONDI";
-    private static final String PREF_EXPORT_SEPARATEUR = "EXPORT_SEPARATEUR";
-    private static final String PREF_EXPORT_DESTINATAIRE = "EXPORT_DESTINATAIRE";
+    //private static final String PREF_EXPORT_SEPARATEUR = "EXPORT_SEPARATEUR";
+    //private static final String PREF_EXPORT_DESTINATAIRE = "EXPORT_DESTINATAIRE";
     private static final String PREF_TEMPS_TRAVAIL_MINIMUM_PAR_SEMAINE_EN_HEURES = "TEMPS_TRAVAIL_MINIMUM_PAR_SEMAINE_EN_HEURES";
     private static final String PREF_TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES = "TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES";
 
@@ -77,12 +77,12 @@ public class Preferences implements PointagePreferences {
 
     @Override
     public String getExportSeparateur() {
-        return preferences.getString(PREF_EXPORT_SEPARATEUR, ";");
+        return preferences.getString(context.getString(R.string.pref_export_separateur), ";");
     }
 
     @Override
     public String getExportDestinataire() {
-        return preferences.getString(PREF_EXPORT_DESTINATAIRE, null);
+        return preferences.getString(context.getString(R.string.pref_export_email), null);
     }
 
     @Override
