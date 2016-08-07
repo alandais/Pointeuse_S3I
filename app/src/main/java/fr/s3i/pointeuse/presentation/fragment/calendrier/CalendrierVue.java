@@ -39,7 +39,7 @@ import java.util.List;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.adaptateur.PointageInfoListeAdaptateur;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;

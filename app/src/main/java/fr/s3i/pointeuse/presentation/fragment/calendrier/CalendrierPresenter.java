@@ -22,7 +22,7 @@ package fr.s3i.pointeuse.presentation.fragment.calendrier;
 import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out.ExporterOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.interactors.modifier.boundaries.out.ModifierOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.supprimer.boundaries.out.SupprimerOut;
 import fr.s3i.pointeuse.presentation.fragment.commun.Presenter;

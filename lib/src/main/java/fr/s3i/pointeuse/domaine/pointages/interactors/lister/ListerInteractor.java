@@ -31,8 +31,9 @@ import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.in.ListerIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.ListerOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListeFactory;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.RequeterOperation;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListeFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.BusPointage;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
@@ -45,18 +46,12 @@ public class ListerInteractor extends Interactor<ListerOut> implements ListerIn,
 
     private final BusPointage bus;
 
-    private final PointageRepository repository;
-
-    private final PointageWrapperFactory pointageWrapperFactory;
-
-    private final PointageInfoListeFactory pointageInfoListeFactory;
+    private final RequeterOperation requeter;
 
     public ListerInteractor(Contexte contexte, ListerOut out) {
         super(out);
         this.bus = contexte.getService(BusPointage.class);
-        this.repository = contexte.getService(PointageRepository.class);
-        this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
-        this.pointageInfoListeFactory = contexte.getService(PointageInfoListeFactory.class);
+        this.requeter = new RequeterOperation(contexte, out);
     }
 
     @Override
@@ -102,13 +97,7 @@ public class ListerInteractor extends Interactor<ListerOut> implements ListerIn,
     }
 
     private void lister(Periode periode, Date reference) {
-        Date debutPeriode = periode.getDebutPeriode(reference);
-        Date finPeriode = periode.getFinPeriode(reference);
-
-        List<Pointage> pointages = repository.recupererEntre(debutPeriode, finPeriode);
-        PointageWrapperListe pointageWrapperListe = pointageWrapperFactory.getPointageWrapper(pointages);
-        PointageInfoListe pointageInfoListe = pointageInfoListeFactory.getPointageInfoListe(pointageWrapperListe);
-
+        PointageInfoListe pointageInfoListe = requeter.executer(periode, reference);
         out.onPointageInfoListeUpdate(pointageInfoListe);
     }
 

@@ -17,30 +17,42 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model;
-
-import java.util.Collections;
-import java.util.List;
+package fr.s3i.pointeuse.domaine.pointages.operations.requeter.model;
 
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class PointageInfoListe {
+public class PointageInfo {
 
-    private final List<PointageInfo> listePointageInfo;
+    private final Long id;
 
-    private final String dureeTotale;
+    private final String debut;
 
-    PointageInfoListe(List<PointageInfo> listePointageInfo, String dureeTotale) {
-        this.listePointageInfo = Collections.unmodifiableList(listePointageInfo);
-        this.dureeTotale = dureeTotale;
+    private final String fin;
+
+    private final String duree;
+
+    PointageInfo(Long id, String debut, String fin, String duree) {
+        this.id = id;
+        this.debut = debut;
+        this.fin = fin;
+        this.duree = duree;
     }
 
-    public List<PointageInfo> getListePointageInfo() {
-        return listePointageInfo;
+    public Long getId() {
+        return id;
     }
 
-    public String getDureeTotale() {
-        return dureeTotale;
+    public String getDebut() {
+        return debut;
     }
+
+    public String getFin() {
+        return fin;
+    }
+
+    public String getDuree() {
+        return duree;
+    }
+
 }

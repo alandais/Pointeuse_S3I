@@ -20,22 +20,17 @@
 package fr.s3i.pointeuse.domaine.pointages.interactors.exporter;
 
 import java.util.Date;
-import java.util.List;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.interactors.Interactor;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
-import fr.s3i.pointeuse.domaine.pointages.entities.Pointage;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointageEnvoiFichier;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
-import fr.s3i.pointeuse.domaine.pointages.gateways.PointageRepository;
 import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.in.ExporterIn;
 import fr.s3i.pointeuse.domaine.pointages.interactors.exporter.out.ExporterOut;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListeFactory;
-import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperFactory;
-import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapperListe;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.RequeterOperation;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe;
 import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 
 /**
@@ -43,22 +38,16 @@ import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
  */
 public class ExporterInteractor extends Interactor<ExporterOut> implements ExporterIn {
 
-    private final PointageRepository repository;
-
     private final PointagePreferences preferences;
 
-    private final PointageWrapperFactory pointageWrapperFactory;
-
-    private final PointageInfoListeFactory pointageInfoListeFactory;
+    private final RequeterOperation requeter;
 
     private final PointageEnvoiFichier envoiFichier;
 
     public ExporterInteractor(Contexte contexte, ExporterOut out) {
         super(out);
-        this.repository = contexte.getService(PointageRepository.class);
         this.preferences = contexte.getService(PointagePreferences.class);
-        this.pointageWrapperFactory = contexte.getService(PointageWrapperFactory.class);
-        this.pointageInfoListeFactory = contexte.getService(PointageInfoListeFactory.class);
+        this.requeter = new RequeterOperation(contexte, out);
         this.envoiFichier = contexte.getService(PointageEnvoiFichier.class, null);
     }
 
@@ -90,12 +79,7 @@ public class ExporterInteractor extends Interactor<ExporterOut> implements Expor
             out.onErreur(Chaines.erreur_export_indisponible);
         }
         else {
-            Date debutPeriode = periode.getDebutPeriode(reference);
-            Date finPeriode = periode.getFinPeriode(reference);
-
-            List<Pointage> pointages = repository.recupererEntre(debutPeriode, finPeriode);
-            PointageWrapperListe pointageWrapperListe = pointageWrapperFactory.getPointageWrapper(pointages);
-            PointageInfoListe pointageInfoListe = pointageInfoListeFactory.getPointageInfoListe(pointageWrapperListe);
+            PointageInfoListe pointageInfoListe = requeter.executer(periode, reference);
 
             StringBuilder export = new StringBuilder();
             for (PointageInfo pointageInfo : pointageInfoListe.getListePointageInfo())

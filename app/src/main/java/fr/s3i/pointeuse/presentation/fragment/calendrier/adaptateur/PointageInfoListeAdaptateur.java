@@ -29,7 +29,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.s3i.pointeuse.R;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo;
 
 /**
  * Created by Adrien on 30/07/2016.

@@ -20,7 +20,7 @@
 package fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out;
 
 import fr.s3i.pointeuse.domaine.communs.interactors.boundaries.out.OutBoundary;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfoListe;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe;
 
 /**
  * Created by Adrien on 19/07/2016.

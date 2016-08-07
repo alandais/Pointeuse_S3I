@@ -22,7 +22,7 @@ package fr.s3i.pointeuse.domaine.pointages;
 import java.util.Date;
 
 import fr.s3i.pointeuse.domaine.communs.R;
-import fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model.PointageInfo;
+import fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo;
 import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
 import fr.s3i.pointeuse.domaine.pointages.utils.Periode;
 

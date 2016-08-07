@@ -17,22 +17,30 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model;
+package fr.s3i.pointeuse.domaine.pointages.operations.requeter.model;
 
-import fr.s3i.pointeuse.domaine.communs.services.Service;
-import fr.s3i.pointeuse.domaine.pointages.services.model.PointageWrapper;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Adrien on 30/07/2016.
  */
-public class PointageInfoFactory implements Service {
+public class PointageInfoListe {
 
-    public PointageInfo getPointageInfo(PointageWrapper pointageWrapper) {
-        Long id = pointageWrapper.getId();
-        String debut = pointageWrapper.getDateDebut();
-        String fin = pointageWrapper.getDateFin();
-        String duree = pointageWrapper.getDuree();
-        return new PointageInfo(id, debut, fin, duree);
+    private final List<PointageInfo> listePointageInfo;
+
+    private final String dureeTotale;
+
+    PointageInfoListe(List<PointageInfo> listePointageInfo, String dureeTotale) {
+        this.listePointageInfo = Collections.unmodifiableList(listePointageInfo);
+        this.dureeTotale = dureeTotale;
     }
 
+    public List<PointageInfo> getListePointageInfo() {
+        return listePointageInfo;
+    }
+
+    public String getDureeTotale() {
+        return dureeTotale;
+    }
 }

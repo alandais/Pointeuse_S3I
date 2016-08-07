@@ -17,7 +17,7 @@
  *
  */
 
-package fr.s3i.pointeuse.domaine.pointages.interactors.lister.boundaries.out.model;
+package fr.s3i.pointeuse.domaine.pointages.operations.requeter.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +38,14 @@ public class PointageInfoListeFactory implements Service {
         this.pointageInfoFactory = contexte.getService(PointageInfoFactory.class);
     }
 
-    public PointageInfoListe getPointageInfoListe(PointageWrapperListe listePointageWrapper) {
+    public fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe getPointageInfoListe(PointageWrapperListe listePointageWrapper) {
         String dureeTotale = listePointageWrapper.getDureeTotale();
         List<PointageWrapper> liste = listePointageWrapper.getPointages();
-        List<PointageInfo> listePointageInfo = new ArrayList<>();
+        List<fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfo> listePointageInfo = new ArrayList<>();
         for (PointageWrapper pointageWrapper : liste) {
             listePointageInfo.add(pointageInfoFactory.getPointageInfo(pointageWrapper));
         }
-        return new PointageInfoListe(listePointageInfo, dureeTotale);
+        return new fr.s3i.pointeuse.domaine.pointages.operations.requeter.model.PointageInfoListe(listePointageInfo, dureeTotale);
     }
 
 }
