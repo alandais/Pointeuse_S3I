@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+  ~
+  ~     This file is part of Oburo.O
+  ~     Oburo.O is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<resources>
+
+    <string name="pref_delai_format">DELAI_FORMAT</string>
+    <string-array name="pref_delai_format_liste">
+        <item>Heure / Min</item>
+        <item>Jour / Heure / Min</item>
+        <item>Dixième d\'heure</item>
+    </string-array>
+    <string-array name="pref_delai_format_valeurs">
+        <item>HEURE_MINUTE</item>
+        <item>JOUR_HEURE_MINUTE</item>
+        <item>DIXIEME_HEURE</item>
+    </string-array>
+
+</resources>

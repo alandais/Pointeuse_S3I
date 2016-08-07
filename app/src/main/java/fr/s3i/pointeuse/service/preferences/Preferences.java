@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 
 /**
@@ -30,11 +31,13 @@ import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
  */
 public class Preferences implements PointagePreferences {
 
+    private final Context context;
+
     private final SharedPreferences preferences;
 
     private static final String PREF_DATE_FORMAT = "DATE_FORMAT";
     private static final String PREF_HEURE_FORMAT = "HEURE_FORMAT";
-    private static final String PREF_DELAI_FORMAT = "DELAI_FORMAT";
+    //private static final String PREF_DELAI_FORMAT = "DELAI_FORMAT";
     private static final String PREF_PRECISION = "PRECISION";
     private static final String PREF_ARRONDI = "ARRONDI";
     private static final String PREF_EXPORT_SEPARATEUR = "EXPORT_SEPARATEUR";
@@ -43,6 +46,7 @@ public class Preferences implements PointagePreferences {
     private static final String PREF_TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES = "TEMPS_TRAVAIL_MAXIMUM_PAR_SEMAINE_EN_HEURES";
 
     public Preferences(Context context) {
+        this.context = context;
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -58,7 +62,7 @@ public class Preferences implements PointagePreferences {
 
     @Override
     public DelaiFormat getDelaiFormat() {
-        return DelaiFormat.valueOf(preferences.getString(PREF_DELAI_FORMAT, DelaiFormat.HEURE_MINUTE.name()));
+        return DelaiFormat.valueOf(preferences.getString(context.getString(R.string.pref_delai_format), DelaiFormat.HEURE_MINUTE.name()));
     }
 
     @Override

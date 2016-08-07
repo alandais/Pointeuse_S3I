@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import fr.s3i.pointeuse.domaine.communs.Contexte;
 import fr.s3i.pointeuse.domaine.communs.services.Service;
+import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
 import fr.s3i.pointeuse.domaine.pointages.gateways.PointagePreferences;
 
 /**
@@ -43,15 +44,19 @@ public class Formateur implements Service {
         switch (preferences.getDelaiFormat()) {
             case DIXIEME_HEURE:
                 result = String.format(Locale.getDefault(), "%02.1f", duree / 3600.00f);
+                Log.debug(Log.DATAFLOW, "formatDuree(DIXIEME_HEURE, {0}) == {1}", duree, result);
                 break;
             case HEURE_MINUTE:
                 result = String.format(Locale.getDefault(), "%02dh%02d", duree / 3600, (duree % 3600) / 60);
+                Log.debug(Log.DATAFLOW, "formatDuree(HEURE_MINUTE, {0}) == {1}", duree, result);
                 break;
             case JOUR_HEURE_MINUTE:
                 result = String.format(Locale.getDefault(), "%dj. %02dh%02d", duree / 86400, (duree % 86400) / 3600, (duree % 3600) / 60);
+                Log.debug(Log.DATAFLOW, "formatDuree(JOUR_HEURE_MINUTE, {0}) == {1}", duree, result);
                 break;
             default:
                 result = Long.toString(duree);
+                Log.warn(Log.DATAFLOW, "formatDuree({0}) == {1}", duree, result);
                 break;
         }
         return result;

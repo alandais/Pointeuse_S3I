@@ -33,6 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.activity.FragmentContainer" />
+        <activity android:name=".presentation.activity.Preferences" />
 
         <receiver android:name=".presentation.widget.pointer.PointerWidgetProvider">
             <intent-filter>
@@ -44,7 +46,6 @@
                 android:resource="@xml/pointer_widget_info" />
         </receiver>
 
-        <activity android:name=".presentation.activity.FragmentContainer"></activity>
     </application>
 
 </manifest>

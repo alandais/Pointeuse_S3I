@@ -35,6 +35,7 @@ import android.widget.Toast;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.activity.FragmentContainer;
+import fr.s3i.pointeuse.presentation.activity.Preferences;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
@@ -75,7 +76,7 @@ public class Pointeuse extends AppCompatActivity {
                 intent.putExtra(FragmentContainer.FRAGMENT_ID, "Suppression");
                 break;
             case R.id.menu_item_preferences:
-                //TODO
+                intent = new Intent(this, Preferences.class);
                 break;
             case R.id.menu_item_export:
                 //TODO

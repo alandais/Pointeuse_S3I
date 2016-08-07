@@ -38,4 +38,6 @@
     <string name="aide">Aide</string>
     <string name="licence">Licence</string>
     <string name="infos3i">S3I</string>
+    <string name="pref_libelle_delai_format">Format d\'affichage des durées</string>
+    <string name="pref_description_delai_format">Défini le format d\'affichage des durées de pointages</string>
 </resources>
