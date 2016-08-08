@@ -46,6 +46,19 @@ public final class Chaines {
     public static final String ok = R.get("ok");
     public static final String annuler = R.get("annuler");
 
+    public static final String periodeAnnee(Date reference) {
+        return R.get("periode_annee", reference);
+    }
+    public static final String periodeMois(Date reference) {
+        return R.get("periode_mois", reference);
+    }
+    public static final String periodeSemaine(Date reference) {
+        return R.get("periode_semaine", reference);
+    }
+    public static final String periodeJour(Date reference) {
+        return R.get("periode_jour", reference);
+    }
+
     public static final String demander_date_debut = R.get("demander_date_debut");
     public static final String demander_date_fin = R.get("demander_date_fin");
     public static String demanderConfirmationSuppression(PointageInfo pointageInfo) {
@@ -68,7 +81,7 @@ public final class Chaines {
         return R.get("notification_debut_travail", pointageWrapper.getHeureDebut());
     }
     public static String notificationFinTravail(PointageWrapper pointageWrapper) {
-        return R.get("notification_fin_travail", pointageWrapper.getHeureFin(), pointageWrapper.getDuree());
+        return R.get("notification_fin_travail", pointageWrapper.getHeureFin());
     }
 
     public static final String statut_pointage_aucun = R.get("statut_pointage_aucun");

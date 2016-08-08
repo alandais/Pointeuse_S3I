@@ -19,12 +19,12 @@
 
 package fr.s3i.pointeuse.domaine.pointages.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import fr.s3i.pointeuse.domaine.communs.services.logger.Log;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 
 /**
  * Created by Adrien on 24/07/2016.
@@ -62,36 +62,18 @@ public enum Periode {
     }
 
     public String toString(Date reference) {
-        // TODO : refaire avec prise en compte de l'internationalisation
-        Calendar cal = getCalendar(reference);
-        StringBuilder builder = new StringBuilder();
         switch(this) {
             case ANNEE:
-                builder.append("Année ");
-                builder.append(cal.get(Calendar.YEAR));
-                break;
+                return Chaines.periodeAnnee(reference);
             case MOIS:
-                builder.append("Mois de ");
-                builder.append(new SimpleDateFormat("MMM", Locale.getDefault()).format(cal.getTime()));
-                builder.append(' ');
-                builder.append(cal.get(Calendar.YEAR));
-                break;
+                return Chaines.periodeMois(reference);
             case SEMAINE:
-                builder.append("Semaine n°");
-                builder.append(cal.get(Calendar.WEEK_OF_YEAR));
-                builder.append(" de l'année ");
-                builder.append(cal.get(Calendar.YEAR));
-                break;
+                return Chaines.periodeSemaine(reference);
             case JOUR:
-                builder.append("Journée du ");
-                builder.append(cal.get(Calendar.DAY_OF_MONTH));
-                builder.append(' ');
-                builder.append(new SimpleDateFormat("MMM", Locale.getDefault()).format(cal.getTime()));
-                builder.append(' ');
-                builder.append(cal.get(Calendar.YEAR));
-                break;
+                return Chaines.periodeJour(reference);
+            default:
+                throw new IllegalStateException("Periode inconnue : " + this.name());
         }
-        return builder.toString();
     }
 
     private void reset(Calendar calendar) {

@@ -19,6 +19,7 @@
 
 package fr.s3i.pointeuse.domaine.communs;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -32,7 +33,7 @@ public final class R {
     }
 
     public static String get(String name, Object... args) {
-        return String.format(R.getString(name), args);
+        return MessageFormat.format(R.getString(name), args);
     }
 
 }
