@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorImportant"
         android:textStyle="bold"
         android:gravity="center"
         />
