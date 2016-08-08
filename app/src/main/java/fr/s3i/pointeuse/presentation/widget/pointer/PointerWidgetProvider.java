@@ -54,6 +54,10 @@ public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter
         WidgetProvider.sendIntent(context, INTENT_ACTION_REFRESH, PointerWidgetProvider.class);
     }
 
+    public static void pointer(Context context) {
+        WidgetProvider.sendIntent(context, INTENT_ACTION_POINTER, PointerWidgetProvider.class);
+    }
+
     @Override
     protected PointerWidgetPresenter getPresenter(Context context) {
         return new PointerWidgetPresenter(context);

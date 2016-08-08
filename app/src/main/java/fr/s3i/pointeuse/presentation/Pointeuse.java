@@ -20,13 +20,15 @@
 package fr.s3i.pointeuse.presentation;
 
 import android.content.Intent;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,12 +37,14 @@ import android.widget.Toast;
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.activity.FragmentContainer;
+import fr.s3i.pointeuse.presentation.activity.NfcActivity;
 import fr.s3i.pointeuse.presentation.activity.Preferences;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
+import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 
-public class Pointeuse extends AppCompatActivity {
+public class Pointeuse extends NfcActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class Pointeuse extends AppCompatActivity {
                 PointerVue.getInstance(Chaines.interacteur_pointer_nom),
                 CalendrierVue.getInstance(Chaines.interacteur_calendrier_nom)
         });
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
@@ -59,6 +64,42 @@ public class Pointeuse extends AppCompatActivity {
         if (savedInstanceState == null) {
             Toast.makeText(this, Chaines.copyright, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            getIntent().setAction("DONE");
+            onTagConnuDecouvert();
+        }
+    }
+
+    @Override
+    public void onNfcTag(Tag tagNfc) {
+        Log.d("NFC", tagNfc.toString());
+        onTagInconnuDecouvert();
+    }
+
+    @Override
+    public void onNfcTechTag(Tag tagNfc) {
+        Log.d("NFC", tagNfc.toString());
+        onTagInconnuDecouvert();
+    }
+
+    @Override
+    public void onNfcNdefTag(Tag tagNfc) {
+        Log.d("NFC", tagNfc.toString());
+        onTagConnuDecouvert();
+    }
+
+    private void onTagInconnuDecouvert() {
+        Toast.makeText(this, "La création de tag n'est pas encore développée", Toast.LENGTH_LONG).show();
+    }
+
+    private void onTagConnuDecouvert() {
+        pointer();
     }
 
     @Override
@@ -99,6 +140,10 @@ public class Pointeuse extends AppCompatActivity {
         PagerAdapter adapter = (PagerAdapter) viewPager.getAdapter();
         CalendrierVue calendrierVue = (CalendrierVue) adapter.getItem(1);
         calendrierVue.onExport();
+    }
+
+    private void pointer() {
+        PointerWidgetProvider.pointer(this);
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {

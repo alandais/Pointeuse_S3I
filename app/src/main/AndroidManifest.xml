@@ -19,21 +19,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.s3i.pointeuse">
 
+    <uses-permission android:name="android.permission.NFC" />
+
     <application
         android:name=".PointageApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeNoir">
+        android:theme="@style/AppThemeNoir"
+        >
+
         <activity android:name=".presentation.Pointeuse">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="http"
+                    android:host="pointeuse.s3i.fr"
+                    android:pathPrefix="/pointer" />
+            </intent-filter>
+
         </activity>
+
         <activity android:name=".presentation.activity.FragmentContainer" />
+
         <activity android:name=".presentation.activity.Preferences" />
 
         <receiver android:name=".presentation.widget.pointer.PointerWidgetProvider">
@@ -50,6 +66,7 @@
             android:authorities="fr.s3i.pointeuse"
             android:name="android.support.v4.content.FileProvider"
             android:grantUriPermissions="true"
+            android:exported="false"
             >
 
             <meta-data
