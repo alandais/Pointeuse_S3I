@@ -19,8 +19,10 @@
 
 package fr.s3i.pointeuse.presentation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.NfcAdapter;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -28,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +55,8 @@ import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
  */
 public class Pointeuse extends NfcActivity {
 
+    private static final String URI_POINTER = "pointeuse.s3i.fr/pointer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,25 +78,47 @@ public class Pointeuse extends NfcActivity {
     }
 
     @Override
-    public void onNfcTag(Tag tagNfc) {
-        Log.d("NFC", "onNfcTag(" + tagNfc.toString() + ")");
-        onTagInconnuDecouvert();
+    public void onNfcTag(Tag tagNfc, NdefMessage[] msgs) {
+        Log.d("NFC", "tagNfc(" + tagNfc.toString() + ")");
+        if (msgs.length > 0) {
+            byte[] payload = msgs[0].getRecords()[0].getPayload();
+            if(payload.length > 1 && new String(payload).substring(1).equals(URI_POINTER)) {
+                // il semblerait que cela soit notre tag
+                onTagConnuDecouvert();
+                return;
+            }
+        }
+        onTagInconnuDecouvert(tagNfc);
     }
 
-    @Override
-    public void onNfcTechTag(Tag tagNfc) {
-        Log.d("NFC", "onNfcTechTag(" + tagNfc.toString() + ")");
-        onTagInconnuDecouvert();
-    }
+    private void onTagInconnuDecouvert(final Tag tagNfc) {
+        final NdefRecord record;
+        try {
+            final byte[] uriBytes = "pointeuse.s3i.fr/pointer".getBytes("UTF-8");
+            final byte[] recordBytes = new byte[uriBytes.length + 1];
+            recordBytes[0] = (byte) 0x03; // 3 = http://
+            System.arraycopy(uriBytes, 0, recordBytes, 1, uriBytes.length);
+            record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], recordBytes);
+        }
+        catch(Exception e) {
+            Log.e("NFC", "Erreur lors de la création du tag", e);
+            Toast.makeText(this, "Tag NFC inconnu ou malformé", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-    @Override
-    public void onNfcNdefTag(Tag tagNfc) {
-        Log.d("NFC", "onNfcNdefTag(" + tagNfc.toString() + ")");
-        onTagConnuDecouvert();
-    }
-
-    private void onTagInconnuDecouvert() {
-        Toast.makeText(this, "La création de tag n'est pas encore développée", Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Tag NFC inconnu")
+                .setMessage("Voulez-vous initialiser un nouveau tag pointer?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ecrireTagNfc(tagNfc, record);
+                    }
+                })
+                .setNegativeButton("Non", null)
+                .show();
     }
 
     private void onTagConnuDecouvert() {

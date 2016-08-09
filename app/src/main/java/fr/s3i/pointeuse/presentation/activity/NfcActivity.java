@@ -21,51 +21,79 @@ package fr.s3i.pointeuse.presentation.activity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Adrien on 08/08/2016.
  */
 public abstract class NfcActivity extends AppCompatActivity {
-    // NFC handling stuff
-    private PendingIntent pendingIntent;
+
     private NfcAdapter nfcAdapter;
 
     @Override
     public void onResume() {
         super.onResume();
 
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+        if (nfcAdapter != null) {
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        nfcAdapter.disableForegroundDispatch(this);
+
+        if (nfcAdapter != null) {
+            nfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
-    public abstract void onNfcTag(Tag tagNfc);
-    public abstract void onNfcTechTag(Tag tagNfc);
-    public abstract void onNfcNdefTag(Tag tagNfc);
+    public abstract void onNfcTag(Tag tagNfc, NdefMessage[] msgs);
 
     @Override
     public void onNewIntent(Intent intent) {
         String action = intent.getAction();
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action) ||
+            NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) ||
+            NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+
             Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            onNfcTag(tagFromIntent);
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msgs = new NdefMessage[0];
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+            }
+
+            onNfcTag(tagFromIntent, msgs);
         }
-        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
-            Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            onNfcTechTag(tagFromIntent);
+    }
+
+    protected void ecrireTagNfc(Tag tagNfc, NdefRecord record) {
+        try {
+            NdefRecord[] records = {record};
+            NdefMessage message = new NdefMessage(records);
+            Ndef ndef = Ndef.get(tagNfc);
+            ndef.connect();
+            ndef.writeNdefMessage(message);
+            ndef.close();
+            Toast.makeText(this, "Tag initialisé", Toast.LENGTH_LONG).show();
         }
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
-            Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            onNfcNdefTag(tagFromIntent);
+        catch (Exception e) {
+            Log.e("NFC", "Erreur lors de l'écriture du tag", e);
+            Toast.makeText(this, "Erreur lors de l'écriture du tag", Toast.LENGTH_LONG).show();
         }
     }
 }
