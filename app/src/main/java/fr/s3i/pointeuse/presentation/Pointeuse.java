@@ -44,6 +44,12 @@ import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
 import fr.s3i.pointeuse.presentation.widget.pointer.PointerWidgetProvider;
 
+/**
+ * C'est l'activité principale de l'application, elle affiche : le menu, les fragments 'pointage' et 'calendrier',
+ * et écoute les évenement de TAG NFC découverts afin de pouvoir lancer un pointage si un tag répond au format
+ * attendu par l'application, ou alors de proposer la création d'un tag au format attendu par l'application,
+ * si ce dernier est vide ou non reconnu.
+ */
 public class Pointeuse extends NfcActivity {
 
     @Override
@@ -67,30 +73,20 @@ public class Pointeuse extends NfcActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            getIntent().setAction("DONE");
-            onTagConnuDecouvert();
-        }
-    }
-
-    @Override
     public void onNfcTag(Tag tagNfc) {
-        Log.d("NFC", tagNfc.toString());
+        Log.d("NFC", "onNfcTag(" + tagNfc.toString() + ")");
         onTagInconnuDecouvert();
     }
 
     @Override
     public void onNfcTechTag(Tag tagNfc) {
-        Log.d("NFC", tagNfc.toString());
+        Log.d("NFC", "onNfcTechTag(" + tagNfc.toString() + ")");
         onTagInconnuDecouvert();
     }
 
     @Override
     public void onNfcNdefTag(Tag tagNfc) {
-        Log.d("NFC", tagNfc.toString());
+        Log.d("NFC", "onNfcNdefTag(" + tagNfc.toString() + ")");
         onTagConnuDecouvert();
     }
 
@@ -143,6 +139,7 @@ public class Pointeuse extends NfcActivity {
     }
 
     private void pointer() {
+        // c'est plus simple d'appeler le widget provider ici
         PointerWidgetProvider.pointer(this);
     }
 

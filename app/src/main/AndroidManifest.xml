@@ -37,6 +37,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+        </activity>
+
+        <activity android:name=".presentation.activity.FragmentContainer" />
+
+        <activity android:name=".presentation.activity.Preferences" />
+
+        <activity
+            android:name=".presentation.activity.NfcPointer"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:noHistory="true"
+            android:excludeFromRecents="true"
+            >
+
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -47,10 +60,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".presentation.activity.FragmentContainer" />
-
-        <activity android:name=".presentation.activity.Preferences" />
 
         <receiver android:name=".presentation.widget.pointer.PointerWidgetProvider">
             <intent-filter>
