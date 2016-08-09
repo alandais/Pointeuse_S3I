@@ -81,6 +81,23 @@ public abstract class NfcActivity extends AppCompatActivity {
         }
     }
 
+    protected NdefRecord creerNdefUri(String url) {
+        final NdefRecord record;
+        try {
+            final byte[] uriBytes = url.getBytes("UTF-8");
+            final byte[] recordBytes = new byte[uriBytes.length + 1];
+            recordBytes[0] = (byte) 0x03; // 3 = http://
+            System.arraycopy(uriBytes, 0, recordBytes, 1, uriBytes.length);
+            record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], recordBytes);
+        }
+        catch(Exception e) {
+            Log.e("NFC", "Erreur lors de la création du tag", e);
+            Toast.makeText(this, "Erreur lors de la création du tag", Toast.LENGTH_LONG).show();
+            return null;
+        }
+        return record;
+    }
+
     protected void ecrireTagNfc(Tag tagNfc, NdefRecord record) {
         try {
             NdefRecord[] records = {record};
@@ -96,5 +113,6 @@ public abstract class NfcActivity extends AppCompatActivity {
             Toast.makeText(this, "Erreur lors de l'écriture du tag", Toast.LENGTH_LONG).show();
         }
     }
+
 }
 

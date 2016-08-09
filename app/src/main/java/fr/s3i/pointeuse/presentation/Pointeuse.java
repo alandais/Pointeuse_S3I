@@ -82,7 +82,7 @@ public class Pointeuse extends NfcActivity {
         Log.d("NFC", "tagNfc(" + tagNfc.toString() + ")");
         if (msgs.length > 0) {
             byte[] payload = msgs[0].getRecords()[0].getPayload();
-            if(payload.length > 1 && new String(payload).substring(1).equals(URI_POINTER)) {
+            if(payload.length > 1 && payload[0] == 3 && new String(payload).substring(1).equals(URI_POINTER)) {
                 // il semblerait que cela soit notre tag
                 onTagConnuDecouvert();
                 return;
@@ -92,29 +92,17 @@ public class Pointeuse extends NfcActivity {
     }
 
     private void onTagInconnuDecouvert(final Tag tagNfc) {
-        final NdefRecord record;
-        try {
-            final byte[] uriBytes = "pointeuse.s3i.fr/pointer".getBytes("UTF-8");
-            final byte[] recordBytes = new byte[uriBytes.length + 1];
-            recordBytes[0] = (byte) 0x03; // 3 = http://
-            System.arraycopy(uriBytes, 0, recordBytes, 1, uriBytes.length);
-            record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], recordBytes);
-        }
-        catch(Exception e) {
-            Log.e("NFC", "Erreur lors de la création du tag", e);
-            Toast.makeText(this, "Tag NFC inconnu ou malformé", Toast.LENGTH_LONG).show();
-            return;
-        }
-
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Tag NFC inconnu")
-                .setMessage("Voulez-vous initialiser un nouveau tag pointer?")
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                {
+                .setMessage("Voulez-vous initialiser un nouveau tag pointer (attention : écrase les données existantes sur le tag) ?")
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ecrireTagNfc(tagNfc, record);
+                        NdefRecord record = creerNdefUri(URI_POINTER);
+                        if (record != null) {
+                            ecrireTagNfc(tagNfc, record);
+                        }
                     }
                 })
                 .setNegativeButton("Non", null)
