@@ -62,6 +62,7 @@ public class PointerWidgetPresenter extends WidgetPresenter implements PointerOu
     @Override
     public void onPointageTermine() {
         PointerWidgetProvider.arreterRefreshAuto(context);
+        PointerWidgetProvider.refresh(context);
     }
 
     @Override

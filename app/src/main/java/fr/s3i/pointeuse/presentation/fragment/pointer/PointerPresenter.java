@@ -68,6 +68,7 @@ public class PointerPresenter extends Presenter<PointerVue> implements PointerOu
     @Override
     public void onPointageTermine() {
         PointerWidgetProvider.arreterRefreshAuto(vue.getContext());
+        PointerWidgetProvider.refresh(vue.getContext());
     }
 
     @Override

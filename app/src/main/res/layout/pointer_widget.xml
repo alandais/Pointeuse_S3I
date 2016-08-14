@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:gravity="center"
-            android:text="En cours"
             />
 
         <LinearLayout
@@ -62,7 +61,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="Jour"
                     />
 
                 <TextView
@@ -70,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="Sem."
                     />
 
             </LinearLayout>
@@ -88,7 +85,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="20h00"
                     />
 
                 <TextView
@@ -96,7 +92,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="120h00"
                     />
 
             </LinearLayout>
