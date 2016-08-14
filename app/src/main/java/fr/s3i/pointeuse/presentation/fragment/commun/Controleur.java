@@ -60,6 +60,7 @@ public abstract class Controleur implements Closeable, InBoundary {
         tacheDeFond.shutdownNow();
     }
 
+    @SuppressWarnings("unchecked")
     protected <T extends Interactor> T getInteracteur(Class<T> type) {
         for (Interactor interactor : interactors) {
             if (interactor.getClass().isAssignableFrom(type)) {

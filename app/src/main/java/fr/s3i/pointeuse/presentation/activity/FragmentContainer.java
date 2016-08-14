@@ -38,8 +38,8 @@ public class FragmentContainer extends AppCompatActivity {
 
         Fragment content;
         Object argument = getIntent().hasExtra(FRAGMENT_ID) ? getIntent().getExtras().get(FRAGMENT_ID) : null;
-        if (argument instanceof Vue) {
-            content = (Vue) argument;
+        if (argument instanceof Fragment) {
+            content = (Fragment) argument;
         }
         else if (argument instanceof String) {
             content = VueTest.getInstance((String) argument);

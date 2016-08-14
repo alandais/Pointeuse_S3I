@@ -42,6 +42,7 @@ import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.activity.FragmentContainer;
 import fr.s3i.pointeuse.presentation.activity.NfcActivity;
 import fr.s3i.pointeuse.presentation.activity.Preferences;
+import fr.s3i.pointeuse.presentation.fragment.aide.Aide;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.fragment.pointer.PointerVue;
@@ -131,13 +132,13 @@ public class Pointeuse extends NfcActivity {
                 exporter(); // c'est la vue Calendrier qui gère les exports
                 return true;
             case R.id.menu_item_aide:
-                //TODO
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/aide_" + getString(R.string.langue) + ".html"));
                 break;
             case R.id.menu_item_licence:
-                //TODO
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/licence_" + getString(R.string.langue) + ".html"));
                 break;
             case R.id.menu_item_s3i:
-                //TODO
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/S3I/presentation_" + getString(R.string.langue) + ".html"));
                 break;
             default:
                 return super.onOptionsItemSelected(item);

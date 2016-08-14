@@ -18,6 +18,7 @@
   -->
 
 <resources>
+    <string name="langue">fr</string>
     <string name="app_name">Oburo.O</string>
     <string name="pointer">Pointage rapide</string>
     <string name="inserer">Insérer un pointage</string>
