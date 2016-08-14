@@ -41,7 +41,7 @@ public class TestWidgetPresenter extends WidgetPresenter implements EmiterOut, R
     @Override
     public void onRefresh(long timestamp) {
         RemoteViews views = getRemoteViews();
-        views.setTextViewText(R.id.monTextWidget, "Timestamp : " + timestamp);
+        views.setTextViewText(R.id.txtWidgetStatut, "Timestamp : " + timestamp);
         updateRemoteViews(views);
     }
 

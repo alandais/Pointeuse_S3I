@@ -95,9 +95,9 @@ public class Pointeuse extends NfcActivity {
     private void onTagInconnuDecouvert(final Tag tagNfc) {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Tag NFC inconnu")
-                .setMessage("Voulez-vous initialiser un nouveau tag pointer (attention : écrase les données existantes sur le tag) ?")
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                .setTitle(Chaines.demander_tagnfc_inconnu_titre)
+                .setMessage(Chaines.demander_tagnfc_inconnu_message)
+                .setPositiveButton(Chaines.oui, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         NdefRecord record = creerNdefUri(URI_POINTER);
@@ -106,7 +106,7 @@ public class Pointeuse extends NfcActivity {
                         }
                     }
                 })
-                .setNegativeButton("Non", null)
+                .setNegativeButton(Chaines.non, null)
                 .show();
     }
 

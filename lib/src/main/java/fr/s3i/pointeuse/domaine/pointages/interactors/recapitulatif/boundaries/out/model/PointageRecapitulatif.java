@@ -30,9 +30,12 @@ public class PointageRecapitulatif implements OutModel {
 
     private final String dureeTotaleSemaine;
 
-    PointageRecapitulatif(String dureeTotaleJour, String dureeTotaleSemaine) {
+    private final boolean enCours;
+
+    PointageRecapitulatif(String dureeTotaleJour, String dureeTotaleSemaine, boolean enCours) {
         this.dureeTotaleJour = dureeTotaleJour;
         this.dureeTotaleSemaine = dureeTotaleSemaine;
+        this.enCours = enCours;
     }
 
     public String getDureeTotaleJour() {
@@ -42,5 +45,9 @@ public class PointageRecapitulatif implements OutModel {
     public String getDureeTotaleSemaine() {
         return dureeTotaleSemaine;
     }
-    
+
+    public boolean isEnCours() {
+        return enCours;
+    }
+
 }

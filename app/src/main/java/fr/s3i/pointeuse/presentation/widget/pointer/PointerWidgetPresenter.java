@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.domaine.pointages.interactors.pointer.boundaries.out.PointerOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.RecapOut;
 import fr.s3i.pointeuse.domaine.pointages.interactors.recapitulatif.boundaries.out.model.PointageRecapitulatif;
@@ -44,11 +45,12 @@ public class PointerWidgetPresenter extends WidgetPresenter implements PointerOu
     public void onPointageRecapitulatifRecalcule(PointageRecapitulatif pointage) {
         Log.d(PointerWidgetProvider.class.getSimpleName(), "Presenter : mise a jour du statut");
 
-        String recap = "Réalisé: " + pointage.getDureeTotaleJour() + '\n' +
-                       "Sem.: " + pointage.getDureeTotaleSemaine();
-
         RemoteViews views = getRemoteViews();
-        views.setTextViewText(R.id.monTextWidget, recap);
+        views.setTextViewText(R.id.txtWidgetStatut, pointage.isEnCours() ? Chaines.en_cours : Chaines.realise);
+        views.setTextViewText(R.id.txtWidgetLibelleJour, Chaines.jour);
+        views.setTextViewText(R.id.txtWidgetLibelleSemaine, Chaines.semaine);
+        views.setTextViewText(R.id.txtWidgetValeurJour, pointage.getDureeTotaleJour());
+        views.setTextViewText(R.id.txtWidgetValeurSemaine, pointage.getDureeTotaleSemaine());
         updateRemoteViews(views);
     }
 

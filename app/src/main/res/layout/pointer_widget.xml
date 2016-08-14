@@ -28,14 +28,82 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo_s3i" />
 
-    <TextView
-        android:background="#35FFFFFF"
-        android:id="@+id/monTextWidget"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:layout_height="fill_parent"
-        android:layout_width="95dip" />
+    <LinearLayout
+        android:layout_width="95dip"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
+        <TextView
+            android:id="@+id/txtWidgetStatut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="En cours"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/txtWidgetLibelleJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="Jour"
+                    />
+
+                <TextView
+                    android:id="@+id/txtWidgetLibelleSemaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="Sem."
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/txtWidgetValeurJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="20h00"
+                    />
+
+                <TextView
+                    android:id="@+id/txtWidgetValeurSemaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="120h00"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:background="@drawable/bouton123"

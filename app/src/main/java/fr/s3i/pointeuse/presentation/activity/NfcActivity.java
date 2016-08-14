@@ -31,6 +31,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
+
 /**
  * Created by Adrien on 08/08/2016.
  */
@@ -91,8 +93,8 @@ public abstract class NfcActivity extends AppCompatActivity {
             record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_URI, new byte[0], recordBytes);
         }
         catch(Exception e) {
-            Log.e("NFC", "Erreur lors de la création du tag", e);
-            Toast.makeText(this, "Erreur lors de la création du tag", Toast.LENGTH_LONG).show();
+            Log.e("NFC", Chaines.erreur_tagnfc_creation, e);
+            Toast.makeText(this, Chaines.erreur_tagnfc_creation, Toast.LENGTH_LONG).show();
             return null;
         }
         return record;
@@ -106,11 +108,11 @@ public abstract class NfcActivity extends AppCompatActivity {
             ndef.connect();
             ndef.writeNdefMessage(message);
             ndef.close();
-            Toast.makeText(this, "Tag initialisé", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Chaines.toast_tagnfc_initialise, Toast.LENGTH_LONG).show();
         }
         catch (Exception e) {
-            Log.e("NFC", "Erreur lors de l'écriture du tag", e);
-            Toast.makeText(this, "Erreur lors de l'écriture du tag", Toast.LENGTH_LONG).show();
+            Log.e("NFC", Chaines.erreur_tagnfc_ecriture, e);
+            Toast.makeText(this, Chaines.erreur_tagnfc_ecriture, Toast.LENGTH_LONG).show();
         }
     }
 

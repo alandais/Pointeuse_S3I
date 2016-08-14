@@ -31,11 +31,11 @@ public class PointageStatutFactory implements Service {
     public PointageStatut getStatut(PointageWrapper pointageWrapper) {
         String statut;
         if (pointageWrapper.isVide()) {
-            statut = Chaines.statut_pointage_aucun;
+            statut = Chaines.pointage_statut_aucun;
         } else if (pointageWrapper.isTermine()) {
-            statut = Chaines.statutPointageTermine(pointageWrapper);
+            statut = Chaines.pointageStatutTermine(pointageWrapper);
         } else {
-            statut = Chaines.statutPointageEncours(pointageWrapper);
+            statut = Chaines.pointageStatutEncours(pointageWrapper);
         }
         return new PointageStatut(statut);
     }

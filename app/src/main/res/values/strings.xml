@@ -30,10 +30,8 @@
     <string name="semaine">Semaine</string>
     <string name="mois">Mois</string>
     <string name="annee">Annee</string>
-    <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="logo_s3i">Logo S3I</string>
-    <string name="supprimer">Suppression</string>
     <string name="preferences">Paramètres</string>
     <string name="export">Export</string>
     <string name="aide">Aide</string>

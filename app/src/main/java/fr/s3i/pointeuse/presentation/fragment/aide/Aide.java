@@ -36,6 +36,8 @@ import fr.s3i.pointeuse.R;
  */
 public class Aide extends Fragment implements Parcelable {
 
+    private static final String STATE_URL = "URL";
+
     public static Aide newInstance(Parcel parcel) {
         String url = parcel.readString();
         return newInstance(url);
@@ -44,7 +46,7 @@ public class Aide extends Fragment implements Parcelable {
     public static Aide newInstance(String url) {
         Aide aide = new Aide();
         Bundle args = new Bundle();
-        args.putString("url", url);
+        args.putString(STATE_URL, url);
         aide.setArguments(args);
         return aide;
     }
@@ -67,7 +69,7 @@ public class Aide extends Fragment implements Parcelable {
         View view = inflater.inflate(R.layout.fragment_aide, container, false);
 
         Bundle args = getArguments();
-        String url = args.getString("url");
+        String url = args.getString(STATE_URL);
 
         WebView webView = (WebView) view.findViewById(R.id.aide_webview);
         webView.loadUrl(url);
@@ -83,7 +85,7 @@ public class Aide extends Fragment implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         Bundle args = getArguments();
-        String url = args.getString("url");
+        String url = args.getString(STATE_URL);
         parcel.writeString(url);
     }
 

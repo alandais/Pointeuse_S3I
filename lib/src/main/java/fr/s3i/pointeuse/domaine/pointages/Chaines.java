@@ -41,21 +41,31 @@ public final class Chaines {
     public static final String interacteur_pointer_nom = R.get("interacteur_pointer_nom");
     public static final String interacteur_calendrier_nom = R.get("interacteur_calendrier_nom");
 
-    public static final String oui = R.get("oui");
-    public static final String non = R.get("non");
-    public static final String ok = R.get("ok");
-    public static final String annuler = R.get("annuler");
+    public static final String oui = R.get("libelle_oui");
+    public static final String non = R.get("libelle_non");
+    public static final String ok = R.get("libelle_ok");
+    public static final String annuler = R.get("libelle_annuler");
+    public static final String jour = R.get("libelle_jour");
+    public static final String semaine = R.get("libelle_semaine");
+    public static final String mois = R.get("libelle_mois");
+    public static final String annee = R.get("libelle_annee");
+    public static final String ce_jour = R.get("libelle_ce(tte)_jour");
+    public static final String cette_semaine = R.get("libelle_ce(tte)_semaine");
+    public static final String ce_mois = R.get("libelle_ce(tte)_mois");
+    public static final String cette_annee = R.get("libelle_ce(tte)_annee");
+    public static final String realise = R.get("libelle_realise");
+    public static final String en_cours = R.get("libelle_en_cours");
 
-    public static final String periodeAnnee(Date reference) {
+    public static String periodeAnnee(Date reference) {
         return R.get("periode_annee", reference);
     }
-    public static final String periodeMois(Date reference) {
+    public static String periodeMois(Date reference) {
         return R.get("periode_mois", reference);
     }
-    public static final String periodeSemaine(Date reference) {
+    public static String periodeSemaine(Date reference) {
         return R.get("periode_semaine", reference);
     }
-    public static final String periodeJour(Date reference) {
+    public static String periodeJour(Date reference) {
         return R.get("periode_jour", reference);
     }
 
@@ -64,6 +74,8 @@ public final class Chaines {
     public static String demanderConfirmationSuppression(PointageInfo pointageInfo) {
         return R.get("demander_confirmation_suppression_pointage", pointageInfo.getDebut(), pointageInfo.getFin(), pointageInfo.getDuree());
     }
+    public static final String demander_tagnfc_inconnu_titre = R.get("demander_tagnfc_inconnu_titre");
+    public static final String demander_tagnfc_inconnu_message = R.get("demander_tagnfc_inconnu_message");
 
     public static String toastPointageComplet(PointageWrapper pointageWrapper) {
         return R.get("toast_pointage_complet", pointageWrapper.getHeureFin());
@@ -75,6 +87,7 @@ public final class Chaines {
     public static final String toast_pointage_supprime = R.get("toast_pointage_supprime");
     public static final String toast_pointage_modifie = R.get("toast_pointage_modifie");
     public static final String toast_export_termine = R.get("toast_export_termine");
+    public static final String toast_tagnfc_initialise = R.get("toast_tagnfc_initialise");
 
     public static final String notification_titre = R.get("notification_titre");
     public static String notificationDebutTravail(PointageWrapper pointageWrapper) {
@@ -84,12 +97,12 @@ public final class Chaines {
         return R.get("notification_fin_travail", pointageWrapper.getHeureFin());
     }
 
-    public static final String statut_pointage_aucun = R.get("statut_pointage_aucun");
-    public static String statutPointageEncours(PointageWrapper pointageWrapper) {
-        return R.get("statut_pointage_en_cours", pointageWrapper.getHeureDebut());
+    public static final String pointage_statut_aucun = R.get("pointage_statut_aucun");
+    public static String pointageStatutEncours(PointageWrapper pointageWrapper) {
+        return R.get("pointage_statut_en_cours", pointageWrapper.getHeureDebut());
     }
-    public static String statutPointageTermine(PointageWrapper pointageWrapper) {
-        return R.get("statut_pointage_termine", pointageWrapper.getDuree());
+    public static String pointageStatutTermine(PointageWrapper pointageWrapper) {
+        return R.get("pointage_statut_termine", pointageWrapper.getDuree());
     }
 
     public static final String mail_corps = R.get("mail_corps");
@@ -105,5 +118,7 @@ public final class Chaines {
     public static final String erreur_plusieurs_pointage_en_cours = R.get("erreur_plusieurs_pointage_en_cours");
     public static final String erreur_export_indisponible = R.get("erreur_export_indisponible");
     public static final String erreur_export_email_invalide = R.get("erreur_export_email_invalide");
+    public static final String erreur_tagnfc_creation = R.get("erreur_tagnfc_creation");
+    public static final String erreur_tagnfc_ecriture = R.get("erreur_tagnfc_ecriture");
 
 }

@@ -30,7 +30,7 @@ public class PointageRecapitulatifFactory implements Service {
     public PointageRecapitulatif getRecapitulatif(PointageWrapperListe pointageWrapperJour, PointageWrapperListe pointageWrapperSemaine) {
         String dureeJour = pointageWrapperJour.getDureeTotale();
         String dureeSemaine = pointageWrapperSemaine.getDureeTotale();
-        return new PointageRecapitulatif(dureeJour, dureeSemaine);
+        return new PointageRecapitulatif(dureeJour, dureeSemaine, pointageWrapperSemaine.isEnCours() || pointageWrapperJour.isEnCours());
     }
 
 }
