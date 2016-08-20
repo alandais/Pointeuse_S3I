@@ -74,6 +74,10 @@ public class PointageInfoListeAdaptateur extends BaseAdapter {
         if (textFin != null) {
             textFin.setText(pointageInfoListe.get(i).getFin());
         }
+        TextView textCommentaire = (TextView) view.findViewById(R.id.calendrier_liste_commentaire);
+        if (textCommentaire != null) {
+            textCommentaire.setText(pointageInfoListe.get(i).getCommentaire());
+        }
         TextView textDuree = (TextView) view.findViewById(R.id.calendrier_liste_duree);
         if (textDuree != null) {
             textDuree.setText(pointageInfoListe.get(i).getDuree());

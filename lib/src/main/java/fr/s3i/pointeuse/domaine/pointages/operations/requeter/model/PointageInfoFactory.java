@@ -32,7 +32,8 @@ public class PointageInfoFactory implements Service {
         String debut = pointageWrapper.getDateDebut();
         String fin = pointageWrapper.getDateFin();
         String duree = pointageWrapper.getDuree();
-        return new PointageInfo(id, debut, fin, duree);
+        String commentaire = pointageWrapper.getCommentaire();
+        return new PointageInfo(id, debut, fin, duree, commentaire);
     }
 
 }

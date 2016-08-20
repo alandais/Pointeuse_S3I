@@ -32,11 +32,14 @@ public class PointageInfo {
 
     private final String duree;
 
-    PointageInfo(Long id, String debut, String fin, String duree) {
+    private final String commentaire;
+
+    PointageInfo(Long id, String debut, String fin, String duree, String commentaire) {
         this.id = id;
         this.debut = debut;
         this.fin = fin;
         this.duree = duree;
+        this.commentaire = commentaire;
     }
 
     public Long getId() {
@@ -55,4 +58,7 @@ public class PointageInfo {
         return duree;
     }
 
+    public String getCommentaire() {
+        return commentaire;
+    }
 }

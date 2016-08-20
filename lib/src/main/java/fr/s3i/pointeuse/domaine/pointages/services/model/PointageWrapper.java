@@ -68,6 +68,10 @@ public class PointageWrapper {
         return formateur.formatDuree(calculateur.calculDuree(pointage));
     }
 
+    public String getCommentaire() {
+        return pointage.getCommentaire();
+    }
+
     public boolean isDemarre() {
         return pointage.getDebut() != null;
     }

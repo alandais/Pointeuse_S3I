@@ -25,24 +25,45 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         >
 
         <TextView
             android:id="@+id/calendrier_liste_debut"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:drawableLeft="@drawable/ic_pointage_in"
+            android:drawableStart="@drawable/ic_pointage_in"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:layout_weight="1"
             />
 
         <TextView
             android:id="@+id/calendrier_liste_fin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:drawableLeft="@drawable/ic_pointage_out"
+            android:drawableStart="@drawable/ic_pointage_out"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:layout_weight="1"
             />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/calendrier_liste_commentaire"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:paddingRight="5dp"
+        android:paddingEnd="5dp"
+        />
 
     <TextView
         android:id="@+id/calendrier_liste_duree"
