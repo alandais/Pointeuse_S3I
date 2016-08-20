@@ -43,6 +43,7 @@
         android:id="@+id/calendrier_liste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/fragment_calendrier_liste_item"
         />
 
 </LinearLayout>

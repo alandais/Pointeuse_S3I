@@ -18,7 +18,9 @@
   ~
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_calendrier_vue">
 
     <DatePicker
         android:id="@+id/calendrier"
@@ -28,7 +30,9 @@
         android:startYear="2000"
         android:endYear="2100"
         android:datePickerMode="spinner"
-        android:calendarViewShown="false" />
+        android:calendarViewShown="false"
+        tools:targetApi="LOLLIPOP"
+        />
 
     <RadioGroup
         android:id="@+id/radiogroup"
