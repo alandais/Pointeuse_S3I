@@ -37,6 +37,7 @@
         android:textColor="@color/colorImportant"
         android:textStyle="bold"
         android:gravity="center"
+        tools:text="05h00"
         />
 
     <ListView

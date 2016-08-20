@@ -18,7 +18,9 @@
   ~
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -46,6 +48,7 @@
             android:inputType="textShortMessage"
             android:layout_weight="1"
             android:textSize="15sp"
+            tools:text="commentaire exemple"
             >
 
             <requestFocus />
@@ -61,6 +64,7 @@
         android:timePickerMode="clock"
         android:layout_gravity="center"
         android:layoutMode="clipBounds"
+        tools:targetApi="LOLLIPOP"
         />
 
     <DatePicker
@@ -70,6 +74,7 @@
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
         android:layout_gravity="center"
+        tools:targetApi="LOLLIPOP"
         />
 
 </LinearLayout>

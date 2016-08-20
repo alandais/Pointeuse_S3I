@@ -34,6 +34,7 @@
         android:padding="15dp"
         android:layout_gravity="start"
         android:layout_weight="0"
+        tools:text="Aucun pointage en cours"
         />
 
     <Button
@@ -95,6 +96,7 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
+                tools:text="07h00"
                 />
 
         </TableRow>
@@ -116,27 +118,21 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
+                tools:text="35h00"
                 />
 
         </TableRow>
 
     </TableLayout>
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/imgS3i"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:src="@drawable/bandeau_s3i"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        >
-
-        <ImageView
-            android:id="@+id/imgS3i"
-            android:layout_width="wrap_content"
-            android:src="@drawable/bandeau_s3i"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:contentDescription="@string/app_name"
-            />
-
-    </FrameLayout>
+        android:contentDescription="@string/logo_s3i"
+        android:scaleType="fitEnd"
+        />
 
 </LinearLayout>
