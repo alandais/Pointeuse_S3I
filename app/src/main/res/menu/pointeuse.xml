@@ -44,4 +44,9 @@
         android:icon="@drawable/ipointage"
         android:title="@string/infos3i" />
 
+    <item
+        android:id="@+id/menu_item_apropos"
+        android:icon="@drawable/ipointage"
+        android:title="@string/apropos" />
+
 </menu>

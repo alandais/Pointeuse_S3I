@@ -18,8 +18,9 @@
   -->
 
 <resources>
-    <string name="langue">fr</string>
     <string name="app_name">Oburo.O</string>
+    <string name="version">Version 2.0</string>
+
     <string name="pointer">Pointage rapide</string>
     <string name="inserer">Insérer un pointage</string>
     <string name="pointageEnCousDureeJourLibelle">Aujourd\'hui</string>
@@ -37,6 +38,7 @@
     <string name="aide">Aide</string>
     <string name="licence">Licence</string>
     <string name="infos3i">S3I</string>
+    <string name="apropos">A propos</string>
     <string name="pref_libelle_delai_format">Format d\'affichage des durées</string>
     <string name="pref_description_delai_format">Défini le format d\'affichage des durées de pointages</string>
     <string name="pref_export_separateur_libelle">Séparateur</string>

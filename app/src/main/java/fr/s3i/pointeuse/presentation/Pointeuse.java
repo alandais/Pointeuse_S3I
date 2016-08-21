@@ -35,13 +35,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import fr.s3i.pointeuse.R;
 import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.activity.FragmentContainer;
 import fr.s3i.pointeuse.presentation.activity.NfcActivity;
 import fr.s3i.pointeuse.presentation.activity.Preferences;
+import fr.s3i.pointeuse.presentation.fragment.aide.APropos;
 import fr.s3i.pointeuse.presentation.fragment.aide.Aide;
 import fr.s3i.pointeuse.presentation.fragment.calendrier.CalendrierVue;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
@@ -72,10 +72,6 @@ public class Pointeuse extends NfcActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-
-        if (savedInstanceState == null) {
-            Toast.makeText(this, Chaines.copyright, Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -132,13 +128,16 @@ public class Pointeuse extends NfcActivity {
                 exporter(); // c'est la vue Calendrier qui gère les exports
                 return true;
             case R.id.menu_item_aide:
-                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/aide_" + getString(R.string.langue) + ".html"));
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/aide_" + Chaines.langue + ".html"));
                 break;
             case R.id.menu_item_licence:
-                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/licence_" + getString(R.string.langue) + ".html"));
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/licence_" + Chaines.langue + ".html"));
                 break;
             case R.id.menu_item_s3i:
-                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/S3I/presentation_" + getString(R.string.langue) + ".html"));
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, Aide.newInstance("file:///android_asset/S3I/presentation_" + Chaines.langue + ".html"));
+                break;
+            case R.id.menu_item_apropos:
+                intent.putExtra(FragmentContainer.FRAGMENT_ID, APropos.newInstance());
                 break;
             default:
                 return super.onOptionsItemSelected(item);

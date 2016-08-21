@@ -36,7 +36,12 @@ public final class Chaines {
         // constructeur privé
     }
 
+    public static final String langue = R.get("langue");
+    public static final String a_propos = R.get("a_propos");
+
     public static final String copyright = R.get("copyright");
+    public static final String contact_libelle = R.get("contact_libelle");
+    public static final String contact_url = R.get("contact_url");
 
     public static final String interacteur_pointer_nom = R.get("interacteur_pointer_nom");
     public static final String interacteur_calendrier_nom = R.get("interacteur_calendrier_nom");
