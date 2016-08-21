@@ -18,31 +18,25 @@
   -->
 
 <resources>
+
     <string name="app_name">Oburo.O</string>
     <string name="version">Version 2.0</string>
-
-    <string name="pointer">Pointage rapide</string>
-    <string name="inserer">Insérer un pointage</string>
-    <string name="pointageEnCousDureeJourLibelle">Aujourd\'hui</string>
-    <string name="pointageEnCousDureeSemaineLibelle">Cette semaine</string>
-    <string name="realise">Réalisé</string>
-    <string name="libelle_commentaire">Commentaire :</string>
-    <string name="jour">Jour</string>
-    <string name="semaine">Semaine</string>
-    <string name="mois">Mois</string>
-    <string name="annee">Annee</string>
-    <string name="add_widget">Add widget</string>
     <string name="logo_s3i">Logo S3I</string>
+
+    <!-- menu (todo: déplacer dans les resources du projet lib) -->
     <string name="preferences">Paramètres</string>
     <string name="export">Export</string>
     <string name="aide">Aide</string>
     <string name="licence">Licence</string>
     <string name="infos3i">S3I</string>
     <string name="apropos">A propos</string>
+
+    <!-- préférences (todo: déplacer dans les resources du projet lib) -->
     <string name="pref_libelle_delai_format">Format d\'affichage des durées</string>
     <string name="pref_description_delai_format">Défini le format d\'affichage des durées de pointages</string>
     <string name="pref_export_separateur_libelle">Séparateur</string>
     <string name="pref_export_separateur_description">Choix du caractére de séparation pour le fichier de sauvegarde</string>
     <string name="pref_export_email_libelle">Email destinataire export</string>
     <string name="pref_export_email_description">Entrez votre adresse Email</string>
+
 </resources>

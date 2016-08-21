@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -115,6 +116,15 @@ public class CalendrierVue extends Vue<CalendrierPresenter, CalendrierControleur
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendrier_vue, container, false);
+
+        RadioButton triButton = (RadioButton) view.findViewById(R.id.trijour);
+        triButton.setText(Chaines.jour);
+        triButton = (RadioButton) view.findViewById(R.id.trisemaine);
+        triButton.setText(Chaines.semaine);
+        triButton = (RadioButton) view.findViewById(R.id.trimois);
+        triButton.setText(Chaines.mois);
+        triButton = (RadioButton) view.findViewById(R.id.triannee);
+        triButton.setText(Chaines.annee);
 
         calendrier = (DatePicker) view.findViewById(R.id.calendrier);
         calendrier.init(calendrier.getYear(), calendrier.getMonth(), calendrier.getDayOfMonth(), this);

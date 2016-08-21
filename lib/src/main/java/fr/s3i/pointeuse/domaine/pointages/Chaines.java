@@ -46,6 +46,9 @@ public final class Chaines {
     public static final String interacteur_pointer_nom = R.get("interacteur_pointer_nom");
     public static final String interacteur_calendrier_nom = R.get("interacteur_calendrier_nom");
 
+    public static final String action_pointer = R.get("action_pointer");
+    public static final String action_inserer = R.get("action_inserer");
+
     public static final String oui = R.get("libelle_oui");
     public static final String non = R.get("libelle_non");
     public static final String ok = R.get("libelle_ok");
@@ -60,6 +63,7 @@ public final class Chaines {
     public static final String cette_annee = R.get("libelle_ce(tte)_annee");
     public static final String realise = R.get("libelle_realise");
     public static final String en_cours = R.get("libelle_en_cours");
+    public static final String commentaire = R.get("libelle_commentaire");
 
     public static String periodeAnnee(Date reference) {
         return R.get("periode_annee", reference);

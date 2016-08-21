@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import java.util.concurrent.TimeUnit;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.widget.commun.WidgetProvider;
 
 /**
@@ -74,6 +75,7 @@ public class PointerWidgetProvider extends WidgetProvider<PointerWidgetPresenter
 
         RemoteViews views = presenter.getRemoteViews();
         views.setOnClickPendingIntent(R.id.monbouttonwidget, WidgetProvider.getPendingIntent(context, INTENT_ACTION_POINTER, getClass()));
+        views.setTextViewText(R.id.monbouttonwidget, Chaines.action_pointer);
         presenter.updateRemoteViews(views);
 
         controler.lancerCalculRecapitulatifAutomatique();

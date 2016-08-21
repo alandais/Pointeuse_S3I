@@ -34,11 +34,12 @@
         >
 
         <TextView
+            android:id="@+id/label_commentaire"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:text="@string/libelle_commentaire"
             android:textSize="15sp"
             android:paddingTop="10sp"
+            tools:text="Commentaire"
             />
 
         <EditText

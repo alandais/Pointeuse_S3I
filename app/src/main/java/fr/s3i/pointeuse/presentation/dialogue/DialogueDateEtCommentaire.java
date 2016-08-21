@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import fr.s3i.pointeuse.R;
@@ -102,6 +103,8 @@ public class DialogueDateEtCommentaire extends DialogFragment implements DialogI
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_choix_heure, null);
+        TextView labelCommentaire = (TextView) view.findViewById(R.id.label_commentaire);
+        labelCommentaire.setText(Chaines.commentaire);
         commentaire = (EditText) view.findViewById(R.id.txtCommentaire);
         datePicker = (DatePicker) view.findViewById(R.id.datePicker);
         timePicker = (TimePicker) view.findViewById(R.id.timePicker);

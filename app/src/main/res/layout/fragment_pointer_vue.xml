@@ -42,12 +42,12 @@
         android:id="@+id/btnPointer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pointer"
         android:textSize="16sp"
         android:layout_marginLeft="50dip"
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
         android:layout_weight="0"
+        tools:text="Pointage rapide"
         />
 
     <Button
@@ -55,12 +55,12 @@
         android:id="@+id/btnInserer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/inserer"
         android:textSize="16sp"
         android:layout_marginLeft="50dip"
         android:layout_marginRight="50dip"
         android:layout_gravity="top"
         android:layout_weight="0"
+        tools:text="Insérer un pointage"
         />
 
     <TableLayout
@@ -72,11 +72,12 @@
         <TableRow>
 
             <TextView
-                android:text="@string/realise"
+                android:id="@+id/label_realise"
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="center"
                 android:layout_span="2"
+                tools:text="Réalisé"
                 />
 
         </TableRow>
@@ -88,7 +89,7 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:text="@string/pointageEnCousDureeJourLibelle"
+                tools:text="Aujourd'hui"
                 />
 
             <TextView
@@ -108,7 +109,7 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:layout_gravity="start"
-                android:text="@string/pointageEnCousDureeSemaineLibelle"
+                tools:text="Cette semaine"
                 />
 
             <TextView

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import fr.s3i.pointeuse.R;
+import fr.s3i.pointeuse.domaine.pointages.Chaines;
 import fr.s3i.pointeuse.presentation.fragment.commun.Vue;
 import fr.s3i.pointeuse.presentation.dialogue.DialoguePointageInfo;
 import fr.s3i.pointeuse.presentation.dialogue.Listener;
@@ -59,9 +60,20 @@ public class PointerVue extends Vue<PointerPresenter, PointerControleur> impleme
 
         Button b = (Button) view.findViewById(R.id.btnPointer);
         b.setOnClickListener(this);
+        b.setText(Chaines.action_pointer);
 
         b = (Button) view.findViewById(R.id.btnInserer);
         b.setOnClickListener(this);
+        b.setText(Chaines.action_inserer);
+
+        TextView textView = (TextView) view.findViewById(R.id.label_realise);
+        textView.setText(Chaines.realise);
+
+        textView = (TextView) view.findViewById(R.id.lblPointageEnCoursJour);
+        textView.setText(Chaines.ce_jour);
+
+        textView = (TextView) view.findViewById(R.id.lblPointageEnCoursSemaine);
+        textView.setText(Chaines.cette_semaine);
 
         return view;
     }

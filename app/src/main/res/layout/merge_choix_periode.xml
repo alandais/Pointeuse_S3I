@@ -49,32 +49,37 @@
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/jour"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Jour"
+            />
 
         <RadioButton
             android:id="@+id/trisemaine"
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/semaine"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Semaine"
+            />
 
         <RadioButton
             android:id="@+id/trimois"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:text="@string/mois"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Mois"
+            />
 
         <RadioButton
             android:id="@+id/triannee"
             android:layout_weight="1"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:text="@string/annee"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Année"
+            />
+
     </RadioGroup>
 
 </merge>

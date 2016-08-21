@@ -29,6 +29,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import fr.s3i.pointeuse.R;
@@ -94,6 +95,16 @@ public class DialogueChoixPeriode extends DialogFragment implements DialogInterf
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_choix_periode, null);
+
+        RadioButton triButton = (RadioButton) view.findViewById(R.id.trijour);
+        triButton.setText(Chaines.jour);
+        triButton = (RadioButton) view.findViewById(R.id.trisemaine);
+        triButton.setText(Chaines.semaine);
+        triButton = (RadioButton) view.findViewById(R.id.trimois);
+        triButton.setText(Chaines.mois);
+        triButton = (RadioButton) view.findViewById(R.id.triannee);
+        triButton.setText(Chaines.annee);
+
         calendrier = (DatePicker) view.findViewById(R.id.calendrier);
         calendrierFiltre = (RadioGroup) view.findViewById(R.id.radiogroup);
         if (valeursParDefaut != null) {
