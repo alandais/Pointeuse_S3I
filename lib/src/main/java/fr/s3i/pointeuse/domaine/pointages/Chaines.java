@@ -37,7 +37,12 @@ public final class Chaines {
     }
 
     public static final String langue = R.get("langue");
-    public static final String a_propos = R.get("a_propos");
+    public static final String a_propos = R.get("libelle_a_propos");
+    public static final String parametres = R.get("libelle_parametres");
+    public static final String export = R.get("libelle_export");
+    public static final String aide = R.get("libelle_aide");
+    public static final String licence = R.get("libelle_licence");
+    public static final String s3i = R.get("libelle_s3i");
 
     public static final String copyright = R.get("copyright");
     public static final String contact_libelle = R.get("contact_libelle");

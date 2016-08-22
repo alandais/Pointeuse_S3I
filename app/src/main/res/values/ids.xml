@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
   ~
   ~     This file is part of Oburo.O
@@ -17,30 +18,11 @@
   ~
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/menu_item_preferences"
-        android:title="@string/preferences" />
-
-    <item
-        android:id="@+id/menu_item_export"
-        android:title="@string/export" />
-
-    <item
-        android:id="@+id/menu_item_aide"
-        android:title="@string/aide" />
-
-    <item
-        android:id="@+id/menu_item_licence"
-        android:title="@string/licence" />
-
-    <item
-        android:id="@+id/menu_item_s3i"
-        android:title="@string/infos3i" />
-
-    <item
-        android:id="@+id/menu_item_apropos"
-        android:title="@string/apropos" />
-
-</menu>
+<resources>
+    <item name="menu_item_preferences" type="id" />
+    <item name="menu_item_export" type="id" />
+    <item name="menu_item_aide" type="id" />
+    <item name="menu_item_licence" type="id" />
+    <item name="menu_item_s3i" type="id" />
+    <item name="menu_item_apropos" type="id" />
+</resources>

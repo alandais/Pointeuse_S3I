@@ -33,7 +33,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import fr.s3i.pointeuse.R;
@@ -112,8 +111,12 @@ public class Pointeuse extends NfcActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.pointeuse, menu);
+        menu.add(Menu.NONE, R.id.menu_item_preferences, Menu.NONE, Chaines.parametres);
+        menu.add(Menu.NONE, R.id.menu_item_export, Menu.NONE, Chaines.export);
+        menu.add(Menu.NONE, R.id.menu_item_aide, Menu.NONE, Chaines.aide);
+        menu.add(Menu.NONE, R.id.menu_item_licence, Menu.NONE, Chaines.licence);
+        menu.add(Menu.NONE, R.id.menu_item_s3i, Menu.NONE, Chaines.s3i);
+        menu.add(Menu.NONE, R.id.menu_item_apropos, Menu.NONE, Chaines.a_propos);
         return true;
     }
 
