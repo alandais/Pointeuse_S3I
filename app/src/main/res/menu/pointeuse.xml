@@ -21,32 +21,26 @@
 
     <item
         android:id="@+id/menu_item_preferences"
-        android:icon="@drawable/ipointage"
         android:title="@string/preferences" />
 
     <item
         android:id="@+id/menu_item_export"
-        android:icon="@drawable/ipointage"
         android:title="@string/export" />
 
     <item
         android:id="@+id/menu_item_aide"
-        android:icon="@drawable/ipointage"
         android:title="@string/aide" />
 
     <item
         android:id="@+id/menu_item_licence"
-        android:icon="@drawable/ipointage"
         android:title="@string/licence" />
 
     <item
         android:id="@+id/menu_item_s3i"
-        android:icon="@drawable/ipointage"
         android:title="@string/infos3i" />
 
     <item
         android:id="@+id/menu_item_apropos"
-        android:icon="@drawable/ipointage"
         android:title="@string/apropos" />
 
 </menu>
