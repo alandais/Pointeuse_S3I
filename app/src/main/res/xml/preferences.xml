@@ -20,58 +20,36 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/prefgenerale">
+    <PreferenceCategory android:title="General">
 
         <ListPreference
-            android:key="theme"
-            android:title="@string/titre_theme"
-            android:summary="@string/theme_description"
-            android:dialogTitle="@string/titre_theme"
-            android:entries="@array/liste_theme"
-            android:entryValues="@array/liste_valeur_theme" />
-
-        <ListPreference
-            android:key="listedesarrondis"
-            android:title="@string/prefarrondi"
-            android:summary="@string/prefarrondi1"
-            android:dialogTitle="@string/prefarrondi"
-            android:entries="@array/liste_arrondis"
-            android:entryValues="@array/valeur_liste_arrondis" />
-
-        <ListPreference
-            android:key="pointagealaseconde"
-            android:title="@string/pointagealasecondetitre"
-            android:summary="@string/pointagealasecondedescription"
-            android:dialogTitle="@string/pointagealasecondetitre"
-            android:entries="@array/non_oui"
-            android:entryValues="@array/valeur_non_oui" />
-
-        <ListPreference
-            android:key="formataffichage"
-            android:title="@string/prefformat"
-            android:summary="@string/prefformat1"
-            android:dialogTitle="@string/prefformat"
-            android:entries="@array/liste_format"
-            android:entryValues="@array/valeur_liste_format" />
+            android:key="@string/pref_delai_format"
+            android:title="@string/pref_libelle_delai_format"
+            android:summary="@string/pref_description_delai_format"
+            android:dialogTitle="@string/pref_libelle_delai_format"
+            android:entries="@array/pref_delai_format_liste"
+            android:entryValues="@array/pref_delai_format_valeurs"
+            />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Backup">
+    <PreferenceCategory android:title="Export">
 
         <EditTextPreference
-            android:key="email"
-            android:title="Email"
-            android:summary="@string/prefmail"
-            android:dialogTitle="Email" />
+            android:key="@string/pref_export_email"
+            android:title="@string/pref_export_email_libelle"
+            android:summary="@string/pref_export_email_description"
+            android:dialogTitle="@string/pref_export_email_libelle"
+            android:inputType="textEmailAddress"
+            />
 
         <EditTextPreference
-            android:key="separateur"
-            android:title="@string/prefsep1"
+            android:key="@string/pref_export_separateur"
+            android:title="@string/pref_export_separateur_libelle"
             android:defaultValue=";"
-            android:maxLength="1"
-            android:summary="@string/prefsep"
-            android:dialogTitle="@string/prefsep1" />
-
+            android:summary="@string/pref_export_separateur_description"
+            android:dialogTitle="@string/pref_export_separateur_libelle"
+            />
 
     </PreferenceCategory>
 

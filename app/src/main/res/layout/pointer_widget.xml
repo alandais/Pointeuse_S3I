@@ -1,0 +1,126 @@
+<!--
+  ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+  ~
+  ~     This file is part of Oburo.O
+  ~     Oburo.O is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="214dip"
+    android:layout_height="54dip"
+    android:background="@drawable/widgetborder">
+
+    <ImageView
+        android:layout_width="50dip"
+        android:src="@drawable/logo_s3i"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_s3i" />
+
+    <LinearLayout
+        android:layout_width="95dip"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/txtWidgetStatut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:gravity="center"
+            tools:text="Réalisé"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="top"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/txtWidgetLibelleJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    tools:text="Jour"
+                    />
+
+                <TextView
+                    android:id="@+id/txtWidgetLibelleSemaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    tools:text="Semaine"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="top"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:paddingRight="5dp"
+                android:paddingEnd="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/txtWidgetValeurJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    tools:text="07h00"
+                    />
+
+                <TextView
+                    android:id="@+id/txtWidgetValeurSemaine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    tools:text="35h00"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:background="@drawable/bouton123"
+        android:id="@+id/monbouttonwidget"
+        android:gravity="center"
+        android:layout_gravity="start"
+        android:layout_width="65dip"
+        android:layout_height="fill_parent"
+        android:textSize="13sp"
+        tools:text="Pointage rapide"
+        />
+
+</LinearLayout>

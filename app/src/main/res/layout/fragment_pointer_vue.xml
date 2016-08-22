@@ -1,0 +1,139 @@
+<!--
+  ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+  ~
+  ~     This file is part of Oburo.O
+  ~     Oburo.O is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.fragment.pointer.PointerVue" >
+
+    <TextView
+        android:id="@+id/txtPointageStatut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="15dp"
+        android:layout_gravity="start"
+        android:layout_weight="0"
+        tools:text="Aucun pointage en cours"
+        />
+
+    <Button
+        android:background="@drawable/bouton123"
+        android:id="@+id/btnPointer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:layout_gravity="top"
+        android:layout_weight="0"
+        tools:text="Pointage rapide"
+        />
+
+    <Button
+        android:background="@drawable/bouton123"
+        android:id="@+id/btnInserer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:layout_gravity="top"
+        android:layout_weight="0"
+        tools:text="Insérer un pointage"
+        />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_gravity="center" >
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/label_realise"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_span="2"
+                tools:text="Réalisé"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/lblPointageEnCoursJour"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                tools:text="Aujourd'hui"
+                />
+
+            <TextView
+                android:id="@+id/txtPointageRecapJour"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                tools:text="07h00"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/lblPointageEnCoursSemaine"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                tools:text="Cette semaine"
+                />
+
+            <TextView
+                android:id="@+id/txtPointageRecapSemaine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                tools:text="35h00"
+                />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageView
+        android:id="@+id/imgS3i"
+        android:layout_width="match_parent"
+        android:src="@drawable/bandeau_s3i"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/logo_s3i"
+        android:scaleType="fitEnd"
+        />
+
+</LinearLayout>

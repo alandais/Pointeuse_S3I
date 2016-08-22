@@ -1,0 +1,50 @@
+<!--
+  ~ Oburo.O est un programme destinée à saisir son temps de travail sur un support Android.
+  ~
+  ~     This file is part of Oburo.O
+  ~     Oburo.O is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_calendrier"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.fragment.calendrier.CalendrierVue"
+    >
+
+    <include layout="@layout/merge_choix_periode" />
+
+    <TextView
+        android:id="@+id/duree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorImportant"
+        android:textStyle="bold"
+        android:gravity="center"
+        tools:text="05h00"
+        />
+
+    <ListView
+        android:id="@+id/calendrier_liste"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/fragment_calendrier_liste_item"
+        />
+
+</LinearLayout>
